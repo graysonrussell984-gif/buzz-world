@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buzz & Einstein</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: #121212; color: #ffffff; font-family: Arial, sans-serif; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+
+        /* --- LOGIN SCREEN --- */
+        #login-screen {
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            height: 100vh; padding: 20px; text-align: center;
+        }
+        .login-box {
+            background-color: #1e1e1e; border-radius: 20px; padding: 40px 30px;
+            border: 1px solid #333; max-width: 400px; width: 100%;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+        }
+        .login-title { font-size: 24px; font-weight: bold; margin-bottom: 10px; }
+        .login-subtitle { font-size: 13px; color: #888; margin-bottom: 30px; }
+        .login-box input {
+            width: 100%; padding: 14px; border-radius: 20px; border: 1px solid #333;
+            background-color: #2a2a2a; color: white; outline: none; font-size: 16px;
+            margin-bottom: 15px; text-align: center;
+        }
+        .login-box button {
+            width: 100%; background-color: #4a90e2; color: white; border: none;
+            padding: 14px; border-radius: 20px; cursor: pointer; font-size: 16px; font-weight: bold;
+        }
+        .login-error { color: #e74c3c; font-size: 13px; margin-top: 15px; height: 18px; }
+
+        /* --- HOME SCREEN --- */
+        #home-screen {
+            display: none; flex-direction: column; justify-content: center; align-items: center;
+            height: 100vh; padding: 20px; text-align: center;
+        }
+        .home-title { font-size: 24px; font-weight: bold; margin-bottom: 40px; }
+        .profiles-container {
+            display: flex; gap: 20px; overflow-x: auto; padding-bottom: 20px; width: 100%;
+            justify-content: center; scroll-snap-type: x mandatory;
+        }
+        .profile-card {
+            background-color: #1e1e1e; border-radius: 20px; padding: 25px 15px; min-width: 220px;
+            display: flex; flex-direction: column; align-items: center; scroll-snap-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5); border: 1px solid #333;
+        }
+        .profile-pic {
+            width: 80px; height: 80px; border-radius: 50%; background-color: #2a2a2a;
+            display: flex; justify-content: center; align-items: center; margin-bottom: 15px;
+            border: 2px solid #4a90e2; overflow: hidden;
+        }
+        .profile-pic img { width: 100%; height: 100%; object-fit: cover; }
+        .profile-pic-emoji { font-size: 32px; }
+        .profile-name { font-size: 18px; font-weight: bold; margin-bottom: 5px; }
+        .profile-desc { font-size: 12px; color: #888; margin-bottom: 20px; }
+        .chat-btn {
+            background-color: #4a90e2; color: white; border: none; padding: 10px 30px;
+            border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 14px; width: 100%;
+        }
+
+        /* --- CHAT SCREENS --- */
+        #buzz-screen, #einstein-screen { display: none; flex-direction: column; height: 100vh; }
+        .header {
+            display: flex; align-items: center; padding: 15px; background-color: #1e1e1e;
+            border-bottom: 1px solid #333; gap: 15px; z-index: 10;
+        }
+        .back-btn { background: none; border: none; color: #4a90e2; font-size: 16px; cursor: pointer; font-weight: bold; }
+        .header-title { font-size: 18px; font-weight: bold; }
+        .chat-container { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
+        .message { max-width: 80%; padding: 12px 16px; border-radius: 15px; line-height: 1.5; white-space: pre-wrap; }
+        .input-area { display: flex; padding: 15px; align-items: center; gap: 10px; z-index: 10; }
+        .plus-btn {
+            width: 40px; height: 40px; border-radius: 20px; background-color: #2a2a2a;
+            color: white; border: none; font-size: 24px; cursor: pointer; display: flex;
+            justify-content: center; align-items: center; padding-bottom: 4px;
+        }
+        .input-area input {
+            flex: 1; padding: 12px; border-radius: 20px; border: 1px solid #333;
+            background-color: #2a2a2a; color: white; outline: none; font-size: 16px;
+        }
+        .send-btn {
+            background-color: #4a90e2; color: white; border: none; padding: 0 20px;
+            height: 44px; border-radius: 22px; cursor: pointer; font-size: 16px; font-weight: bold;
+        }
+
+        /* Buzz Specific */
+        #buzz-screen { background-color: #121212; }
+        #buzz-screen .message.buzz { background-color: #2a2a2a; align-self: flex-start; }
+        #buzz-screen .message.user { background-color: #4a90e2; align-self: flex-end; }
+        #buzz-screen .input-area { background-color: #1e1e1e; border-top: 1px solid #333; }
+
+        /* Einstein Specific */
+        #einstein-screen {
+            background-image: url('chalkboard.jpg');
+            background-size: cover; background-position: center; justify-content: space-between;
+        }
+        #einstein-screen .header { background-color: rgba(30, 30, 30, 0.9); }
+        #einstein-screen .chat-container { background-color: transparent; padding: 30px 40px; margin-top: 80px; }
+        #einstein-screen .message.buzz {
+            background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ffffff; font-family: 'Courier New', Courier, monospace; align-self: flex-start;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+        }
+        #einstein-screen .message.user {
+            background-color: rgba(74, 144, 226, 0.6); color: #ffffff; align-self: flex-end;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+        }
+        #einstein-screen .input-area { background-color: rgba(30, 30, 30, 0.85); border-top: 1px solid rgba(255, 255, 255, 0.1); }
+
+        /* --- MY LIBRARY --- */
+        #library-screen { display: none; flex-direction: column; height: 100vh; background-color: #121212; overflow-y: auto; }
+        #library-screen .header { position: sticky; top: 0; z-index: 10; }
+        .dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 15px; max-width: 800px; margin: 0 auto; width: 100%; }
+        .dashboard-card { background-color: #1e1e1e; border-radius: 15px; padding: 15px; border: 1px solid #333; display: flex; flex-direction: column; }
+        .card-title { font-size: 14px; color: #aaa; margin-bottom: 10px; font-weight: bold; text-transform: uppercase; }
+        .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .calendar-header button { background: none; border: none; color: #4a90e2; cursor: pointer; font-size: 16px; }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; text-align: center; }
+        .calendar-day { font-size: 12px; color: #888; }
+        .calendar-date { font-size: 14px; padding: 5px; border-radius: 5px; }
+        .calendar-date.today { background-color: #4a90e2; color: white; font-weight: bold; }
+        #library-chat-container { display: flex; flex-direction: column; height: 200px; }
+        #library-chat-box { flex: 1; overflow-y: auto; margin-bottom: 10px; font-size: 14px; }
+        #library-chat-box div { margin-bottom: 5px; }
+        .lib-input-area { display: flex; gap: 5px; }
+        .lib-input-area input { flex: 1; padding: 8px; border-radius: 10px; border: 1px solid #333; background-color: #2a2a2a; color: white; font-size: 14px; outline: none; }
+        .lib-input-area button { background-color: #4a90e2; color: white; border: none; padding: 8px 15px; border-radius: 10px; cursor: pointer; font-weight: bold; }
+        #projects-container { max-height: 250px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+        .project-item { background-color: #2a2a2a; padding: 10px; border-radius: 10px; border: 1px solid #333; }
+        .project-item h4 { font-size: 14px; margin-bottom: 5px; }
+        .project-item p { font-size: 12px; color: #888; }
+        .dashboard-card.full-width { grid-column: span 2; }
+    </style>
+</head>
+<body>
+
+    <!-- LOGIN SCREEN -->
+    <div id="login-screen">
+        <div class="login-box">
+            <div class="login-title">Buzz & Einstein</div>
+            <div class="login-subtitle">Private Access</div>
+            <input type="password" id="password-input" placeholder="Enter password..." onkeypress="if(event.key === 'Enter') checkPassword()">
+            <button onclick="checkPassword()">Enter</button>
+            <div class="login-error" id="login-error"></div>
+        </div>
+    </div>
+
+    <!-- HOME SCREEN -->
+    <div id="home-screen">
+        <div class="home-title">Who do you want to talk to?</div>
+        <div class="profiles-container">
+            <div class="profile-card" onclick="openChat('Buzz')">
+                <div class="profile-pic"><span class="profile-pic-emoji">🤖</span></div>
+                <div class="profile-name">Buzz</div>
+                <div class="profile-desc">Personal AI</div>
+                <button class="chat-btn">Chat</button>
+            </div>
+            <div class="profile-card" onclick="openChat('Einstein')">
+                <div class="profile-pic"><img src="einstein-profile.jpg" alt="Einstein"></div>
+                <div class="profile-name">Einstein</div>
+                <div class="profile-desc">School Helper</div>
+                <button class="chat-btn">Chat</button>
+            </div>
+            <div class="profile-card" onclick="openLibrary()">
+                <div class="profile-pic"><span class="profile-pic-emoji">📚</span></div>
+                <div class="profile-name">My Library</div>
+                <div class="profile-desc">History & Settings</div>
+                <button class="chat-btn">Open</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- BUZZ SCREEN -->
+    <div id="buzz-screen">
+        <div class="header">
+            <button class="back-btn" onclick="goHome()">← Back</button>
+            <div class="header-title">Buzz</div>
+        </div>
+        <div class="chat-container" id="buzz-chat-box">
+            <div class="message buzz">I am Buzz. I remember everything. How can I help you today?</div>
+        </div>
+        <div class="input-area">
+            <button class="plus-btn">+</button>
+            <input type="text" id="buzz-input" placeholder="Type a message...">
+            <button class="send-btn">Send</button>
+        </div>
+    </div>
+
+    <!-- EINSTEIN SCREEN -->
+    <div id="einstein-screen">
+        <div class="header">
+            <button class="back-btn" onclick="goHome()">← Back</button>
+            <div class="header-title">Einstein</div>
+        </div>
+        <div class="chat-container" id="einstein-chat-box">
+            <div class="message buzz">I am Einstein. I am strictly for school. Let's fix that grammar.</div>
+        </div>
+        <div class="input-area">
+            <button class="plus-btn">+</button>
+            <input type="text" id="einstein-input" placeholder="Type a message...">
+            <button class="send-btn">Send</button>
+        </div>
+    </div>
+
+    <!-- LIBRARY SCREEN -->
+    <div id="library-screen">
+        <div class="header">
+            <button class="back-btn" onclick="goHome()">← Back</button>
+            <div class="header-title">My Library</div>
+        </div>
+        <div class="dashboard-grid">
+            <div class="dashboard-card">
+                <div class="card-title">My Schedule</div>
+                <div class="calendar-header">
+                    <button onclick="changeMonth(-1)">◀</button>
+                    <span id="month-year-display">Month Year</span>
+                    <button onclick="changeMonth(1)">▶</button>
+                </div>
+                <div class="calendar-grid" id="calendar-grid"></div>
+            </div>
+            <div class="dashboard-card">
+                <div class="card-title">Quick Chat</div>
+                <div id="library-chat-container">
+                    <div id="library-chat-box">
+                        <div style="color: #4a90e2;">AI: How can I help you today?</div>
+                    </div>
+                    <div class="lib-input-area">
+                        <input type="text" id="lib-input" placeholder="Type a message...">
+                        <button onclick="sendLibraryMessage()">Send</button>
+                    </div>
+                </div>
+            </div>
+            <div class="dashboard-card full-width">
+                <div class="card-title">My Projects</div>
+                <div id="projects-container">
+                    <div class="project-item"><h4>Buzz & Einstein App</h4><p>Building a personal AI dashboard.</p></div>
+                    <div class="project-item"><h4>Business Ideas</h4><p>Notes for future small business ventures.</p></div>
+                    <div class="project-item"><h4>School Assignments</h4><p>Upcoming papers and discussion board topics.</p></div>
+                    <div class="project-item"><h4>Reading List</h4><p>Books and articles to read next month.</p></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // CHANGE THIS PASSWORD TO WHATEVER YOU WANT
+        // ==========================================
+        const APP_PASSWORD = "buzz2026";
+        // ==========================================
+
+        // Check if already logged in this session
+        window.onload = function() {
+            if (sessionStorage.getItem('loggedIn') === 'true') {
+                showHome();
+            }
+        };
+
+        function checkPassword() {
+            const input = document.getElementById('password-input').value;
+            const errorBox = document.getElementById('login-error');
+
+            if (input === APP_PASSWORD) {
+                sessionStorage.setItem('loggedIn', 'true');
+                showHome();
+            } else {
+                errorBox.innerText = "Wrong password. Try again.";
+                document.getElementById('password-input').value = '';
+            }
+        }
+
+        function showHome() {
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('home-screen').style.display = 'flex';
+        }
+
+        // Navigation
+        function openChat(aiName) {
+            document.getElementById('home-screen').style.display = 'none';
+            if (aiName === 'Buzz') document.getElementById('buzz-screen').style.display = 'flex';
+            if (aiName === 'Einstein') document.getElementById('einstein-screen').style.display = 'flex';
+        }
+
+        function goHome() {
+            document.getElementById('buzz-screen').style.display = 'none';
+            document.getElementById('einstein-screen').style.display = 'none';
+            document.getElementById('library-screen').style.display = 'none';
+            document.getElementById('home-screen').style.display = 'flex';
+        }
+
+        function openLibrary() {
+            document.getElementById('home-screen').style.display = 'none';
+            document.getElementById('library-screen').style.display = 'flex';
+            renderCalendar();
+        }
+
+        // Calendar
+        let currentDate = new Date();
+        function renderCalendar() {
+            const monthYearDisplay = document.getElementById('month-year-display');
+            const calendarGrid = document.getElementById('calendar-grid');
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+            const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+            monthYearDisplay.innerText = monthNames[month] + " " + year;
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            let gridHTML = '';
+            ['S','M','T','W','T','F','S'].forEach(day => { gridHTML += `<div class="calendar-day">${day}</div>`; });
+            for (let i = 0; i < firstDay; i++) { gridHTML += `<div></div>`; }
+            const today = new Date();
+            const isCurrentMonth = today.getMonth() === month && today.getFullYear() === year;
+            const todayDate = today.getDate();
+            for (let i = 1; i <= daysInMonth; i++) {
+                let classNames = 'calendar-date';
+                if (isCurrentMonth && i === todayDate) { classNames += ' today'; }
+                gridHTML += `<div class="${classNames}">${i}</div>`;
+            }
+            calendarGrid.innerHTML = gridHTML;
+        }
+
+        function changeMonth(direction) {
+            currentDate.setMonth(currentDate.getMonth() + direction);
+            renderCalendar();
+        }
+
+        // Library Chat
+        function sendLibraryMessage() {
+            const input = document.getElementById('lib-input');
+            const text = input.value.trim();
+            if (text === '') return;
+            const chatBox = document.getElementById('library-chat-box');
+            const userMsg = document.createElement('div');
+            userMsg.style.color = '#fff';
+            userMsg.innerText = 'You: ' + text;
+            chatBox.appendChild(userMsg);
+            input.value = '';
+            chatBox.scrollTop = chatBox.scrollHeight;
+            setTimeout(() => {
+                const aiMsg = document.createElement('div');
+                aiMsg.style.color = '#4a90e2';
+                aiMsg.innerText = 'AI: I am still learning. Connect my brain later!';
+                chatBox.appendChild(aiMsg);
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
