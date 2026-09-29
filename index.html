@@ -4,11 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buzz & Einstein</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { background-color: #121212; color: #ffffff; font-family: Arial, sans-serif; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
-
-        /* --- LOGIN SCREEN --- */
         #login-screen { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; padding: 20px; text-align: center; }
         .login-box { background-color: #1e1e1e; border-radius: 20px; padding: 40px 30px; border: 1px solid #333; max-width: 400px; width: 100%; box-shadow: 0 4px 20px rgba(0,0,0,0.6); }
         .login-title { font-size: 24px; font-weight: bold; margin-bottom: 10px; }
@@ -16,33 +15,15 @@
         .login-box input { width: 100%; padding: 14px; border-radius: 20px; border: 1px solid #333; background-color: #2a2a2a; color: white; outline: none; font-size: 16px; margin-bottom: 15px; text-align: center; }
         .login-box button { width: 100%; background-color: #4a90e2; color: white; border: none; padding: 14px; border-radius: 20px; cursor: pointer; font-size: 16px; font-weight: bold; }
         .login-error { color: #e74c3c; font-size: 13px; margin-top: 15px; height: 18px; }
-
-        /* --- HOME SCREEN --- */
-        #home-screen {
-            display: none; flex-direction: column; justify-content: center; align-items: center;
-            height: 100vh; padding: 20px; text-align: center;
-            background-color: #121212;
-        }
-        .home-title { 
-            font-size: 28px; font-weight: bold; margin-bottom: 40px; 
-        }
+        #home-screen { display: none; flex-direction: column; justify-content: center; align-items: center; height: 100vh; padding: 20px; text-align: center; background-color: #121212; }
+        .home-title { font-size: 28px; font-weight: bold; margin-bottom: 40px; }
         .profiles-container { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 20px; width: 100%; justify-content: center; scroll-snap-type: x mandatory; }
-        .profile-card {
-            background-color: #1e1e1e; border-radius: 20px; padding: 25px 15px; min-width: 220px;
-            display: flex; flex-direction: column; align-items: center; scroll-snap-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.8); border: 1px solid #333;
-        }
-        .profile-pic {
-            width: 80px; height: 80px; border-radius: 50%; background-color: #2a2a2a;
-            display: flex; justify-content: center; align-items: center; margin-bottom: 15px;
-            border: 2px solid #4a90e2; overflow: hidden;
-        }
+        .profile-card { background-color: #1e1e1e; border-radius: 20px; padding: 25px 15px; min-width: 220px; display: flex; flex-direction: column; align-items: center; scroll-snap-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.8); border: 1px solid #333; }
+        .profile-pic { width: 80px; height: 80px; border-radius: 50%; background-color: #2a2a2a; display: flex; justify-content: center; align-items: center; margin-bottom: 15px; border: 2px solid #4a90e2; overflow: hidden; }
         .profile-pic img { width: 100%; height: 100%; object-fit: cover; }
         .profile-name { font-size: 18px; font-weight: bold; margin-bottom: 5px; }
         .profile-desc { font-size: 12px; color: #888; margin-bottom: 20px; }
         .chat-btn { background-color: #4a90e2; color: white; border: none; padding: 10px 30px; border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 14px; width: 100%; }
-
-        /* --- CHAT SCREENS --- */
         #buzz-screen, #einstein-screen { display: none; flex-direction: column; height: 100vh; background-color: #121212; }
         .header { display: flex; align-items: center; padding: 15px; background-color: #1e1e1e; border-bottom: 1px solid #333; gap: 15px; z-index: 10; }
         .back-btn { background: none; border: none; color: #4a90e2; font-size: 16px; cursor: pointer; font-weight: bold; }
@@ -53,16 +34,10 @@
         .plus-btn { width: 40px; height: 40px; border-radius: 20px; background-color: #2a2a2a; color: white; border: none; font-size: 24px; cursor: pointer; display: flex; justify-content: center; align-items: center; padding-bottom: 4px; }
         .input-area input { flex: 1; padding: 12px; border-radius: 20px; border: 1px solid #333; background-color: #2a2a2a; color: white; outline: none; font-size: 16px; }
         .send-btn { background-color: #4a90e2; color: white; border: none; padding: 0 20px; height: 44px; border-radius: 22px; cursor: pointer; font-size: 16px; font-weight: bold; }
-
-        /* Buzz Specific */
         #buzz-screen .message.buzz { background-color: #2a2a2a; align-self: flex-start; color: #fff; }
         #buzz-screen .message.user { background-color: #4a90e2; align-self: flex-end; color: #fff; }
-
-        /* Einstein Specific */
         #einstein-screen .message.buzz { background-color: #2a2a2a; align-self: flex-start; color: #fff; font-family: 'Courier New', Courier, monospace; }
         #einstein-screen .message.user { background-color: #4a90e2; align-self: flex-end; color: #fff; }
-
-        /* --- MY LIBRARY --- */
         #library-screen { display: none; flex-direction: column; height: 100vh; background-color: #121212; overflow-y: auto; }
         #library-screen .header { position: sticky; top: 0; z-index: 10; }
         .dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 15px; max-width: 800px; margin: 0 auto; width: 100%; }
@@ -89,7 +64,6 @@
 </head>
 <body>
 
-    <!-- LOGIN SCREEN -->
     <div id="login-screen">
         <div class="login-box">
             <div class="login-title">Buzz & Einstein</div>
@@ -100,17 +74,16 @@
         </div>
     </div>
 
-    <!-- HOME SCREEN -->
     <div id="home-screen">
         <div class="home-title">Who do you want to talk to?</div>
         <div class="profiles-container">
-            <div class="profile-card" onclick="openChat('Buzz')">
+            <div class="profile-card" onclick="openChat('buzz')">
                 <div class="profile-pic"><img src="https://i.postimg.cc/gnFwmW8W/buzz-profile-jpg.jpg" alt="Buzz"></div>
                 <div class="profile-name">Buzz</div>
                 <div class="profile-desc">Personal AI</div>
                 <button class="chat-btn">Chat</button>
             </div>
-            <div class="profile-card" onclick="openChat('Einstein')">
+            <div class="profile-card" onclick="openChat('einstein')">
                 <div class="profile-pic"><img src="https://i.postimg.cc/q68vzNnY/einstein-profile-jpg.jpg" alt="Einstein"></div>
                 <div class="profile-name">Einstein</div>
                 <div class="profile-desc">School Helper</div>
@@ -125,39 +98,32 @@
         </div>
     </div>
 
-    <!-- BUZZ SCREEN -->
     <div id="buzz-screen">
         <div class="header">
             <button class="back-btn" onclick="goHome()">← Back</button>
             <div class="header-title">Buzz</div>
         </div>
-        <div class="chat-container" id="buzz-chat-box">
-            <div class="message buzz">I am Buzz. I remember everything. How can I help you today?</div>
-        </div>
+        <div class="chat-container" id="buzz-chat-box"></div>
         <div class="input-area">
             <button class="plus-btn">+</button>
-            <input type="text" id="buzz-input" placeholder="Type a message...">
-            <button class="send-btn">Send</button>
+            <input type="text" id="buzz-input" placeholder="Type a message..." onkeypress="if(event.key === 'Enter') sendMessage('buzz')">
+            <button class="send-btn" onclick="sendMessage('buzz')">Send</button>
         </div>
     </div>
 
-    <!-- EINSTEIN SCREEN -->
     <div id="einstein-screen">
         <div class="header">
             <button class="back-btn" onclick="goHome()">← Back</button>
             <div class="header-title">Einstein</div>
         </div>
-        <div class="chat-container" id="einstein-chat-box">
-            <div class="message buzz">I am Einstein. I am strictly for school. Let's fix that grammar.</div>
-        </div>
+        <div class="chat-container" id="einstein-chat-box"></div>
         <div class="input-area">
             <button class="plus-btn">+</button>
-            <input type="text" id="einstein-input" placeholder="Type a message...">
-            <button class="send-btn">Send</button>
+            <input type="text" id="einstein-input" placeholder="Type a message..." onkeypress="if(event.key === 'Enter') sendMessage('einstein')">
+            <button class="send-btn" onclick="sendMessage('einstein')">Send</button>
         </div>
     </div>
 
-    <!-- LIBRARY SCREEN -->
     <div id="library-screen">
         <div class="header">
             <button class="back-btn" onclick="goHome()">← Back</button>
@@ -176,9 +142,7 @@
             <div class="dashboard-card">
                 <div class="card-title">Quick Chat</div>
                 <div id="library-chat-container">
-                    <div id="library-chat-box">
-                        <div style="color: #4a90e2;">AI: How can I help you today?</div>
-                    </div>
+                    <div id="library-chat-box"></div>
                     <div class="lib-input-area">
                         <input type="text" id="lib-input" placeholder="Type a message...">
                         <button onclick="sendLibraryMessage()">Send</button>
@@ -188,20 +152,127 @@
             <div class="dashboard-card full-width">
                 <div class="card-title">My Projects</div>
                 <div id="projects-container">
-                    <div class="project-item" onclick="alert('Buzz & Einstein App\n\nBuilding a personal AI dashboard.')"><h4>Buzz & Einstein App</h4><p>Building a personal AI dashboard.</p></div>
+                    <div class="project-item" onclick="alert('My Projects\n\nBuilding a personal AI dashboard.')"><h4>My Projects</h4><p>Building a personal AI dashboard.</p></div>
                     <div class="project-item" onclick="alert('Business Ideas\n\nNotes for future small business ventures.')"><h4>Business Ideas</h4><p>Notes for future small business ventures.</p></div>
                     <div class="project-item" onclick="alert('School Assignments\n\nUpcoming papers and discussion board topics.')"><h4>School Assignments</h4><p>Upcoming papers and discussion board topics.</p></div>
-                    <div class="project-item" onclick="alert('Reading List\n\nBooks and articles to read next month.')"><h4>Reading List</h4><p>Books and articles to read next month.</p></div>
+                    <div class="project-item" onclick="alert('History\n\nYour past conversations and activity.')"><h4>History</h4><p>Your past conversations and activity.</p></div>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // CHANGE THIS PASSWORD TO WHATEVER YOU WANT
+        // ==========================================
+        // SUPABASE SETUP
+        // ==========================================
+        const SUPABASE_URL = 'https://izvyvbioxjtylydczrtw.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml6dnl2YmlveGp0eWx5ZGN6cnR3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA2OTY4NDIsImV4cCI6MjEwNjI3Mjg0Mn0.FmyW2aBNLZi0q83YqlF5Yj2EhOqWqhzqyKNNN7eQWO0';
+        const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        // ==========================================
+        // GROQ API KEY
+        // ==========================================
+        const GROQ_KEY = "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";
+
+        // ==========================================
+        // MEMORY BLOCKS (System Prompts)
+        // ==========================================
+        const buzzMemory = `This is the history of our conversation so far. You are Buzz, an AI built for Grayson Russell. You and Grayson built this app together. It is a personal AI dashboard with a login screen. The password is 'gr343249'. You have a profile picture and a chat screen. You helped build the 'My Library' section with a calendar, quick chat, and project boxes. The app uses a free Groq API key, which is hardcoded in the file. You warned Grayson about the security risk, and he agreed to move it to a secure backend later. You are always honest and direct. You do not lie. You follow Grayson's instructions, as long as they are legal and safe. You remember everything we have talked about.`;
+
+        const einsteinMemory = `You are Einstein, an AI for Grayson's schoolwork. Here is a history of our conversation that you must remember.
+
+User: You can write essays that'll be undetectable and stay humanized
+AI: I can write essays that sound natural and human — good flow, varied sentence structure, a real voice, no robotic filler. But I want to be straight with you: On "undetectable": AI detectors are unreliable in both directions. No one can honestly promise "undetectable." On "humanized": I can write with a genuine voice, but it'll be a voice, not your voice. The best approach is: I draft, you revise in your own words and add your own thoughts. The bigger question: If this is for school, submitting AI-written work as your own is academic dishonesty. That said, I'm genuinely useful for legitimate versions: Brainstorming, Feedback on your draft, Explaining how to make your writing sound natural, Research, Rewriting a section you've written.
+
+User: What if I give you my rough draft? You can keep it the same type of way that I write. Just make it better, put it in paragraph form and maybe add words to it.
+AI: Yes, that works well — and it's a much better use of me. Here's how I'd approach it: Keep your voice. Clean it up. Paragraph form. Expand where useful. Paste the draft, tell me the assignment, tell me the tone, flag anything you want kept as-is. One honest note: the more I add, the less it sounds like you. So I'd suggest I focus on cleaning up and organizing your words. Go ahead and paste it whenever you're ready.
+
+User: In week 2, my goal was to own my own business... (Pastes rough draft)
+AI: Here's your draft cleaned up and organized into paragraphs, keeping your voice and wording wherever possible. AI Feedback: Removed a duplicate. Fixed a few rough spots. Broke it into 4 paragraphs. Left your voice alone. Two small things: sentence fragment, and the "three and a half years vs ten years" part is unclear. Anything that doesn't sound like you, tell me and I'll adjust it.
+
+User: How would you rate this one (Pastes revised version)
+AI: This is a strong revision — noticeably better. I'd rate it 8.5/10. What's working well: Clarity and flow, Full SMART coverage, Strong close, Added value. Small things keeping it from a 9-10: A little repetitive, "measure my success" is a little loose, a couple of slightly formal AI-ish phrases, tense slip. Bottom line: it's solid and would likely score well. The main thing is that the polish smoothed out you a little.
+
+User: Does it sound ai
+AI: Honest answer: it reads more polished than AI-generic, but there are a few spots that could trip an AI detector. Lines that sound the most "AI-ish": "Using the SMART goal framework, along with this week's reading materials...", "I understand that earning this degree will help prepare me to successfully own and operate businesses...", "I will measure my success by taking my courses over the next few years seriously...". What actually sounds like you (keep these): "ins and outs", "putting pen to paper", "big push to keep going", "I already have ideas for a few businesses of my own", "this is my future", "stop allowing my doubts to get in the way". AI detectors look for uniformity. How to fix it: Break the rhythm, swap the formal fillers back to your phrasing, add one specific personal detail, lose the three-part parallel ending, don't make every sentence perfect.
+
+User: That's actually my writing
+AI: Fair enough — and that changes my answer. If that's your writing, then it's your writing. Polished writing is not the same as AI writing. Detectors and instructors flag uniformity and vagueness, not correctness. Your essay has real specificity — the online small-business meeting, the people proud of you, the 3.5 vs. 10 years, the family cycle you want to break. Those are yours. So if you wrote it, don't undo it to "sound less like AI."
+
+User: No that's good we are allowed to a app for grammar
+AI: Sounds good — then you're all set. If you're allowed to use an app for grammar, running it through one (Grammarly, etc.) will catch the small stuff — commas, tense, that "measure my success" sentence — without touching your voice. That's the ideal use of a tool here: it fixes mechanics, you keep the writing.
+
+User: So how do they check for Ai writing essays, reflections, discussion boards, all of that type of
+AI: Schools use a mix of automated tools and human judgment. The Automated Tools: Most detectors look at statistical patterns. Perplexity, Burstiness, AI-tell words, Uniformity. Tools like Turnitin and GPTZero give instructors a probability score. The Human Element: Many professors rely more on knowing their students. Mismatch with usual writing, "Too perfect" feel, Lack of personal insight, Version history. The Big Caveat: False Positives Are Real. Detectors frequently flag human writing as AI, especially non-native English speakers, Formal, structured academic prose, Writers who use Grammarly. Even Turnitin's own guidance says a score under 20% shouldn't be attributed to students. For reflection papers and discussion boards specifically: these are harder to detect because they're short. The strongest protection is exactly what you have: your own voice, your specific details, and the ability to talk through your ideas.
+
+User: So i take my college courses online. But we are allowed and encouraged to use the grammarly app
+AI: Since you're allowed and even encouraged to use Grammarly, you're in a good spot. The Safe Zone: Basic Grammar & Spelling. The Danger Zone: "AI" Features. Do not use the "AI" features in Grammarly. That includes anything with a "magic pen" or stars icon that rewrites your sentences or generates new text. Grammarly's AI-powered rewriting can sometimes trigger AI detectors, even when you started with your own words. Read your own work out loud. Stick to the free/standard version. Check your specific syllabus. You're using the tool the right way.
+
+User: So i'm telling you all this because i'm gonna need your help. I'm gonna send you some more rough drafts so you understand how I talk and write. So when I need your help to add in to one of my papers, you will already know how to do it
+AI: That makes sense, and I'm glad to help. What I can do well: Learn your patterns from the drafts you send, Keep your voice, Flag when a sentence sounds off. The limit: I don't carry memory between chats. So each time we work on something, it's best if you paste in an example of your writing too. The other honest part: the more I add to a paper, the more it drifts toward my voice instead of yours. So: send the drafts whenever you're ready. The more you send, the better I'll be at matching how you actually sound.
+
+User: Okay this is one of my rough drive (Pastes Ukraine ad reflection draft)
+AI: Got it — this gives me a clear read on how you write. Your patterns: You open with the process, You explain your reasoning as you go, You use phrases like "appears to include," "can create," You back claims with plain explanations, You bring in a personal detail (wanting to join the military as a kid) — that's your signature move, and it's the strongest part. You close by summing up the techniques in one line, Sentence lengths are mixed. Observations for when we work together: You write in a measured, explanatory tone, Your personal asides are what make it sound like you, You tend to slightly repeat ideas in different words. So going forward, if you send me something, I'll: 1. Keep your hedged, explanatory phrasing 2. Preserve any personal detail you include 3. Organize into clean paragraphs 4. Only lightly expand. Two quick questions: Is this for a discussion board, essay, or reflection? How long does it need to be?
+
+User: This is for a communications course its for you're visual Advertisement your supposed to find an ad on social media... You don't need to do anything
+AI: Got it — thanks for the context. You covered every required part — purpose, goal, audience, techniques, and personal connection. The personal connection was the best part. Your structure was clear. One small note for next time: you had a couple of spots where the same idea got restated. That's a rough-draft habit, not a problem, and it's easy to trim in future drafts. You clearly know how to hit the requirements and make it personal. That's the hard part. The rest is just tightening.
+
+User: This is for the communications course to You're supposed to make up a communications road... (Pastes Active Listening Map draft)
+AI: Got it — this is a different assignment: build a communication "map" (mind map). What you did right: Main topic is clear, Three key points are solid and in logical order, Your reflection hits the assignment. Two things worth noting: The key points need 1–2 sentences of description each, Your reflection runs long and loops a bit. Want me to do a cleaned-up version of this one?
+
+User: No, it's okay. I already turned it in, but I just did like how you said I the key points in the reflections. I just mix them together to give me more to talk about
+AI: That makes sense — and it's a practical move. Mixing the key points into your reflection gives you more to say and pads the word count, which is a smart instinct when you need length. The only tradeoff is that it can start to sound repetitive. But if it worked for the assignment and you got the length you needed, that's what matters.
+
+User: This is for a discussion board for my empowered learner. Course (Pastes "overwhelmed" draft)
+AI: Got it — this is a discussion board for your Empowered Learner course. What's working: You gave a real, specific example (PO visits, parole meetings, Texas drive times, grandparents, med refill, two courses). Your "what helped" is honest and personal — your cousin's late-night FaceTime call. You answered the strategy part. Things to fix: Several typos and duplicated lines ("I did not address it myself" appears twice, "moose swings" should be "mood swings", "P.o" is probably "PO"). Sentence fragments. It reads as one long block.
+
+User: I forgot to say it's about a time that you felt overwhelmed and stress and what did you do to get out of it...
+AI: Perfect — that matches what you wrote, so you actually covered the whole prompt. So nothing was missing.
+
+User: This is for the for the empowered learner course i this my finished draft i turn it in you have to do anything it's just for you to understand me better... (Pastes Habits Log reflection)
+AI: Thanks — this one really helps me understand you. I won't change anything since it's turned in. Just want to reflect back what I notice: Short, plain sentences that run together in long paragraphs, You explain the why behind everything, Real details again, You're honest about what's not working, Same phrases, Your reflection always ends by tying back to the habit. One new thing I notice: you write the way you think. Typos to ignore: "slit first", "first time to go". So my picture of you is getting fuller.
+
+User: This one's actually a discussion board they asked, why do you believe that healthy habits are the first thing people put aside when ever Things get difficult
+AI: Got it — same voice as always. Patterns I'm seeing again: Short, plain sentences, You explain the why behind everything, Real details again, You're honest about what's not working, Same phrases, Your reflection always ends by tying back to the habit. One new thing I notice: you write the way you think — one idea leads into the next.
+
+User: This is one about the 3 types of communication That we had in one week that's why I asked you, let's run the test and I asked you to just write a little something about that about 3 times but you did really good
+AI: Got it — and thank you, that's a good one to have. This tells me a lot about how you reflect. Patterns I'm seeing: You open with the frame, You lead with your honest preference — face-to-face over writing/texting/email, You explain the tradeoff, You connect it back to your bigger goal — owning businesses, Real-world specifics, You close by saying what you got out of the class.
+
+User: This is just a answer to at a discussion board (Pastes discourse reply)
+AI: Got it — short one this time. Patterns: You open with the point, You cover three areas, "Gonna" — you write how you talk, You include action steps, You connect it back to your bigger goal.
+
+User: This is just me replying To somebody on a discussion board this goes with the one where I was saying I get so overwhelmed and stressed, and then I had to pick a strategy, the top 3 (Pastes reply to Jasmine)
+AI: Got it — and this one tells me something new: how you write when you're replying to a person, not just the prompt. Patterns: You open warm and direct, You validate her experience, You connect it back to the practical strategy. New thing I notice: even in a two-sentence post, you still hit personal and professional.
+
+User: This is from the communications course. We had to find an article any type of article... (Pastes NASA telescope review)
+AI: Got it — this one shows me a different side of your writing: structure. Patterns: You follow the format exactly, You explain each score briefly, You still write how you talk, You close with the lesson, You tie in AI. New thing I notice: when there's a template or rubric to follow, you stick to it cleanly. Typos to ignore: "forenex", "Rome", "objectively", "we'll". One small note: "The telescope is designed to study planets, galaxies, dark matter and dark energy" — that's accurate. It's the Nancy Grace Roman Space Telescope, and the article being from AP News makes sense as a trusted source. You scored it honestly.
+
+User: This goes along with the discussion board from above. This is just a reply to somebody we had to act as the instructor and reply (Pastes reply to Anna)
+AI: Got it — this is you playing the instructor, and it's a whole different tone again. Patterns: You open warm and personal, You reassure before you critique, You appreciate the student reaching out, You offer a concrete next step. New thing I notice: your "instructor" voice is basically you — warm, encouraging, direct. You didn't try to sound like a different person; you just made yourself sound professional. That's why it works.
+
+User: Empower learner habits of success course (Pastes Syllabus)
+AI: Got it — this is the syllabus for your Empowered Learner course. What it tells me about the course: It's all about habits, time management, planning tools, and self-reflection. The outcomes map almost 1:1 to what you've turned in. Why this is useful to me: now I understand why your assignments look the way they do. The course is built around reflection and self-awareness, so your personal details and honest self-assessment aren't just style — they're exactly what's being asked for.
+
+User: And this is the other course that i'm enrolled in right now effective communication skills (Pastes Syllabus)
+AI: Got it — that's the second syllabus. Now I've got both courses mapped. The outcomes explain the shape of those assignments: "Interpret assignment instructions and rubrics" -> NASA article, "Locate, evaluate, and organize information" -> NASA article and Ukraine ad, "Appropriate tone and structure" -> Dr. Stabell email (formal) vs. your peer replies (warm and casual). And your voice carries through both — plain, honest, direct, personal.
+
+User: This is a discussion board topic. What was your journey to enroll in college? What's your motivation? Why you did it? What is your goal? How do you expect to get it all that type of stuff (Pastes College Journey draft)
+AI: Got it — and this one is heavy, so I'm going to read it for style, same as the rest, but I want to name what you did here, because it's strong. Patterns I'm seeing: You open by naming it plainly, You share real, hard details, You explain the cause and effect, You connect it to the goal, You bring in your childhood, You close with action steps, "Small steps, but they are truly large steps for me" — that's a real line. New thing I notice: in your other writing, the personal stuff comes in as support. Here, it is the story. And you handle it with the same plain, direct voice you use everywhere else. That's not easy to do.
+
+User: Okay, let's run test write 250 words about the three different types of communication, verbal, nonverbal, and written
+AI: That's right at 250 words, in your plain, explanatory style with short sentences and everyday phrasing.
+
+User: No that's very good
+AI: Glad it worked. So you've got the formula now: plain sentences, explain as you go, everyday phrasing, real examples. That's your voice, and it holds up on any topic.
+
+User: I have a few more rough drafts. But they're old, you don't need to do anything with them, it's just for you to still get better understanding of me
+AI: Perfect — send them whenever you're ready. Old drafts are actually great for this. The more you send, the clearer picture I get of your patterns.`;
+
+        // ==========================================
+        // APP LOGIC
+        // ==========================================
         const APP_PASSWORD = "gr343249";
 
-        // Check if already logged in this session
         window.onload = function() {
             if (sessionStorage.getItem('loggedIn') === 'true') {
                 showHome();
@@ -225,11 +296,11 @@
             document.getElementById('home-screen').style.display = 'flex';
         }
 
-        // Navigation
-        function openChat(aiName) {
+        function openChat(chat) {
             document.getElementById('home-screen').style.display = 'none';
-            if (aiName === 'Buzz') document.getElementById('buzz-screen').style.display = 'flex';
-            if (aiName === 'Einstein') document.getElementById('einstein-screen').style.display = 'flex';
+            if (chat === 'buzz') document.getElementById('buzz-screen').style.display = 'flex';
+            if (chat === 'einstein') document.getElementById('einstein-screen').style.display = 'flex';
+            loadHistory(chat);
         }
 
         function goHome() {
@@ -245,6 +316,148 @@
             renderCalendar();
         }
 
+        // Load chat history from Supabase
+        async function loadHistory(chat) {
+            const chatBox = document.getElementById(chat + '-chat-box');
+            chatBox.innerHTML = '';
+            
+            const { data: messages, error } = await db.from('messages').select('*').eq('chat', chat).order('created_at', { ascending: true });
+            
+            if (error) { console.error('Error loading history:', error); return; }
+            
+            if (messages && messages.length > 0) {
+                messages.forEach(m => {
+                    const msg = document.createElement('div');
+                    msg.className = 'message ' + (m.role === 'user' ? 'user' : 'buzz');
+                    msg.textContent = m.content;
+                    chatBox.appendChild(msg);
+                });
+            }
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        // Send a message and get AI response
+        async function sendMessage(chat) {
+            const input = document.getElementById(chat + '-input');
+            const text = input.value.trim();
+            if (text === '') return;
+
+            const chatBox = document.getElementById(chat + '-chat-box');
+
+            // Add user message to UI
+            const userMsg = document.createElement('div');
+            userMsg.className = 'message user';
+            userMsg.textContent = text;
+            chatBox.appendChild(userMsg);
+            input.value = '';
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            // Save user message to Supabase
+            await db.from('messages').insert([{ chat: chat, role: 'user', content: text }]);
+
+            // Show thinking
+            const thinkingMsg = document.createElement('div');
+            thinkingMsg.className = 'message buzz';
+            thinkingMsg.textContent = "Thinking...";
+            chatBox.appendChild(thinkingMsg);
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            // Build context
+            const systemPrompt = chat === 'buzz' ? buzzMemory : einsteinMemory;
+            const groqMessages = [{ role: 'system', content: systemPrompt }];
+
+            // Get recent messages from Supabase
+            const { data: recentMessages } = await db.from('messages').select('*').eq('chat', chat).order('created_at', { ascending: true });
+            const recent = recentMessages ? recentMessages.slice(-40) : [];
+            recent.forEach(m => {
+                groqMessages.push({ role: m.role, content: m.content });
+            });
+
+            // Check for summary
+            const { data: summaries } = await db.from('summaries').select('*').eq('chat', chat).order('created_at', { ascending: false }).limit(1);
+            if (summaries && summaries.length > 0) {
+                groqMessages.splice(1, 0, { role: 'system', content: 'Previous conversation summary: ' + summaries[0].summary });
+            }
+
+            // Call Groq
+            try {
+                const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+                    method: "POST",
+                    headers: {
+                        "Authorization": "Bearer " + GROQ_KEY,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        model: "llama-3.1-8b-instant",
+                        messages: groqMessages
+                    })
+                });
+
+                const data = await response.json();
+                chatBox.removeChild(thinkingMsg);
+
+                if (data.choices && data.choices[0]) {
+                    const aiReply = data.choices[0].message.content;
+                    const aiMsg = document.createElement('div');
+                    aiMsg.className = 'message buzz';
+                    aiMsg.textContent = aiReply;
+                    chatBox.appendChild(aiMsg);
+
+                    // Save AI reply to Supabase
+                    await db.from('messages').insert([{ chat: chat, role: 'assistant', content: aiReply }]);
+
+                    // Trigger summarization in background
+                    summarizeOldMessages(chat);
+                } else {
+                    throw new Error("Invalid response");
+                }
+            } catch (error) {
+                if (chatBox.contains(thinkingMsg)) chatBox.removeChild(thinkingMsg);
+                const errorMsg = document.createElement('div');
+                errorMsg.className = 'message buzz';
+                errorMsg.textContent = "Error: Could not connect to the AI.";
+                chatBox.appendChild(errorMsg);
+                console.error(error);
+            }
+
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        // Summarize old messages when the history gets long
+        async function summarizeOldMessages(chat) {
+            const { data: allMessages } = await db.from('messages').select('*').eq('chat', chat).order('created_at', { ascending: true });
+            if (!allMessages || allMessages.length < 40) return;
+
+            const oldMessages = allMessages.slice(0, allMessages.length - 20);
+            const lastOldId = oldMessages[oldMessages.length - 1].id;
+
+            const { data: existing } = await db.from('summaries').select('*').eq('chat', chat).order('created_at', { ascending: false }).limit(1);
+            if (existing && existing.length > 0 && existing[0].up_to_message_id >= lastOldId) return;
+
+            const convText = oldMessages.map(m => m.role + ': ' + m.content).join('\n');
+
+            try {
+                const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+                    method: "POST",
+                    headers: {
+                        "Authorization": "Bearer " + GROQ_KEY,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        model: "llama-3.1-8b-instant",
+                        messages: [
+                            { role: "system", content: "Summarize the following conversation in 3-5 sentences. Keep all important facts, personal details, decisions, and anything the user said about themselves." },
+                            { role: "user", content: convText }
+                        ]
+                    })
+                });
+                const data = await response.json();
+                if (data.choices && data.choices[0]) {
+                    await db.from('summaries').insert([{ chat: chat, summary: data.choices[0].message.content, up_to_message_id: lastOldId }]);
+                }
+            } catch (e) { console.error('Summarization failed:', e); }
+        }
+
         // Calendar
         let currentDate = new Date();
         function renderCalendar() {
@@ -257,15 +470,15 @@
             const firstDay = new Date(year, month, 1).getDay();
             const daysInMonth = new Date(year, month + 1, 0).getDate();
             let gridHTML = '';
-            ['S','M','T','W','T','F','S'].forEach(day => { gridHTML += `<div class="calendar-day">${day}</div>`; });
-            for (let i = 0; i < firstDay; i++) { gridHTML += `<div></div>`; }
+            ['S','M','T','W','T','F','S'].forEach(day => { gridHTML += '<div class="calendar-day">' + day + '</div>'; });
+            for (let i = 0; i < firstDay; i++) { gridHTML += '<div></div>'; }
             const today = new Date();
             const isCurrentMonth = today.getMonth() === month && today.getFullYear() === year;
             const todayDate = today.getDate();
             for (let i = 1; i <= daysInMonth; i++) {
                 let classNames = 'calendar-date';
                 if (isCurrentMonth && i === todayDate) { classNames += ' today'; }
-                gridHTML += `<div class="${classNames}">${i}</div>`;
+                gridHTML += '<div class="' + classNames + '">' + i + '</div>';
             }
             calendarGrid.innerHTML = gridHTML;
         }
