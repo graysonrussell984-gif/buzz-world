@@ -163,16 +163,11 @@
 
     <script>
         // ==========================================
-        // SUPABASE SETUP
+        // SUPABASE SETUP (Safe to be here)
         // ==========================================
         const SUPABASE_URL = 'https://izvyvbioxjtylydczrtw.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml6dnl2YmlveGp0eWx5ZGN6cnR3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA2OTY4NDIsImV4cCI6MjEwNjI3Mjg0Mn0.FmyW2aBNLZi0q83YqlF5Yj2EhOqWqhzqyKNNN7eQWO0';
         const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-        // ==========================================
-        // GROQ API KEY
-        // ==========================================
-        const GROQ_KEY = "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";
 
         // ==========================================
         // MEMORY BLOCKS (System Prompts)
@@ -379,17 +374,15 @@ AI: Perfect — send them whenever you're ready. Old drafts are actually great f
                 groqMessages.splice(1, 0, { role: 'system', content: 'Previous conversation summary: ' + summaries[0].summary });
             }
 
-            // Call Groq
+            // Call Middleman (Cloudflare Function)
             try {
-                const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+                const response = await fetch("/chat", {
                     method: "POST",
                     headers: {
-                        "Authorization": "Bearer " + GROQ_KEY,
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
-                        model: "llama-3.1-8b-instant",
-                        messages: groqMessages
+                        "messages": groqMessages
                     })
                 });
 
@@ -437,15 +430,13 @@ AI: Perfect — send them whenever you're ready. Old drafts are actually great f
             const convText = oldMessages.map(m => m.role + ': ' + m.content).join('\n');
 
             try {
-                const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+                const response = await fetch("/chat", {
                     method: "POST",
                     headers: {
-                        "Authorization": "Bearer " + GROQ_KEY,
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
-                        model: "llama-3.1-8b-instant",
-                        messages: [
+                        "messages": [
                             { role: "system", content: "Summarize the following conversation in 3-5 sentences. Keep all important facts, personal details, decisions, and anything the user said about themselves." },
                             { role: "user", content: convText }
                         ]
