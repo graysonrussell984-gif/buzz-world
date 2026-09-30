@@ -82,7 +82,7 @@
             padding: 20px; display: flex; flex-direction: column; gap: 15px; overflow-y: auto; 
         }
 
-        /* Top Navigation inside Nav Room - CHANGED TO TEXT */
+        /* Top Navigation inside Nav Room */
         .nav-room-top { 
             display: flex; justify-content: center; align-items: center; 
             padding: 15px 20px; border-radius: 30px; 
@@ -108,7 +108,7 @@
         /* Left Column: Profile & Reminders */
         .nav-col-left { display: flex; flex-direction: column; align-items: center; padding: 20px; border: 1px solid rgba(217, 70, 239, 0.4); border-radius: 40px; box-shadow: inset 0 0 20px rgba(217, 70, 239, 0.1); height: 100%; }
         
-        /* CHANGED TO IMAGE */
+        /* PROFILE PICTURE UPDATED HERE */
         .avatar-circle { 
             width: 80px; height: 80px; border-radius: 50%; 
             background: rgba(255,255,255,0.1); border: 2px solid #d946ef; 
@@ -255,7 +255,6 @@
 
         <div style="display: flex; flex-direction: column; width: 100%; height: 100%; z-index: 1; position: relative;">
             
-            <!-- TOP BAR CHANGED TO TEXT -->
             <div class="nav-room-top glass-panel">
                 <h1>Let's get to the bag</h1>
             </div>
@@ -265,8 +264,8 @@
                 <!-- LEFT: PROFILE & REMINDERS -->
                 <div class="nav-col-left glass-panel">
                     <div class="avatar-circle">
-                        <!-- CHANGED TO IMAGE. Replace this URL with your own photo! -->
-                        <img src="https://i.postimg.cc/gnFwmW8W/buzz-profile-jpg.jpg" alt="Grayson">
+                        <!-- PROFILE PICTURE UPDATED HERE -->
+                        <img src="https://i.postimg.cc/xTWNKK7X/home-bg-jpg.jpg" alt="Grayson">
                     </div>
                     <div class="profile-name">
                         <div>Grayson's Profile</div>
@@ -370,16 +369,14 @@
         function renderReminders() {
             const tasks = JSON.parse(localStorage.getItem('user_tasks')) || {};
             const today = new Date();
-            today.setHours(0,0,0,0); // Start of today
+            today.setHours(0,0,0,0); 
 
             let upcoming = [];
 
-            // Loop through all saved tasks
             Object.keys(tasks).forEach(dateKey => {
                 const taskDate = new Date(dateKey);
                 taskDate.setHours(0,0,0,0);
 
-                // If the task date is today or in the future
                 if (taskDate >= today) {
                     tasks[dateKey].forEach(taskText => {
                         upcoming.push({ date: taskDate, text: taskText });
@@ -387,7 +384,6 @@
                 }
             });
 
-            // Sort by date (soonest first)
             upcoming.sort((a, b) => a.date - b.date);
 
             const list = document.getElementById('upcoming-reminders');
@@ -397,7 +393,6 @@
                 return;
             }
 
-            // Limit to 10 reminders so it doesn't overflow
             const limited = upcoming.slice(0, 10);
             let html = '';
             limited.forEach(item => {
