@@ -28,6 +28,49 @@
 
         .hidden { display: none !important; }
 
+        /* --- SIDEBAR STYLES --- */
+        #sidebar-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: rgba(0,0,0,0.6);
+            z-index: 999;
+        }
+
+        #sidebar {
+            position: fixed; top: 0; left: 0; width: 280px; height: 100vh;
+            background-image: url('https://i.postimg.cc/76npSNQf/HD-wallpaper-albert-einstein-funny-inteligent-science-space.jpg');
+            background-size: cover; background-position: center;
+            z-index: 1000;
+            transition: transform 0.3s ease-in-out;
+            box-shadow: 5px 0 15px rgba(0,0,0,0.5);
+            display: flex; flex-direction: column; padding: 20px;
+            background-color: rgba(11, 7, 26, 0.75); /* Dark overlay */
+            background-blend-mode: overlay;
+        }
+        
+        #sidebar.sidebar-closed { transform: translateX(-100%); }
+        #sidebar.sidebar-open { transform: translateX(0); }
+
+        .sidebar-content h2 {
+            font-family: 'Orbitron', sans-serif; color: #06b6d4; text-align: center;
+            margin-bottom: 30px; text-shadow: 0 0 10px #06b6d4;
+            font-size: 20px;
+        }
+        
+        .sidebar-content a {
+            display: block; color: #fff; text-decoration: none;
+            font-family: 'Orbitron', sans-serif; font-size: 14px;
+            padding: 15px; border-radius: 10px; margin-bottom: 10px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(217, 70, 239, 0.4);
+            transition: all 0.3s ease; cursor: pointer;
+            text-align: center;
+        }
+        
+        .sidebar-content a:hover {
+            background: rgba(217, 70, 239, 0.3);
+            box-shadow: 0 0 15px rgba(217, 70, 239, 0.6);
+        }
+
         /* THE HOMEPAGE BACKGROUND LAYER */
         .bg-image {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -69,7 +112,8 @@
         #homepage nav:hover { box-shadow: 0 0 20px rgba(217, 70, 239, 0.6); border-color: rgba(217, 70, 239, 0.8); }
         #homepage main { display: grid; grid-template-columns: 1fr 2fr 1fr; gap: 15px; width: 100%; flex: 1; }
         
-        .content-box { width: 100%; min-height: 250px; display: flex; flex-direction: column; padding: 20px; }
+        .content-box { width: 100%; min-height: 250px; display: flex; flex-direction: column; padding: 20px; cursor: pointer; transition: all 0.3s ease; }
+        .content-box:hover { box-shadow: 0 0 20px rgba(217, 70, 239, 0.6); border-color: rgba(217, 70, 239, 0.8); }
         .profile-img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid rgba(217, 70, 239, 0.8); margin-bottom: 20px; box-shadow: 0 0 20px rgba(217, 70, 239, 0.4); }
         #homepage footer { height: 60px; width: 100%; }
 
@@ -79,85 +123,30 @@
             background-image: url('https://i.postimg.cc/Dy6xxLm9/Screenshot-20260930-133327-Google.jpg');
             background-size: cover; background-position: center; background-repeat: no-repeat;
             z-index: 100; background-color: rgba(11, 7, 26, 0.6); background-blend-mode: overlay;
-            padding: 20px;
-            display: flex; flex-direction: column; gap: 15px;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
+            padding: 20px; display: flex; flex-direction: column; gap: 15px;
+            overflow-y: auto; -webkit-overflow-scrolling: touch;
         }
 
-        /* Top Navigation inside Nav Room */
-        .nav-room-top { 
-            display: flex; justify-content: center; align-items: center; 
-            padding: 15px 20px; border-radius: 30px; 
-            border: 1px solid rgba(217, 70, 239, 0.5); 
-            box-shadow: 0 0 15px rgba(217, 70, 239, 0.3); 
-            flex-shrink: 0;
-        }
+        .nav-room-top { display: flex; justify-content: center; align-items: center; padding: 15px 20px; border-radius: 30px; border: 1px solid rgba(217, 70, 239, 0.5); box-shadow: 0 0 15px rgba(217, 70, 239, 0.3); flex-shrink: 0; }
+        .nav-room-top h1 { font-family: 'Orbitron', sans-serif; font-size: 20px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; background: linear-gradient(90deg, #06b6d4 0%, #d946ef 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; filter: drop-shadow(0 0 10px rgba(217, 70, 239, 0.6)); text-align: center; }
 
-        .nav-room-top h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 20px;
-            font-weight: 900;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            background: linear-gradient(90deg, #06b6d4 0%, #d946ef 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            background-clip: text;
-            filter: drop-shadow(0 0 10px rgba(217, 70, 239, 0.6));
-            text-align: center;
-        }
+        .nav-room-grid { display: grid; grid-template-columns: 1fr 2fr 1.2fr; gap: 15px; width: 100%; flex: 1; min-height: 0; }
 
-        /* GRID: Fills screen on desktop, stacks on mobile */
-        .nav-room-grid { 
-            display: grid; 
-            grid-template-columns: 1fr 2fr 1.2fr; 
-            gap: 15px; 
-            width: 100%; 
-            flex: 1;
-            min-height: 0; /* IMPORTANT: lets internal scrolls work */
-        }
-
-        /* Left Column: Profile & Reminders */
         .nav-col-left { display: flex; flex-direction: column; align-items: center; padding: 20px; border: 1px solid rgba(217, 70, 239, 0.4); border-radius: 40px; box-shadow: inset 0 0 20px rgba(217, 70, 239, 0.1); height: 100%; min-height: 0; }
-        
-        .avatar-circle { 
-            width: 80px; height: 80px; border-radius: 50%; 
-            background: rgba(255,255,255,0.1); border: 2px solid #d946ef; 
-            display: flex; justify-content: center; align-items: center; 
-            margin-bottom: 15px; box-shadow: 0 0 20px rgba(217, 70, 239, 0.5);
-            overflow: hidden; flex-shrink: 0;
-        }
+        .avatar-circle { width: 80px; height: 80px; border-radius: 50%; background: rgba(255,255,255,0.1); border: 2px solid #d946ef; display: flex; justify-content: center; align-items: center; margin-bottom: 15px; box-shadow: 0 0 20px rgba(217, 70, 239, 0.5); overflow: hidden; flex-shrink: 0; }
         .avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
-        
-        .profile-name { 
-            font-family: 'Orbitron', sans-serif; 
-            text-align: center; 
-            margin-bottom: 15px;
-            font-size: 14px;
-            font-weight: 900;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            background: linear-gradient(90deg, #06b6d4 0%, #d946ef 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            background-clip: text;
-            filter: drop-shadow(0 0 8px rgba(217, 70, 239, 0.5));
-            flex-shrink: 0;
-        }
-        
+        .profile-name { font-family: 'Orbitron', sans-serif; text-align: center; margin-bottom: 15px; font-size: 14px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; background: linear-gradient(90deg, #06b6d4 0%, #d946ef 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; filter: drop-shadow(0 0 8px rgba(217, 70, 239, 0.5)); flex-shrink: 0; }
         .stat-row { display: flex; gap: 10px; margin-bottom: 20px; flex-shrink: 0; }
         .stat-box { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; padding: 8px 12px; text-align: center; font-size: 12px; min-width: 60px; }
         
-        /* Upcoming Reminders Section */
         .reminders-section { width: 100%; flex: 1; display: flex; flex-direction: column; overflow: hidden; min-height: 0; }
         .reminders-title { font-family: 'Orbitron', sans-serif; font-size: 12px; color: #06b6d4; margin-bottom: 10px; text-align: center; width: 100%; border-bottom: 1px solid rgba(6, 182, 212, 0.3); padding-bottom: 5px; flex-shrink: 0; }
         .reminders-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; width: 100%; padding-right: 5px; }
         .reminders-list::-webkit-scrollbar { width: 4px; }
         .reminders-list::-webkit-scrollbar-thumb { background: rgba(6, 182, 212, 0.5); border-radius: 10px; }
-        
         .reminder-item { background: rgba(255,255,255,0.05); border-left: 3px solid #d946ef; border-radius: 5px; padding: 8px 10px; font-size: 11px; word-break: break-word; }
         .reminder-date { color: #06b6d4; font-weight: bold; margin-bottom: 3px; }
         
-        /* Center Column: Projects & Gallery Split */
         .nav-col-center { display: flex; flex-direction: column; padding: 20px; border: 1px solid rgba(217, 70, 239, 0.4); border-radius: 40px; box-shadow: inset 0 0 20px rgba(217, 70, 239, 0.1); height: 100%; min-height: 0; }
         .center-split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; height: 100%; min-height: 0; }
         .sub-panel { display: flex; flex-direction: column; height: 100%; background: rgba(255,255,255,0.03); border-radius: 20px; border: 1px solid rgba(255,255,255,0.15); padding: 15px; overflow: hidden; min-height: 0; }
@@ -165,21 +154,17 @@
         .add-item-area { display: flex; gap: 5px; margin-bottom: 10px; flex-shrink: 0; }
         .add-item-area input { flex: 1; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; padding: 8px 12px; color: white; font-size: 12px; outline: none; }
         .add-item-area button { background: #d946ef; border: none; border-radius: 10px; color: white; padding: 0 12px; cursor: pointer; font-weight: bold; }
-        
         .scroll-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding-right: 5px; min-height: 0; }
         .scroll-list::-webkit-scrollbar { width: 6px; }
         .scroll-list::-webkit-scrollbar-thumb { background: rgba(217, 70, 239, 0.5); border-radius: 10px; }
-        
         .project-item { background: rgba(255,255,255,0.05); border-left: 3px solid #d946ef; border-radius: 8px; padding: 10px 12px; font-size: 12px; display: flex; justify-content: space-between; align-items: center; word-break: break-word; }
         .project-item button { background: transparent; border: none; color: #ff4d4d; cursor: pointer; font-size: 14px; margin-left: 10px; }
         
-        /* Gallery Styles */
         .gallery-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-content: start; }
         .gallery-item { position: relative; width: 100%; height: 100px; border-radius: 10px; overflow: hidden; border: 1px solid rgba(255,255,255,0.2); }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
         .gallery-item button { position: absolute; top: 5px; right: 5px; background: rgba(0,0,0,0.6); border: none; color: #ff4d4d; border-radius: 50%; width: 20px; height: 20px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 12px; }
 
-        /* Right Column: Calendar & Tasks */
         .nav-col-right { display: flex; flex-direction: column; gap: 10px; padding: 20px; border: 1px solid rgba(217, 70, 239, 0.4); border-radius: 40px; box-shadow: inset 0 0 20px rgba(217, 70, 239, 0.1); height: 100%; min-height: 0; }
         .calendar-header { display: flex; justify-content: space-between; align-items: center; font-family: 'Orbitron', sans-serif; font-size: 14px; margin-bottom: 10px; color: #06b6d4; width: 100%; flex-shrink: 0; }
         .calendar-header button { background: transparent; border: none; color: #d946ef; cursor: pointer; font-size: 16px; }
@@ -191,49 +176,118 @@
         .calendar-date.selected { background: #d946ef; color: #fff; font-weight: bold; box-shadow: 0 0 10px rgba(217, 70, 239, 0.8); }
         .calendar-date.empty { cursor: default; }
         .calendar-date.empty:hover { background: transparent; }
-
         .task-input-area { display: flex; gap: 5px; margin-bottom: 10px; width: 100%; flex-shrink: 0; }
         .task-input-area input { flex: 1; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; padding: 8px 12px; color: white; font-size: 12px; outline: none; }
         .task-input-area button { background: #d946ef; border: none; border-radius: 10px; color: white; padding: 0 12px; cursor: pointer; font-weight: bold; }
-        
         .task-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 5px; font-size: 12px; width: 100%; min-height: 0; }
         .task-list::-webkit-scrollbar { width: 6px; }
         .task-list::-webkit-scrollbar-thumb { background: rgba(6, 182, 212, 0.5); border-radius: 10px; }
-        
         .task-item { background: rgba(255,255,255,0.05); border-left: 3px solid #06b6d4; border-radius: 5px; padding: 8px 10px; display: flex; justify-content: space-between; align-items: center; }
         .task-item button { background: transparent; border: none; color: #ff4d4d; cursor: pointer; font-size: 14px; }
 
-        /* Back button styling */
-        .back-home-btn {
-            margin-top: 15px;
-            margin-bottom: 20px;
-            padding: 15px 30px;
-            cursor: pointer;
-            color: white;
-            font-family: 'Orbitron', sans-serif;
-            background: transparent;
-            flex-shrink: 0;
+        .back-home-btn { margin-top: 15px; margin-bottom: 20px; padding: 15px 30px; cursor: pointer; color: white; font-family: 'Orbitron', sans-serif; background: transparent; flex-shrink: 0; }
+
+        /* --- EINSTEIN ROOM LAYOUT --- */
+        #einstein-room {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background-image: url('https://i.postimg.cc/639v8tSX/chakbnoard-jpg.jpg');
+            background-size: cover; background-position: center; background-repeat: no-repeat;
+            z-index: 100;
+            display: flex; flex-direction: column;
         }
+
+        .einstein-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 15px 20px;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(5px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .einstein-header h2 {
+            font-family: 'Orbitron', sans-serif; font-size: 18px; color: #fff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+        }
+
+        .einstein-header button {
+            background: transparent; border: none; color: #fff; font-size: 16px; cursor: pointer;
+            font-family: 'Orbitron', sans-serif; text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+            padding: 5px 10px; border-radius: 5px;
+        }
+        .einstein-header button:hover { background: rgba(255,255,255,0.1); }
+
+        .einstein-chat-area {
+            flex: 1; overflow-y: auto; padding: 20px;
+            display: flex; flex-direction: column; gap: 15px;
+        }
+
+        .einstein-msg {
+            max-width: 80%; padding: 12px 16px; border-radius: 15px;
+            line-height: 1.5; font-family: 'Courier New', Courier, monospace;
+            font-size: 15px; text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+        }
+        .einstein-msg.ai { background-color: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.3); color: #fff; align-self: flex-start; }
+        .einstein-msg.user { background-color: rgba(74, 144, 226, 0.7); color: #fff; align-self: flex-end; }
+
+        /* --- CUSTOM CHATBOX --- */
+        .custom-chatbox {
+            background: #ffffff; border-radius: 25px; padding: 15px 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            display: flex; flex-direction: column; width: 100%; max-width: 800px;
+            margin: 0 auto 20px auto; position: relative;
+        }
+
+        .custom-input-row { display: flex; align-items: center; margin-bottom: 15px; }
+        .custom-input-row input {
+            flex: 1; border: none; outline: none; font-size: 16px; color: #333;
+            background: transparent; font-family: Arial, sans-serif;
+        }
+        .custom-input-row input::placeholder { color: #aaa; }
+
+        .custom-icons-row { display: flex; justify-content: space-between; align-items: center; }
+
+        .icon-btn-left {
+            background: transparent; border: none; cursor: pointer;
+            font-size: 24px; color: #555; font-weight: 300;
+            display: flex; align-items: center; justify-content: center;
+            width: 40px; height: 40px;
+        }
+
+        .icon-btn-right { display: flex; align-items: center; gap: 15px; }
+        .mic-icon { color: #555; font-size: 20px; cursor: pointer; }
+
+        .send-btn-circle {
+            width: 40px; height: 40px; border-radius: 50%;
+            background: #4a5568; color: white; border: none; cursor: pointer;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 20px; font-weight: bold;
+        }
+        .send-btn-circle:hover { background: #2d3748; }
+
+        /* --- ATTACHMENT MENU --- */
+        .attachment-menu {
+            position: absolute; bottom: 80px; left: 20px;
+            background: #2d3748; border-radius: 15px; padding: 10px;
+            display: flex; flex-direction: column; gap: 5px;
+            z-index: 200; box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            border: 1px solid #4a5568;
+        }
+
+        .attachment-menu button {
+            background: transparent; color: #fff; border: none;
+            font-size: 14px; display: flex; align-items: center; gap: 10px;
+            padding: 12px 20px; border-radius: 10px; cursor: pointer;
+            font-family: 'Orbitron', sans-serif; font-weight: 500; text-align: left;
+        }
+        .attachment-menu button:hover { background: rgba(255,255,255,0.1); }
 
         /* --- MOBILE RESPONSIVE FIXES --- */
         @media (max-width: 1024px) {
-            /* Stack the layout so the whole room can scroll */
-            .nav-room-grid { 
-                grid-template-columns: 1fr; 
-                flex: none;
-            }
+            .nav-room-grid { grid-template-columns: 1fr; flex: none; }
             .center-split-grid { grid-template-columns: 1fr; }
             .nav-room-top { padding: 10px; }
             .nav-room-top h1 { font-size: 16px; letter-spacing: 1px; }
-            
-            /* Each column becomes a fixed-height box */
-            .nav-col-left, .nav-col-center, .nav-col-right { 
-                padding: 15px; 
-                height: 400px;
-                min-height: 0;
-            }
-            
-            /* Mobile Profile adjustments */
+            .nav-col-left, .nav-col-center, .nav-col-right { padding: 15px; height: 400px; min-height: 0; }
             .nav-col-left { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 15px; }
             .avatar-circle { width: 60px; height: 60px; margin-bottom: 0; }
             .profile-name { margin-bottom: 0; width: 100%; text-align: center; }
@@ -245,17 +299,37 @@
             #homepage main { grid-template-columns: 1fr; }
             #homepage .content-box { min-height: 200px; }
             #homepage header h1 { font-size: 16px; letter-spacing: 1px; }
-            
             .nav-room-top h1 { font-size: 14px; letter-spacing: 1px; }
             .section-title { font-size: 12px; }
             .add-item-area input { padding: 6px 10px; font-size: 11px; }
             .add-item-area button { padding: 0 10px; }
             .calendar-date { padding: 4px 0; font-size: 11px; }
             .project-item, .reminder-item, .task-item { font-size: 11px; padding: 6px 8px; }
+            
+            .custom-chatbox { margin: 0 15px 15px 15px; width: auto; border-radius: 20px; padding: 12px 15px; }
+            .custom-input-row input { font-size: 14px; }
+            .icon-btn-left { font-size: 20px; width: 30px; height: 30px; }
+            .mic-icon { font-size: 18px; }
+            .send-btn-circle { width: 35px; height: 35px; font-size: 18px; }
+            .attachment-menu { left: 15px; bottom: 75px; }
         }
     </style>
 </head>
 <body>
+
+    <!-- SIDEBAR OVERLAY (Closes sidebar when clicked) -->
+    <div id="sidebar-overlay" class="hidden" onclick="toggleSidebar()"></div>
+
+    <!-- SLIDE-OUT SIDEBAR -->
+    <div id="sidebar" class="sidebar-closed">
+        <div class="sidebar-content">
+            <h2>Einstein's Lab</h2>
+            <a onclick="closeEinstein(); toggleSidebar();">🏠 Home</a>
+            <a onclick="goToNavRoom(); toggleSidebar();">📊 Dashboard</a>
+            <a onclick="alert('Settings coming soon!'); toggleSidebar();">⚙️ Settings</a>
+            <a onclick="alert('Profile coming soon!'); toggleSidebar();">👤 Profile</a>
+        </div>
+    </div>
 
     <!-- HOMEPAGE -->
     <div id="homepage">
@@ -269,7 +343,7 @@
         <nav class="glass-panel" onclick="goToNavRoom()">Navigation Menu</nav>
 
         <main>
-            <div class="glass-panel content-box">
+            <div class="glass-panel content-box" onclick="openEinstein()">
                 <img src="https://i.postimg.cc/q68vzNnY/einstein-profile-jpg.jpg" alt="Einstein" class="profile-img">
                 <span>Einstein</span>
             </div>
@@ -295,29 +369,20 @@
         </div>
 
         <div class="nav-room-grid">
-            
-            <!-- LEFT: PROFILE & REMINDERS -->
             <div class="nav-col-left glass-panel">
-                <div class="avatar-circle">
-                    <img src="https://i.postimg.cc/xTWNKK7X/home-bg-jpg.jpg" alt="Grayson">
-                </div>
-                <div class="profile-name">
-                    What we doing today
-                </div>
-                
+                <div class="avatar-circle"><img src="https://i.postimg.cc/xTWNKK7X/home-bg-jpg.jpg" alt="Grayson"></div>
+                <div class="profile-name">What we doing today</div>
                 <div class="stat-row">
                     <div class="stat-box"><div id="stat-projects">0</div><div>Projects</div></div>
                     <div class="stat-box"><div id="stat-gallery">0</div><div>Images</div></div>
                     <div class="stat-box"><div id="stat-tasks">0</div><div>Tasks</div></div>
                 </div>
-
                 <div class="reminders-section">
                     <div class="reminders-title">Upcoming Reminders</div>
                     <div class="reminders-list" id="upcoming-reminders"></div>
                 </div>
             </div>
 
-            <!-- CENTER: PROJECTS & GALLERY -->
             <div class="nav-col-center glass-panel">
                 <div class="center-split-grid">
                     <div class="sub-panel">
@@ -328,7 +393,6 @@
                         </div>
                         <div class="scroll-list" id="projects-list"></div>
                     </div>
-
                     <div class="sub-panel">
                         <div class="section-title">Gallery</div>
                         <div class="add-item-area">
@@ -340,7 +404,6 @@
                 </div>
             </div>
 
-            <!-- RIGHT: CALENDAR & TASKS -->
             <div class="nav-col-right glass-panel">
                 <div class="calendar-header">
                     <button onclick="changeMonth(-1)">◀</button>
@@ -354,17 +417,67 @@
                 </div>
                 <div class="task-list" id="task-list"></div>
             </div>
-
         </div>
 
-        <button class="glass-panel back-home-btn" onclick="goHome()">
-            ← Back to Home
-        </button>
+        <button class="glass-panel back-home-btn" onclick="goHome()">← Back to Home</button>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- EINSTEIN ROOM (NEW) -->
+    <!-- ========================================== -->
+    <div id="einstein-room" class="hidden">
+        
+        <!-- HEADER WITH HAMBURGER MENU -->
+        <div class="einstein-header">
+            <button onclick="toggleSidebar()">☰</button>
+            <h2>Einstein</h2>
+            <button onclick="closeEinstein()">← Back</button>
+        </div>
+
+        <!-- CHAT AREA -->
+        <div class="einstein-chat-area" id="einstein-chat-box">
+            <div class="einstein-msg ai">I am Einstein. I am strictly for school. Let's fix that grammar.</div>
+        </div>
+
+        <!-- CUSTOM CHATBOX -->
+        <div class="custom-chatbox">
+            <div class="attachment-menu hidden" id="attachment-menu">
+                <button onclick="triggerFileInput('camera')">📷 Camera</button>
+                <button onclick="triggerFileInput('photo')">🖼️ Photo</button>
+                <button onclick="triggerFileInput('document')">📄 Document</button>
+            </div>
+
+            <div class="custom-input-row">
+                <input type="text" id="einstein-input" placeholder="Ask anything..." onkeypress="if(event.key === 'Enter') sendEinsteinMessage()">
+            </div>
+            <div class="custom-icons-row">
+                <button class="icon-btn-left" onclick="toggleAttachmentMenu()">+</button>
+                <div class="icon-btn-right">
+                    <span class="mic-icon">🎤</span>
+                    <button class="send-btn-circle" onclick="sendEinsteinMessage()">↑</button>
+                </div>
+            </div>
+        </div>
 
     </div>
 
+    <!-- HIDDEN FILE INPUTS -->
+    <input type="file" id="file-camera" accept="image/*" capture="environment" style="display:none;">
+    <input type="file" id="file-photo" accept="image/*" style="display:none;">
+    <input type="file" id="file-document" accept=".pdf,.doc,.docx,.txt" style="display:none;">
+
     <!-- THE SCRIPT -->
     <script>
+        // --- SIDEBAR LOGIC ---
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            sidebar.classList.toggle('sidebar-closed');
+            sidebar.classList.toggle('sidebar-open');
+            overlay.classList.toggle('hidden');
+        }
+
+        // --- NAVIGATION LOGIC ---
         function goToNavRoom() {
             document.getElementById('homepage').classList.add('hidden');
             document.getElementById('navigation-room').classList.remove('hidden');
@@ -376,8 +489,54 @@
         function goHome() {
             document.getElementById('homepage').classList.remove('hidden');
             document.getElementById('navigation-room').classList.add('hidden');
+            document.getElementById('einstein-room').classList.add('hidden');
         }
 
+        function openEinstein() {
+            document.getElementById('homepage').classList.add('hidden');
+            document.getElementById('einstein-room').classList.remove('hidden');
+        }
+
+        function closeEinstein() {
+            document.getElementById('einstein-room').classList.add('hidden');
+            document.getElementById('homepage').classList.remove('hidden');
+        }
+
+        // --- EINSTEIN ROOM LOGIC ---
+        function toggleAttachmentMenu() {
+            const menu = document.getElementById('attachment-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        function triggerFileInput(type) {
+            document.getElementById('file-' + type).click();
+            document.getElementById('attachment-menu').classList.add('hidden');
+        }
+
+        function sendEinsteinMessage() {
+            const input = document.getElementById('einstein-input');
+            const text = input.value.trim();
+            if (text === '') return;
+
+            const chatBox = document.getElementById('einstein-chat-box');
+
+            const userMsg = document.createElement('div');
+            userMsg.className = 'einstein-msg user';
+            userMsg.textContent = text;
+            chatBox.appendChild(userMsg);
+            input.value = '';
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            setTimeout(() => {
+                const aiMsg = document.createElement('div');
+                aiMsg.className = 'einstein-msg ai';
+                aiMsg.textContent = "Got it. I will help you with that.";
+                chatBox.appendChild(aiMsg);
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 800);
+        }
+
+        // --- NAVIGATION ROOM LOGIC ---
         function updateProfileStats() {
             const projects = JSON.parse(localStorage.getItem('user_projects')) || [];
             const gallery = JSON.parse(localStorage.getItem('user_gallery')) || [];
