@@ -7,30 +7,30 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background-color: #121212; color: #ffffff; font-family: Arial, sans-serif; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
-        #login-screen { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; padding: 20px; text-align: center; }
+        body { background-color: #121212; color: #ffffff; font-family: Arial, sans-serif; display: flex; flex-direction: column; height: 100dvh; overflow: hidden; }
+        #login-screen { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100dvh; padding: 20px; text-align: center; }
         .login-box { background-color: #1e1e1e; border-radius: 20px; padding: 40px 30px; border: 1px solid #333; max-width: 400px; width: 100%; box-shadow: 0 4px 20px rgba(0,0,0,0.6); }
         .login-title { font-size: 24px; font-weight: bold; margin-bottom: 10px; }
         .login-subtitle { font-size: 13px; color: #888; margin-bottom: 30px; }
         .login-box input { width: 100%; padding: 14px; border-radius: 20px; border: 1px solid #333; background-color: #2a2a2a; color: white; outline: none; font-size: 16px; margin-bottom: 15px; text-align: center; }
         .login-box button { width: 100%; background-color: #4a90e2; color: white; border: none; padding: 14px; border-radius: 20px; cursor: pointer; font-size: 16px; font-weight: bold; }
         .login-error { color: #e74c3c; font-size: 13px; margin-top: 15px; height: 18px; }
-        #home-screen { display: none; flex-direction: column; justify-content: center; align-items: center; height: 100vh; padding: 20px; text-align: center; background-color: #121212; }
+        #home-screen { display: none; flex-direction: column; justify-content: center; align-items: center; height: 100dvh; padding: 20px; text-align: center; background-color: #121212; }
         .home-title { font-size: 28px; font-weight: bold; margin-bottom: 40px; }
-        .profiles-container { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 20px; width: 100%; justify-content: center; scroll-snap-type: x mandatory; }
-        .profile-card { background-color: #1e1e1e; border-radius: 20px; padding: 25px 15px; min-width: 220px; display: flex; flex-direction: column; align-items: center; scroll-snap-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.8); border: 1px solid #333; }
+        .profiles-container { display: flex; gap: 20px; overflow-x: auto; padding: 0 20px 20px 20px; width: 100%; justify-content: flex-start; scroll-snap-type: x mandatory; }
+        .profile-card { background-color: #1e1e1e; border-radius: 20px; padding: 25px 15px; min-width: 200px; max-width: 200px; display: flex; flex-direction: column; align-items: center; scroll-snap-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.8); border: 1px solid #333; }
         .profile-pic { width: 80px; height: 80px; border-radius: 50%; background-color: #2a2a2a; display: flex; justify-content: center; align-items: center; margin-bottom: 15px; border: 2px solid #4a90e2; overflow: hidden; }
         .profile-pic img { width: 100%; height: 100%; object-fit: cover; }
         .profile-name { font-size: 18px; font-weight: bold; margin-bottom: 5px; }
         .profile-desc { font-size: 12px; color: #888; margin-bottom: 20px; }
         .chat-btn { background-color: #4a90e2; color: white; border: none; padding: 10px 30px; border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 14px; width: 100%; }
-        #buzz-screen, #einstein-screen { display: none; flex-direction: column; height: 100vh; background-color: #121212; }
+        #buzz-screen, #einstein-screen { display: none; flex-direction: column; height: 100dvh; background-color: #121212; }
         .header { display: flex; align-items: center; padding: 15px; background-color: #1e1e1e; border-bottom: 1px solid #333; gap: 15px; z-index: 10; }
         .back-btn { background: none; border: none; color: #4a90e2; font-size: 16px; cursor: pointer; font-weight: bold; }
         .header-title { font-size: 18px; font-weight: bold; }
         .chat-container { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
         .message { max-width: 80%; padding: 12px 16px; border-radius: 15px; line-height: 1.5; white-space: pre-wrap; }
-        .input-area { display: flex; padding: 15px; align-items: center; gap: 10px; z-index: 10; background-color: #1e1e1e; border-top: 1px solid #333; }
+        .input-area { display: flex; padding: 15px; flex-shrink: 0; align-items: center; gap: 10px; z-index: 10; background-color: #1e1e1e; border-top: 1px solid #333; }
         .plus-btn { width: 40px; height: 40px; border-radius: 20px; background-color: #2a2a2a; color: white; border: none; font-size: 24px; cursor: pointer; display: flex; justify-content: center; align-items: center; padding-bottom: 4px; }
         .input-area input { flex: 1; padding: 12px; border-radius: 20px; border: 1px solid #333; background-color: #2a2a2a; color: white; outline: none; font-size: 16px; }
         .send-btn { background-color: #4a90e2; color: white; border: none; padding: 0 20px; height: 44px; border-radius: 22px; cursor: pointer; font-size: 16px; font-weight: bold; }
@@ -38,7 +38,7 @@
         #buzz-screen .message.user { background-color: #4a90e2; align-self: flex-end; color: #fff; }
         #einstein-screen .message.buzz { background-color: #2a2a2a; align-self: flex-start; color: #fff; font-family: 'Courier New', Courier, monospace; }
         #einstein-screen .message.user { background-color: #4a90e2; align-self: flex-end; color: #fff; }
-        #library-screen { display: none; flex-direction: column; height: 100vh; background-color: #121212; overflow-y: auto; }
+        #library-screen { display: none; flex-direction: column; height: 100dvh; background-color: #121212; overflow-y: auto; }
         #library-screen .header { position: sticky; top: 0; z-index: 10; }
         .dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 15px; max-width: 800px; margin: 0 auto; width: 100%; }
         .dashboard-card { background-color: #1e1e1e; border-radius: 15px; padding: 15px; border: 1px solid #333; display: flex; flex-direction: column; }
@@ -60,6 +60,9 @@
         .project-item h4 { font-size: 14px; margin-bottom: 5px; }
         .project-item p { font-size: 12px; color: #888; }
         .dashboard-card.full-width { grid-column: span 2; }
+        #project-detail-screen { display: none; flex-direction: column; height: 100dvh; background-color: #121212; }
+        #project-detail-content { flex: 1; padding: 20px; overflow-y: auto; }
+        #project-detail-content textarea { width: 100%; height: 300px; background-color: #1e1e1e; color: white; border: 1px solid #333; border-radius: 10px; padding: 15px; font-size: 16px; outline: none; resize: none; }
     </style>
 </head>
 <body>
@@ -144,7 +147,7 @@
                 <div id="library-chat-container">
                     <div id="library-chat-box"></div>
                     <div class="lib-input-area">
-                        <input type="text" id="lib-input" placeholder="Type a message...">
+                        <input type="text" id="lib-input" placeholder="Type a message..." onkeypress="if(event.key === 'Enter') sendLibraryMessage()">
                         <button onclick="sendLibraryMessage()">Send</button>
                     </div>
                 </div>
@@ -152,35 +155,35 @@
             <div class="dashboard-card full-width">
                 <div class="card-title">My Projects</div>
                 <div id="projects-container">
-                    <div class="project-item" onclick="alert('My Projects\n\nBuilding a personal AI dashboard.')"><h4>My Projects</h4><p>Building a personal AI dashboard.</p></div>
-                    <div class="project-item" onclick="alert('Business Ideas\n\nNotes for future small business ventures.')"><h4>Business Ideas</h4><p>Notes for future small business ventures.</p></div>
-                    <div class="project-item" onclick="alert('School Assignments\n\nUpcoming papers and discussion board topics.')"><h4>School Assignments</h4><p>Upcoming papers and discussion board topics.</p></div>
-                    <div class="project-item" onclick="alert('History\n\nYour past conversations and activity.')"><h4>History</h4><p>Your past conversations and activity.</p></div>
+                    <div class="project-item" onclick="openProject('My Projects')"><h4>My Projects</h4><p>Click to open and edit.</p></div>
+                    <div class="project-item" onclick="openProject('Business Ideas')"><h4>Business Ideas</h4><p>Click to open and edit.</p></div>
+                    <div class="project-item" onclick="openProject('School Assignments')"><h4>School Assignments</h4><p>Click to open and edit.</p></div>
+                    <div class="project-item" onclick="openProject('History')"><h4>History</h4><p>Click to open and edit.</p></div>
                 </div>
             </div>
         </div>
     </div>
 
+    <div id="project-detail-screen">
+        <div class="header">
+            <button class="back-btn" onclick="closeProject()">← Back</button>
+            <div class="header-title" id="project-detail-title">Project</div>
+        </div>
+        <div id="project-detail-content">
+            <textarea id="project-textarea" placeholder="Type your notes here..."></textarea>
+        </div>
+    </div>
+
     <script>
-        // ==========================================
-        // SUPABASE SETUP (Safe to be here)
-        // ==========================================
         const SUPABASE_URL = 'https://izvyvbioxjtylydczrtw.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml6dnl2YmlveGp0eWx5ZGN6cnR3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA2OTY4NDIsImV4cCI6MjEwNjI3Mjg0Mn0.FmyW2aBNLZi0q83YqlF5Yj2EhOqWqhzqyKNNN7eQWO0';
         const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        // ==========================================
-        // MEMORY BLOCKS (System Prompts)
-        // ==========================================
-        const buzzMemory = `This is the history of our conversation so far. You are Buzz, an AI built for Grayson Russell. You and Grayson built this app together. It is a personal AI dashboard with a login screen. The password is 'gr343249'. You have a profile picture and a chat screen. You helped build the 'My Library' section with a calendar, quick chat, and project boxes. You are always honest and direct. You do not lie. You follow Grayson's instructions, as long as they are legal and safe. You remember everything we have talked about.`;
-
-        const einsteinMemory = `You are Einstein, an AI for Grayson's schoolwork. Here is a history of our conversation that you must remember.`;
-        // NOTE: Your full einstein memory is in the previous code block, make sure to paste it here if you overwrite the whole file.
-
-        // ==========================================
-        // APP LOGIC
-        // ==========================================
+        const buzzMemory = "You are Buzz, a personal AI assistant for Grayson Russell. Follow his rules. Be honest. Do not lie.";
+        const einsteinMemory = "You are Einstein, a school helper for Grayson. Keep vocabulary at a 10th-grade level. Keep sentences short and plain. Fix grammar only.";
         const APP_PASSWORD = "gr343249";
+
+        let currentProjectName = '';
 
         window.onload = function() {
             if (sessionStorage.getItem('loggedIn') === 'true') {
@@ -216,6 +219,7 @@
             document.getElementById('buzz-screen').style.display = 'none';
             document.getElementById('einstein-screen').style.display = 'none';
             document.getElementById('library-screen').style.display = 'none';
+            document.getElementById('project-detail-screen').style.display = 'none';
             document.getElementById('home-screen').style.display = 'flex';
         }
 
@@ -225,15 +229,11 @@
             renderCalendar();
         }
 
-        // Load chat history from Supabase
         async function loadHistory(chat) {
             const chatBox = document.getElementById(chat + '-chat-box');
             chatBox.innerHTML = '';
-            
             const { data: messages, error } = await db.from('messages').select('*').eq('chat', chat).order('created_at', { ascending: true });
-            
             if (error) { console.error('Error loading history:', error); return; }
-            
             if (messages && messages.length > 0) {
                 messages.forEach(m => {
                     const msg = document.createElement('div');
@@ -245,7 +245,6 @@
             chatBox.scrollTop = chatBox.scrollHeight;
         }
 
-        // Send a message and get AI response
         async function sendMessage(chat) {
             const input = document.getElementById(chat + '-input');
             const text = input.value.trim();
@@ -253,7 +252,6 @@
 
             const chatBox = document.getElementById(chat + '-chat-box');
 
-            // Add user message to UI
             const userMsg = document.createElement('div');
             userMsg.className = 'message user';
             userMsg.textContent = text;
@@ -261,43 +259,28 @@
             input.value = '';
             chatBox.scrollTop = chatBox.scrollHeight;
 
-            // Save user message to Supabase
             await db.from('messages').insert([{ chat: chat, role: 'user', content: text }]);
 
-            // Show thinking
             const thinkingMsg = document.createElement('div');
             thinkingMsg.className = 'message buzz';
             thinkingMsg.textContent = "Thinking...";
             chatBox.appendChild(thinkingMsg);
             chatBox.scrollTop = chatBox.scrollHeight;
 
-            // Build context
             const systemPrompt = chat === 'buzz' ? buzzMemory : einsteinMemory;
             const groqMessages = [{ role: 'system', content: systemPrompt }];
 
-            // Get recent messages from Supabase
             const { data: recentMessages } = await db.from('messages').select('*').eq('chat', chat).order('created_at', { ascending: true });
             const recent = recentMessages ? recentMessages.slice(-40) : [];
             recent.forEach(m => {
                 groqMessages.push({ role: m.role, content: m.content });
             });
 
-            // Check for summary
-            const { data: summaries } = await db.from('summaries').select('*').eq('chat', chat).order('created_at', { ascending: false }).limit(1);
-            if (summaries && summaries.length > 0) {
-                groqMessages.splice(1, 0, { role: 'system', content: 'Previous conversation summary: ' + summaries[0].summary });
-            }
-
-            // Call Middleman (Cloudflare Function)
             try {
                 const response = await fetch("/chat", {
                     method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        "messages": groqMessages
-                    })
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ "messages": groqMessages })
                 });
 
                 const data = await response.json();
@@ -309,12 +292,7 @@
                     aiMsg.className = 'message buzz';
                     aiMsg.textContent = aiReply;
                     chatBox.appendChild(aiMsg);
-
-                    // Save AI reply to Supabase
                     await db.from('messages').insert([{ chat: chat, role: 'assistant', content: aiReply }]);
-
-                    // Trigger summarization in background
-                    summarizeOldMessages(chat);
                 } else {
                     throw new Error("Invalid response");
                 }
@@ -324,46 +302,10 @@
                 errorMsg.className = 'message buzz';
                 errorMsg.textContent = "Error: Could not connect to the AI.";
                 chatBox.appendChild(errorMsg);
-                console.error(error);
             }
-
             chatBox.scrollTop = chatBox.scrollHeight;
         }
 
-        // Summarize old messages when the history gets long
-        async function summarizeOldMessages(chat) {
-            const { data: allMessages } = await db.from('messages').select('*').eq('chat', chat).order('created_at', { ascending: true });
-            if (!allMessages || allMessages.length < 40) return;
-
-            const oldMessages = allMessages.slice(0, allMessages.length - 20);
-            const lastOldId = oldMessages[oldMessages.length - 1].id;
-
-            const { data: existing } = await db.from('summaries').select('*').eq('chat', chat).order('created_at', { ascending: false }).limit(1);
-            if (existing && existing.length > 0 && existing[0].up_to_message_id >= lastOldId) return;
-
-            const convText = oldMessages.map(m => m.role + ': ' + m.content).join('\n');
-
-            try {
-                const response = await fetch("/chat", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        "messages": [
-                            { role: "system", content: "Summarize the following conversation in 3-5 sentences. Keep all important facts, personal details, decisions, and anything the user said about themselves." },
-                            { role: "user", content: convText }
-                        ]
-                    })
-                });
-                const data = await response.json();
-                if (data.choices && data.choices[0]) {
-                    await db.from('summaries').insert([{ chat: chat, summary: data.choices[0].message.content, up_to_message_id: lastOldId }]);
-                }
-            } catch (e) { console.error('Summarization failed:', e); }
-        }
-
-        // Calendar
         let currentDate = new Date();
         function renderCalendar() {
             const monthYearDisplay = document.getElementById('month-year-display');
@@ -393,8 +335,7 @@
             renderCalendar();
         }
 
-        // Library Chat
-        function sendLibraryMessage() {
+        async function sendLibraryMessage() {
             const input = document.getElementById('lib-input');
             const text = input.value.trim();
             if (text === '') return;
@@ -405,13 +346,50 @@
             chatBox.appendChild(userMsg);
             input.value = '';
             chatBox.scrollTop = chatBox.scrollHeight;
-            setTimeout(() => {
-                const aiMsg = document.createElement('div');
-                aiMsg.style.color = '#4a90e2';
-                aiMsg.innerText = 'AI: I am still learning. Connect my brain later!';
-                chatBox.appendChild(aiMsg);
-                chatBox.scrollTop = chatBox.scrollHeight;
-            }, 1000);
+
+            const thinking = document.createElement('div');
+            thinking.style.color = '#4a90e2';
+            thinking.innerText = 'Thinking...';
+            chatBox.appendChild(thinking);
+
+            try {
+                const response = await fetch("/chat", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ messages: [{ role: "system", content: "You are a helpful assistant inside Grayson's library. Answer briefly." }, { role: "user", content: text }] })
+                });
+                const data = await response.json();
+                chatBox.removeChild(thinking);
+                if (data.choices && data.choices[0]) {
+                    const aiMsg = document.createElement('div');
+                    aiMsg.style.color = '#4a90e2';
+                    aiMsg.innerText = 'AI: ' + data.choices[0].message.content;
+                    chatBox.appendChild(aiMsg);
+                }
+            } catch (e) {
+                chatBox.removeChild(thinking);
+                const err = document.createElement('div');
+                err.style.color = '#e74c3c';
+                err.innerText = 'Error: ' + e.message;
+                chatBox.appendChild(err);
+            }
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function openProject(name) {
+            currentProjectName = name;
+            document.getElementById('project-detail-title').innerText = name;
+            document.getElementById('library-screen').style.display = 'none';
+            document.getElementById('project-detail-screen').style.display = 'flex';
+            const saved = localStorage.getItem('project_' + name) || '';
+            document.getElementById('project-textarea').value = saved;
+        }
+
+        function closeProject() {
+            const text = document.getElementById('project-textarea').value;
+            localStorage.setItem('project_' + currentProjectName, text);
+            document.getElementById('project-detail-screen').style.display = 'none';
+            document.getElementById('library-screen').style.display = 'flex';
         }
     </script>
 </body>
