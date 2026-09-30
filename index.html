@@ -43,7 +43,7 @@
             transition: transform 0.3s ease-in-out;
             box-shadow: 5px 0 15px rgba(0,0,0,0.5);
             display: flex; flex-direction: column; padding: 20px;
-            background-color: rgba(11, 7, 26, 0.75); /* Dark overlay */
+            background-color: rgba(11, 7, 26, 0.75);
             background-blend-mode: overlay;
         }
         
@@ -189,19 +189,25 @@
 
         /* --- EINSTEIN ROOM LAYOUT --- */
         #einstein-room {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100dvh;
+            /* CHALKBOARD BACKGROUND FIXED: Using contain so it doesn't zoom in */
             background-image: url('https://i.postimg.cc/639v8tSX/chakbnoard-jpg.jpg');
-            background-size: cover; background-position: center; background-repeat: no-repeat;
+            background-size: contain; 
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: #121212; /* Dark background to fill the empty space */
             z-index: 100;
             display: flex; flex-direction: column;
+            overflow: hidden;
         }
 
         .einstein-header {
             display: flex; align-items: center; justify-content: space-between;
             padding: 15px 20px;
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(5px);
             border-bottom: 1px solid rgba(255,255,255,0.1);
+            flex-shrink: 0;
         }
 
         .einstein-header h2 {
@@ -216,9 +222,13 @@
         }
         .einstein-header button:hover { background: rgba(255,255,255,0.1); }
 
+        /* CHAT AREA FIXED: flex: 1 and min-height: 0 lets it scroll while keeping the chatbox visible */
         .einstein-chat-area {
-            flex: 1; overflow-y: auto; padding: 20px;
+            flex: 1; 
+            overflow-y: auto; 
+            padding: 20px;
             display: flex; flex-direction: column; gap: 15px;
+            min-height: 0; 
         }
 
         .einstein-msg {
@@ -230,11 +240,13 @@
         .einstein-msg.user { background-color: rgba(74, 144, 226, 0.7); color: #fff; align-self: flex-end; }
 
         /* --- CUSTOM CHATBOX --- */
+        /* CHATBOX FIXED: flex-shrink: 0 makes sure it never gets squished or pushed off screen */
         .custom-chatbox {
             background: #ffffff; border-radius: 25px; padding: 15px 20px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.3);
             display: flex; flex-direction: column; width: 100%; max-width: 800px;
             margin: 0 auto 20px auto; position: relative;
+            flex-shrink: 0;
         }
 
         .custom-input-row { display: flex; align-items: center; margin-bottom: 15px; }
@@ -306,7 +318,7 @@
             .calendar-date { padding: 4px 0; font-size: 11px; }
             .project-item, .reminder-item, .task-item { font-size: 11px; padding: 6px 8px; }
             
-            .custom-chatbox { margin: 0 15px 15px 15px; width: auto; border-radius: 20px; padding: 12px 15px; }
+            .custom-chatbox { margin: 0 15px 15px 15px; width: auto; border-radius: 20px; padding: 12px 15px; flex-shrink: 0; }
             .custom-input-row input { font-size: 14px; }
             .icon-btn-left { font-size: 20px; width: 30px; height: 30px; }
             .mic-icon { font-size: 18px; }
@@ -325,7 +337,8 @@
         <div class="sidebar-content">
             <h2>Einstein's Lab</h2>
             <a onclick="closeEinstein(); toggleSidebar();">🏠 Home</a>
-            <a onclick="goToNavRoom(); toggleSidebar();">📊 Dashboard</a>
+            <!-- CHANGED DASHBOARD TO CLOTHES HERE -->
+            <a onclick="goToNavRoom(); toggleSidebar();">👕 Clothes</a>
             <a onclick="alert('Settings coming soon!'); toggleSidebar();">⚙️ Settings</a>
             <a onclick="alert('Profile coming soon!'); toggleSidebar();">👤 Profile</a>
         </div>
@@ -423,23 +436,20 @@
     </div>
 
     <!-- ========================================== -->
-    <!-- EINSTEIN ROOM (NEW) -->
+    <!-- EINSTEIN ROOM -->
     <!-- ========================================== -->
     <div id="einstein-room" class="hidden">
         
-        <!-- HEADER WITH HAMBURGER MENU -->
         <div class="einstein-header">
             <button onclick="toggleSidebar()">☰</button>
             <h2>Einstein</h2>
             <button onclick="closeEinstein()">← Back</button>
         </div>
 
-        <!-- CHAT AREA -->
         <div class="einstein-chat-area" id="einstein-chat-box">
             <div class="einstein-msg ai">I am Einstein. I am strictly for school. Let's fix that grammar.</div>
         </div>
 
-        <!-- CUSTOM CHATBOX -->
         <div class="custom-chatbox">
             <div class="attachment-menu hidden" id="attachment-menu">
                 <button onclick="triggerFileInput('camera')">📷 Camera</button>
