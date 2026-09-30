@@ -69,15 +69,17 @@
         /* THE FUTURISTIC HEADER TEXT */
         header h1 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 900;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
             text-transform: uppercase;
             background: linear-gradient(90deg, #06b6d4 0%, #d946ef 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             filter: drop-shadow(0 0 10px rgba(217, 70, 239, 0.6)) drop-shadow(0 0 20px rgba(6, 182, 212, 0.4));
+            text-align: center;
+            padding: 0 10px;
         }
 
         /* HEADER HEIGHT */
@@ -122,7 +124,7 @@
         @media (max-width: 768px) {
             main { grid-template-columns: 1fr; }
             .content-box { min-height: 200px; }
-            header h1 { font-size: 18px; letter-spacing: 1px; }
+            header h1 { font-size: 16px; letter-spacing: 1px; }
         }
     </style>
 </head>
@@ -136,7 +138,7 @@
 
     <!-- HEADER WITH WELCOME TEXT -->
     <header class="glass-panel">
-        <h1>Welcome to my home</h1>
+        <h1>Welcome. Now let's get down to business</h1>
     </header>
 
     <nav class="glass-panel">Navigation Menu</nav>
@@ -154,14 +156,15 @@
             <span>Buzz</span>
         </div>
 
-        <!-- RIGHT BOX: LIBRARY -->
+        <!-- RIGHT BOX: LIBRARY (Updated Image and Text) -->
         <div class="glass-panel content-box">
-            <img src="https://i.postimg.cc/kVzJsQvS/library-profil-jpg.jpg" alt="Library" class="profile-img">
-            <span>Library</span>
+            <img src="https://i.postimg.cc/Th9wMDdK/libray-backgrond.jpg" alt="Library Background" class="profile-img">
+            <span>Experience the existential difference</span>
         </div>
     </main>
 
-    <footer class="glass-panel">Footer</footer>
+    <!-- FOOTER (Updated Text) -->
+    <footer class="glass-panel">Library</footer>
 
     <!-- THE PARTICLE SCRIPT -->
     <script>
