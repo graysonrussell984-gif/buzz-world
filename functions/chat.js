@@ -30,7 +30,7 @@ export async function onRequestPost(context) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                model: 'openai/gpt-oss-20b',
+                model: 'llama-3. 1-8b-instant',
                 messages: trimmedMessages
             }),
             signal: AbortSignal.timeout(20000)
