@@ -3,394 +3,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buzz & Einstein</title>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <title>My Website</title>
+    
+    <!-- THE PARTICLE LIBRARY -->
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
+
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background-color: #121212; color: #ffffff; font-family: Arial, sans-serif; display: flex; flex-direction: column; height: 100dvh; overflow: hidden; }
-        #login-screen { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100dvh; padding: 20px; text-align: center; }
-        .login-box { background-color: #1e1e1e; border-radius: 20px; padding: 40px 30px; border: 1px solid #333; max-width: 400px; width: 100%; box-shadow: 0 4px 20px rgba(0,0,0,0.6); }
-        .login-title { font-size: 24px; font-weight: bold; margin-bottom: 10px; }
-        .login-subtitle { font-size: 13px; color: #888; margin-bottom: 30px; }
-        .login-box input { width: 100%; padding: 14px; border-radius: 20px; border: 1px solid #333; background-color: #2a2a2a; color: white; outline: none; font-size: 16px; margin-bottom: 15px; text-align: center; }
-        .login-box button { width: 100%; background-color: #4a90e2; color: white; border: none; padding: 14px; border-radius: 20px; cursor: pointer; font-size: 16px; font-weight: bold; }
-        .login-error { color: #e74c3c; font-size: 13px; margin-top: 15px; height: 18px; }
-        #home-screen { display: none; flex-direction: column; justify-content: center; align-items: center; height: 100dvh; padding: 20px; text-align: center; background-color: #121212; }
-        .home-title { font-size: 28px; font-weight: bold; margin-bottom: 40px; }
-        .profiles-container { display: flex; gap: 20px; overflow-x: auto; padding: 0 20px 20px 20px; width: 100%; justify-content: flex-start; scroll-snap-type: x mandatory; }
-        .profile-card { background-color: #1e1e1e; border-radius: 20px; padding: 25px 15px; min-width: 200px; max-width: 200px; display: flex; flex-direction: column; align-items: center; scroll-snap-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.8); border: 1px solid #333; }
-        .profile-pic { width: 80px; height: 80px; border-radius: 50%; background-color: #2a2a2a; display: flex; justify-content: center; align-items: center; margin-bottom: 15px; border: 2px solid #4a90e2; overflow: hidden; }
-        .profile-pic img { width: 100%; height: 100%; object-fit: cover; }
-        .profile-name { font-size: 18px; font-weight: bold; margin-bottom: 5px; }
-        .profile-desc { font-size: 12px; color: #888; margin-bottom: 20px; }
-        .chat-btn { background-color: #4a90e2; color: white; border: none; padding: 10px 30px; border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 14px; width: 100%; }
-        #buzz-screen, #einstein-screen { display: none; flex-direction: column; height: 100dvh; background-color: #121212; }
-        .header { display: flex; align-items: center; padding: 15px; background-color: #1e1e1e; border-bottom: 1px solid #333; gap: 15px; z-index: 10; }
-        .back-btn { background: none; border: none; color: #4a90e2; font-size: 16px; cursor: pointer; font-weight: bold; }
-        .header-title { font-size: 18px; font-weight: bold; }
-        .chat-container { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
-        .message { max-width: 80%; padding: 12px 16px; border-radius: 15px; line-height: 1.5; white-space: pre-wrap; }
-        .input-area { display: flex; padding: 15px; flex-shrink: 0; align-items: center; gap: 10px; z-index: 10; background-color: #1e1e1e; border-top: 1px solid #333; }
-        .plus-btn { width: 40px; height: 40px; border-radius: 20px; background-color: #2a2a2a; color: white; border: none; font-size: 24px; cursor: pointer; display: flex; justify-content: center; align-items: center; padding-bottom: 4px; }
-        .input-area input { flex: 1; padding: 12px; border-radius: 20px; border: 1px solid #333; background-color: #2a2a2a; color: white; outline: none; font-size: 16px; }
-        .send-btn { background-color: #4a90e2; color: white; border: none; padding: 0 20px; height: 44px; border-radius: 22px; cursor: pointer; font-size: 16px; font-weight: bold; }
-        #buzz-screen .message.buzz { background-color: #2a2a2a; align-self: flex-start; color: #fff; }
-        #buzz-screen .message.user { background-color: #4a90e2; align-self: flex-end; color: #fff; }
-        #einstein-screen .message.buzz { background-color: #2a2a2a; align-self: flex-start; color: #fff; font-family: 'Courier New', Courier, monospace; }
-        #einstein-screen .message.user { background-color: #4a90e2; align-self: flex-end; color: #fff; }
-        #library-screen { display: none; flex-direction: column; height: 100dvh; background-color: #121212; overflow-y: auto; }
-        #library-screen .header { position: sticky; top: 0; z-index: 10; }
-        .dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 15px; max-width: 800px; margin: 0 auto; width: 100%; }
-        .dashboard-card { background-color: #1e1e1e; border-radius: 15px; padding: 15px; border: 1px solid #333; display: flex; flex-direction: column; }
-        .card-title { font-size: 14px; color: #aaa; margin-bottom: 10px; font-weight: bold; text-transform: uppercase; }
-        .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .calendar-header button { background: none; border: none; color: #4a90e2; cursor: pointer; font-size: 16px; }
-        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; text-align: center; }
-        .calendar-day { font-size: 12px; color: #888; }
-        .calendar-date { font-size: 14px; padding: 5px; border-radius: 5px; }
-        .calendar-date.today { background-color: #4a90e2; color: white; font-weight: bold; }
-        #library-chat-container { display: flex; flex-direction: column; height: 200px; }
-        #library-chat-box { flex: 1; overflow-y: auto; margin-bottom: 10px; font-size: 14px; }
-        #library-chat-box div { margin-bottom: 5px; }
-        .lib-input-area { display: flex; gap: 5px; }
-        .lib-input-area input { flex: 1; padding: 8px; border-radius: 10px; border: 1px solid #333; background-color: #2a2a2a; color: white; font-size: 14px; outline: none; }
-        .lib-input-area button { background-color: #4a90e2; color: white; border: none; padding: 8px 15px; border-radius: 10px; cursor: pointer; font-weight: bold; }
-        #projects-container { max-height: 250px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
-        .project-item { background-color: #2a2a2a; padding: 10px; border-radius: 10px; border: 1px solid #333; cursor: pointer; }
-        .project-item h4 { font-size: 14px; margin-bottom: 5px; }
-        .project-item p { font-size: 12px; color: #888; }
-        .dashboard-card.full-width { grid-column: span 2; }
-        #project-detail-screen { display: none; flex-direction: column; height: 100dvh; background-color: #121212; }
-        #project-detail-content { flex: 1; padding: 20px; overflow-y: auto; }
-        #project-detail-content textarea { width: 100%; height: 300px; background-color: #1e1e1e; color: white; border: 1px solid #333; border-radius: 10px; padding: 15px; font-size: 16px; outline: none; resize: none; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            /* BASE BACKGROUND COLOR */
+            background-color: #0b071a;
+            font-family: Arial, sans-serif;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding: 20px;
+            gap: 15px;
+        }
+
+        /* THE GLASS BOX STYLE FOR ALL PANELS */
+        .glass-panel {
+            background: rgba(11, 7, 26, 0.65); /* Deep dark purple, semi-transparent */
+            backdrop-filter: blur(12px); /* The magic blur effect */
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(217, 70, 239, 0.3); /* Subtle pink border */
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            font-weight: bold;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+            z-index: 1; /* Keeps panels above the particles */
+        }
+
+        /* HEADER */
+        header {
+            height: 80px;
+            width: 100%;
+        }
+
+        /* NAVIGATION */
+        nav {
+            height: 50px;
+            width: 100%;
+            border-color: rgba(6, 182, 212, 0.4); /* Subtle blue border for nav */
+        }
+
+        /* 3 COLUMN CONTENT AREA */
+        main {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr; /* Left 1 part, Middle 2 parts, Right 1 part */
+            gap: 15px;
+            width: 100%;
+            flex: 1; /* This makes the main area grow to fill the screen */
+        }
+
+        .content-box {
+            width: 100%;
+            height: 100%; /* Fills the grid cell */
+        }
+
+        /* FOOTER */
+        footer {
+            height: 60px;
+            width: 100%;
+        }
+
+        /* MOBILE RESPONSIVE (So it looks good on your phone too) */
+        @media (max-width: 768px) {
+            main {
+                grid-template-columns: 1fr; /* Stack the 3 columns on top of each other on mobile */
+            }
+            .content-box {
+                min-height: 150px; /* Give them height when stacked */
+            }
+        }
     </style>
 </head>
 <body>
 
-    <div id="login-screen">
-        <div class="login-box">
-            <div class="login-title">Buzz & Einstein</div>
-            <div class="login-subtitle">Private Access</div>
-            <input type="password" id="password-input" placeholder="Enter password..." onkeypress="if(event.key === 'Enter') checkPassword()">
-            <button onclick="checkPassword()">Enter</button>
-            <div class="login-error" id="login-error"></div>
-        </div>
-    </div>
+    <!-- THE LIVE BACKGROUND LAYER -->
+    <div id="tsparticles" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;"></div>
 
-    <div id="home-screen">
-        <div class="home-title">Who do you want to talk to?</div>
-        <div class="profiles-container">
-            <div class="profile-card" onclick="openChat('buzz')">
-                <div class="profile-pic"><img src="https://i.postimg.cc/gnFwmW8W/buzz-profile-jpg.jpg" alt="Buzz"></div>
-                <div class="profile-name">Buzz</div>
-                <div class="profile-desc">Personal AI</div>
-                <button class="chat-btn">Chat</button>
-            </div>
-            <div class="profile-card" onclick="openChat('einstein')">
-                <div class="profile-pic"><img src="https://i.postimg.cc/q68vzNnY/einstein-profile-jpg.jpg" alt="Einstein"></div>
-                <div class="profile-name">Einstein</div>
-                <div class="profile-desc">School Helper</div>
-                <button class="chat-btn">Chat</button>
-            </div>
-            <div class="profile-card" onclick="openLibrary()">
-                <div class="profile-pic"><img src="https://i.postimg.cc/kVzJsQvS/library-profil-jpg.jpg" alt="Library"></div>
-                <div class="profile-name">My Library</div>
-                <div class="profile-desc">History & Settings</div>
-                <button class="chat-btn">Open</button>
-            </div>
-        </div>
-    </div>
+    <header class="glass-panel">
+        Header
+    </header>
 
-    <div id="buzz-screen">
-        <div class="header">
-            <button class="back-btn" onclick="goHome()">← Back</button>
-            <div class="header-title">Buzz</div>
-        </div>
-        <div class="chat-container" id="buzz-chat-box"></div>
-        <div class="input-area">
-            <button class="plus-btn">+</button>
-            <input type="text" id="buzz-input" placeholder="Type a message..." onkeypress="if(event.key === 'Enter') sendMessage('buzz')">
-            <button class="send-btn" onclick="sendMessage('buzz')">Send</button>
-        </div>
-    </div>
+    <nav class="glass-panel">
+        Navigation Menu
+    </nav>
 
-    <div id="einstein-screen">
-        <div class="header">
-            <button class="back-btn" onclick="goHome()">← Back</button>
-            <div class="header-title">Einstein</div>
-        </div>
-        <div class="chat-container" id="einstein-chat-box"></div>
-        <div class="input-area">
-            <button class="plus-btn">+</button>
-            <input type="text" id="einstein-input" placeholder="Type a message..." onkeypress="if(event.key === 'Enter') sendMessage('einstein')">
-            <button class="send-btn" onclick="sendMessage('einstein')">Send</button>
-        </div>
-    </div>
+    <main>
+        <div class="glass-panel content-box">Content</div>
+        <div class="glass-panel content-box">Main Content</div>
+        <div class="glass-panel content-box">Content</div>
+    </main>
 
-    <div id="library-screen">
-        <div class="header">
-            <button class="back-btn" onclick="goHome()">← Back</button>
-            <div class="header-title">My Library</div>
-        </div>
-        <div class="dashboard-grid">
-            <div class="dashboard-card">
-                <div class="card-title">My Schedule</div>
-                <div class="calendar-header">
-                    <button onclick="changeMonth(-1)">◀</button>
-                    <span id="month-year-display">Month Year</span>
-                    <button onclick="changeMonth(1)">▶</button>
-                </div>
-                <div class="calendar-grid" id="calendar-grid"></div>
-            </div>
-            <div class="dashboard-card">
-                <div class="card-title">Quick Chat</div>
-                <div id="library-chat-container">
-                    <div id="library-chat-box"></div>
-                    <div class="lib-input-area">
-                        <input type="text" id="lib-input" placeholder="Type a message..." onkeypress="if(event.key === 'Enter') sendLibraryMessage()">
-                        <button onclick="sendLibraryMessage()">Send</button>
-                    </div>
-                </div>
-            </div>
-            <div class="dashboard-card full-width">
-                <div class="card-title">My Projects</div>
-                <div id="projects-container">
-                    <div class="project-item" onclick="openProject('My Projects')"><h4>My Projects</h4><p>Click to open and edit.</p></div>
-                    <div class="project-item" onclick="openProject('Business Ideas')"><h4>Business Ideas</h4><p>Click to open and edit.</p></div>
-                    <div class="project-item" onclick="openProject('School Assignments')"><h4>School Assignments</h4><p>Click to open and edit.</p></div>
-                    <div class="project-item" onclick="openProject('History')"><h4>History</h4><p>Click to open and edit.</p></div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <footer class="glass-panel">
+        Footer
+    </footer>
 
-    <div id="project-detail-screen">
-        <div class="header">
-            <button class="back-btn" onclick="closeProject()">← Back</button>
-            <div class="header-title" id="project-detail-title">Project</div>
-        </div>
-        <div id="project-detail-content">
-            <textarea id="project-textarea" placeholder="Type your notes here..."></textarea>
-        </div>
-    </div>
-
+    <!-- THE PARTICLE SCRIPT -->
     <script>
-        const SUPABASE_URL = 'https://izvyvbioxjtylydczrtw.supabase.co';
-        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml6dnl2YmlveGp0eWx5ZGN6cnR3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA2OTY4NDIsImV4cCI6MjEwNjI3Mjg0Mn0.FmyW2aBNLZi0q83YqlF5Yj2EhOqWqhzqyKNNN7eQWO0';
-        const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-        const buzzMemory = "You are Buzz, a personal AI assistant for Grayson Russell. Follow his rules. Be honest. Do not lie.";
-        const einsteinMemory = "You are Einstein, a school helper for Grayson. Keep vocabulary at a 10th-grade level. Keep sentences short and plain. Fix grammar only.";
-        const APP_PASSWORD = "gr343249";
-
-        let currentProjectName = '';
-
-        window.onload = function() {
-            if (sessionStorage.getItem('loggedIn') === 'true') {
-                showHome();
-            }
-        };
-
-        function checkPassword() {
-            const input = document.getElementById('password-input').value;
-            const errorBox = document.getElementById('login-error');
-            if (input === APP_PASSWORD) {
-                sessionStorage.setItem('loggedIn', 'true');
-                showHome();
-            } else {
-                errorBox.innerText = "Wrong password. Try again.";
-                document.getElementById('password-input').value = '';
-            }
-        }
-
-        function showHome() {
-            document.getElementById('login-screen').style.display = 'none';
-            document.getElementById('home-screen').style.display = 'flex';
-        }
-
-        function openChat(chat) {
-            document.getElementById('home-screen').style.display = 'none';
-            if (chat === 'buzz') document.getElementById('buzz-screen').style.display = 'flex';
-            if (chat === 'einstein') document.getElementById('einstein-screen').style.display = 'flex';
-            loadHistory(chat);
-        }
-
-        function goHome() {
-            document.getElementById('buzz-screen').style.display = 'none';
-            document.getElementById('einstein-screen').style.display = 'none';
-            document.getElementById('library-screen').style.display = 'none';
-            document.getElementById('project-detail-screen').style.display = 'none';
-            document.getElementById('home-screen').style.display = 'flex';
-        }
-
-        function openLibrary() {
-            document.getElementById('home-screen').style.display = 'none';
-            document.getElementById('library-screen').style.display = 'flex';
-            renderCalendar();
-        }
-
-        async function loadHistory(chat) {
-            const chatBox = document.getElementById(chat + '-chat-box');
-            chatBox.innerHTML = '';
-            const { data: messages, error } = await db.from('messages').select('*').eq('chat', chat).order('created_at', { ascending: true });
-            if (error) { console.error('Error loading history:', error); return; }
-            if (messages && messages.length > 0) {
-                messages.forEach(m => {
-                    const msg = document.createElement('div');
-                    msg.className = 'message ' + (m.role === 'user' ? 'user' : 'buzz');
-                    msg.textContent = m.content;
-                    chatBox.appendChild(msg);
-                });
-            }
-            chatBox.scrollTop = chatBox.scrollHeight;
-        }
-
-        async function sendMessage(chat) {
-            const input = document.getElementById(chat + '-input');
-            const text = input.value.trim();
-            if (text === '') return;
-
-            const chatBox = document.getElementById(chat + '-chat-box');
-
-            const userMsg = document.createElement('div');
-            userMsg.className = 'message user';
-            userMsg.textContent = text;
-            chatBox.appendChild(userMsg);
-            input.value = '';
-            chatBox.scrollTop = chatBox.scrollHeight;
-
-            await db.from('messages').insert([{ chat: chat, role: 'user', content: text }]);
-
-            const thinkingMsg = document.createElement('div');
-            thinkingMsg.className = 'message buzz';
-            thinkingMsg.textContent = "Thinking...";
-            chatBox.appendChild(thinkingMsg);
-            chatBox.scrollTop = chatBox.scrollHeight;
-
-            const systemPrompt = chat === 'buzz' ? buzzMemory : einsteinMemory;
-            const groqMessages = [{ role: 'system', content: systemPrompt }];
-
-            const { data: recentMessages } = await db.from('messages').select('*').eq('chat', chat).order('created_at', { ascending: true });
-            const recent = recentMessages ? recentMessages.slice(-40) : [];
-            recent.forEach(m => {
-                groqMessages.push({ role: m.role, content: m.content });
-            });
-
-            try {
-                const response = await fetch("/chat", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ "messages": groqMessages })
-                });
-
-                const data = await response.json();
-                chatBox.removeChild(thinkingMsg);
-
-                if (data.choices && data.choices[0]) {
-                    const aiReply = data.choices[0].message.content;
-                    const aiMsg = document.createElement('div');
-                    aiMsg.className = 'message buzz';
-                    aiMsg.textContent = aiReply;
-                    chatBox.appendChild(aiMsg);
-                    await db.from('messages').insert([{ chat: chat, role: 'assistant', content: aiReply }]);
-                } else {
-                    throw new Error("Invalid response");
+        tsParticles.load("tsparticles", {
+            background: {
+                color: {
+                    value: "#0b071a"
                 }
-            } catch (error) {
-                if (chatBox.contains(thinkingMsg)) chatBox.removeChild(thinkingMsg);
-                const errorMsg = document.createElement('div');
-                errorMsg.className = 'message buzz';
-                errorMsg.textContent = "Error: Could not connect to the AI.";
-                chatBox.appendChild(errorMsg);
-            }
-            chatBox.scrollTop = chatBox.scrollHeight;
-        }
-
-        let currentDate = new Date();
-        function renderCalendar() {
-            const monthYearDisplay = document.getElementById('month-year-display');
-            const calendarGrid = document.getElementById('calendar-grid');
-            const year = currentDate.getFullYear();
-            const month = currentDate.getMonth();
-            const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-            monthYearDisplay.innerText = monthNames[month] + " " + year;
-            const firstDay = new Date(year, month, 1).getDay();
-            const daysInMonth = new Date(year, month + 1, 0).getDate();
-            let gridHTML = '';
-            ['S','M','T','W','T','F','S'].forEach(day => { gridHTML += '<div class="calendar-day">' + day + '</div>'; });
-            for (let i = 0; i < firstDay; i++) { gridHTML += '<div></div>'; }
-            const today = new Date();
-            const isCurrentMonth = today.getMonth() === month && today.getFullYear() === year;
-            const todayDate = today.getDate();
-            for (let i = 1; i <= daysInMonth; i++) {
-                let classNames = 'calendar-date';
-                if (isCurrentMonth && i === todayDate) { classNames += ' today'; }
-                gridHTML += '<div class="' + classNames + '">' + i + '</div>';
-            }
-            calendarGrid.innerHTML = gridHTML;
-        }
-
-        function changeMonth(direction) {
-            currentDate.setMonth(currentDate.getMonth() + direction);
-            renderCalendar();
-        }
-
-        async function sendLibraryMessage() {
-            const input = document.getElementById('lib-input');
-            const text = input.value.trim();
-            if (text === '') return;
-            const chatBox = document.getElementById('library-chat-box');
-            const userMsg = document.createElement('div');
-            userMsg.style.color = '#fff';
-            userMsg.innerText = 'You: ' + text;
-            chatBox.appendChild(userMsg);
-            input.value = '';
-            chatBox.scrollTop = chatBox.scrollHeight;
-
-            const thinking = document.createElement('div');
-            thinking.style.color = '#4a90e2';
-            thinking.innerText = 'Thinking...';
-            chatBox.appendChild(thinking);
-
-            try {
-                const response = await fetch("/chat", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ messages: [{ role: "system", content: "You are a helpful assistant inside Grayson's library. Answer briefly." }, { role: "user", content: text }] })
-                });
-                const data = await response.json();
-                chatBox.removeChild(thinking);
-                if (data.choices && data.choices[0]) {
-                    const aiMsg = document.createElement('div');
-                    aiMsg.style.color = '#4a90e2';
-                    aiMsg.innerText = 'AI: ' + data.choices[0].message.content;
-                    chatBox.appendChild(aiMsg);
+            },
+            fpsLimit: 60,
+            particles: {
+                color: {
+                    value: ["#d946ef", "#06b6d4", "#ffffff"]
+                },
+                links: {
+                    color: "#d946ef",
+                    distance: 150,
+                    enable: true,
+                    opacity: 0.2,
+                    width: 1
+                },
+                move: {
+                    direction: "none",
+                    enable: true,
+                    outModes: {
+                        default: "bounce"
+                    },
+                    random: true,
+                    speed: 1,
+                    straight: false
+                },
+                number: {
+                    density: {
+                        enable: true,
+                        area: 800
+                    },
+                    value: 60
+                },
+                opacity: {
+                    value: 0.5
+                },
+                shape: {
+                    type: "circle"
+                },
+                size: {
+                    value: { min: 1, max: 3 }
                 }
-            } catch (e) {
-                chatBox.removeChild(thinking);
-                const err = document.createElement('div');
-                err.style.color = '#e74c3c';
-                err.innerText = 'Error: ' + e.message;
-                chatBox.appendChild(err);
-            }
-            chatBox.scrollTop = chatBox.scrollHeight;
-        }
-
-        function openProject(name) {
-            currentProjectName = name;
-            document.getElementById('project-detail-title').innerText = name;
-            document.getElementById('library-screen').style.display = 'none';
-            document.getElementById('project-detail-screen').style.display = 'flex';
-            const saved = localStorage.getItem('project_' + name) || '';
-            document.getElementById('project-textarea').value = saved;
-        }
-
-        function closeProject() {
-            const text = document.getElementById('project-textarea').value;
-            localStorage.setItem('project_' + currentProjectName, text);
-            document.getElementById('project-detail-screen').style.display = 'none';
-            document.getElementById('library-screen').style.display = 'flex';
-        }
+            },
+            detectRetina: true
+        });
     </script>
+
 </body>
 </html>
