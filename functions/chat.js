@@ -30,7 +30,7 @@ export async function onRequestPost(context) {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    model: "llama-3.1-8b-instant",
+                    model: "openai/gpt-oss-20b",
                     messages: body.messages
                 })
             }
@@ -60,4 +60,8 @@ export async function onRequestPost(context) {
             { status: 500 }
         );
     }
+<<<<<<<< HEAD:functions/ chat . js
 }
+========
+}
+>>>>>>>> 4d78721 (Fix Cloudflare chat function routing):functions/chat.js
