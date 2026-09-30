@@ -60,8 +60,4 @@ export async function onRequestPost(context) {
             { status: 500 }
         );
     }
-<<<<<<<< HEAD:functions/ chat . js
 }
-========
-}
->>>>>>>> 4d78721 (Fix Cloudflare chat function routing):functions/chat.js
