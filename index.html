@@ -21,16 +21,17 @@
         body {
             font-family: Arial, sans-serif;
             color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            padding: 20px;
-            gap: 15px;
             background-color: #0b071a;
+            min-height: 100vh;
             overflow-x: hidden;
         }
 
-        /* THE BACKGROUND IMAGE LAYER */
+        /* UTILITY CLASS TO HIDE ELEMENTS */
+        .hidden {
+            display: none !important;
+        }
+
+        /* THE HOMEPAGE BACKGROUND LAYER */
         .bg-image {
             position: fixed;
             top: 0;
@@ -41,7 +42,7 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            z-index: -1;
+            z-index: -2;
             background-color: rgba(11, 7, 26, 0.4);
             background-blend-mode: overlay;
         }
@@ -49,8 +50,8 @@
         /* THE TRUE CLEAR BUBBLE STYLE */
         .glass-panel {
             background: transparent; 
-            backdrop-filter: blur(2px); 
-            -webkit-backdrop-filter: blur(2px);
+            backdrop-filter: blur(4px); 
+            -webkit-backdrop-filter: blur(4px);
             border-radius: 50px; 
             border: 1px solid rgba(255, 255, 255, 0.4); 
             box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.15), 0 8px 32px rgba(0, 0, 0, 0.3);
@@ -61,9 +62,9 @@
             font-size: 18px;
             font-weight: bold;
             text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-            z-index: 1;
             position: relative;
             overflow: hidden; 
+            z-index: 1;
         }
 
         /* THE FUTURISTIC HEADER TEXT */
@@ -82,30 +83,41 @@
             padding: 0 10px;
         }
 
-        /* HEADER HEIGHT */
-        header { height: 100px; width: 100%; padding: 0 20px; }
+        /* --- HOMEPAGE LAYOUT --- */
+        #homepage {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding: 20px;
+            gap: 15px;
+        }
 
-        /* NAVIGATION */
-        nav { height: 50px; width: 100%; }
+        #homepage header { height: 100px; width: 100%; padding: 0 20px; }
+        
+        #homepage nav { 
+            height: 50px; width: 100%; cursor: pointer; transition: all 0.3s ease;
+        }
+        #homepage nav:hover {
+            box-shadow: 0 0 20px rgba(217, 70, 239, 0.6);
+            border-color: rgba(217, 70, 239, 0.8);
+        }
 
-        /* 3 COLUMN CONTENT AREA */
-        main {
+        #homepage main {
             display: grid;
             grid-template-columns: 1fr 2fr 1fr;
             gap: 15px;
             width: 100%;
-            flex: 1;
+            flex: 1; 
         }
 
         .content-box { 
             width: 100%; 
-            height: 100%; 
+            min-height: 250px; 
             display: flex;
             flex-direction: column;
             padding: 20px;
         }
 
-        /* The circular profile images */
         .profile-img {
             width: 120px;
             height: 120px;
@@ -114,90 +126,601 @@
             border: 3px solid rgba(217, 70, 239, 0.8);
             margin-bottom: 20px;
             box-shadow: 0 0 20px rgba(217, 70, 239, 0.4);
-            z-index: 2;
         }
 
-        /* FOOTER */
-        footer { height: 60px; width: 100%; }
+        #homepage footer { height: 60px; width: 100%; }
+
+        /* --- NAVIGATION ROOM LAYOUT --- */
+        #navigation-room {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-image: url('https://i.postimg.cc/Dy6xxLm9/Screenshot-20260930-133327-Google.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: 100;
+            background-color: rgba(11, 7, 26, 0.6); /* Darker overlay for readability */
+            background-blend-mode: overlay;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            overflow-y: auto; /* Allows scrolling if screen is small */
+        }
+
+        /* Top Navigation inside Nav Room */
+        .nav-room-top {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 15px 20px;
+            border-radius: 30px;
+            border: 1px solid rgba(217, 70, 239, 0.5);
+            box-shadow: 0 0 15px rgba(217, 70, 239, 0.3);
+            flex-wrap: wrap;
+        }
+
+        .nav-room-top button {
+            background: transparent;
+            border: 1px solid rgba(217, 70, 239, 0.6);
+            color: #fff;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(217, 70, 239, 0.2);
+            transition: all 0.3s ease;
+        }
+        .nav-room-top button:hover {
+            background: rgba(217, 70, 239, 0.4);
+            box-shadow: 0 0 15px rgba(217, 70, 239, 0.8);
+        }
+
+        /* Main Dashboard Grid */
+        .nav-room-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr 1.2fr;
+            gap: 15px;
+            width: 100%;
+            flex: 1;
+        }
+
+        /* Left Column: Profile */
+        .nav-col-left {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            border: 1px solid rgba(217, 70, 239, 0.4);
+            border-radius: 40px;
+            box-shadow: inset 0 0 20px rgba(217, 70, 239, 0.1);
+        }
+
+        .avatar-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            border: 2px solid #d946ef;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+            box-shadow: 0 0 20px rgba(217, 70, 239, 0.5);
+        }
+
+        .stat-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .stat-box {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 10px;
+            padding: 8px 12px;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        /* Center Column: Dashboard */
+        .nav-col-center {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding: 20px;
+            border: 1px solid rgba(217, 70, 239, 0.4);
+            border-radius: 40px;
+            box-shadow: inset 0 0 20px rgba(217, 70, 239, 0.1);
+        }
+
+        .chart-box {
+            flex: 1;
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 150px;
+            position: relative;
+        }
+
+        .chart-line {
+            width: 80%;
+            height: 50%;
+            border-bottom: 3px solid #d946ef;
+            border-left: 3px solid transparent;
+            border-right: 3px solid transparent;
+            border-radius: 50% 50% 0 0;
+            box-shadow: 0 15px 20px -10px rgba(217, 70, 239, 0.8);
+        }
+
+        .data-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .data-box {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        /* Right Column: Calendar & Tasks */
+        .nav-col-right {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 20px;
+            border: 1px solid rgba(217, 70, 239, 0.4);
+            border-radius: 40px;
+            box-shadow: inset 0 0 20px rgba(217, 70, 239, 0.1);
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            margin-bottom: 10px;
+            color: #06b6d4;
+            width: 100%;
+        }
+
+        .calendar-header button {
+            background: transparent;
+            border: none;
+            color: #d946ef;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            text-align: center;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+
+        .calendar-day-label {
+            font-size: 10px;
+            color: #aaa;
+            margin-bottom: 5px;
+        }
+
+        .calendar-date {
+            font-size: 12px;
+            padding: 6px 0;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .calendar-date:hover {
+            background: rgba(217, 70, 239, 0.3);
+        }
+
+        .calendar-date.today {
+            background: #06b6d4;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .calendar-date.selected {
+            background: #d946ef;
+            color: #fff;
+            font-weight: bold;
+            box-shadow: 0 0 10px rgba(217, 70, 239, 0.8);
+        }
+
+        .calendar-date.empty {
+            cursor: default;
+        }
+        .calendar-date.empty:hover {
+            background: transparent;
+        }
+
+        .task-input-area {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+        .task-input-area input {
+            flex: 1;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 10px;
+            padding: 8px 12px;
+            color: white;
+            font-size: 12px;
+            outline: none;
+        }
+
+        .task-input-area button {
+            background: #d946ef;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            padding: 0 12px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .task-list {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            font-size: 12px;
+            width: 100%;
+        }
+
+        .task-item {
+            background: rgba(255,255,255,0.05);
+            border-left: 3px solid #06b6d4;
+            border-radius: 5px;
+            padding: 8px 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .task-item button {
+            background: transparent;
+            border: none;
+            color: #ff4d4d;
+            cursor: pointer;
+            font-size: 14px;
+        }
 
         /* MOBILE RESPONSIVE */
         @media (max-width: 768px) {
-            main { grid-template-columns: 1fr; }
-            .content-box { min-height: 200px; }
-            header h1 { font-size: 16px; letter-spacing: 1px; }
+            #homepage main { grid-template-columns: 1fr; }
+            #homepage .content-box { min-height: 200px; }
+            #homepage header h1 { font-size: 16px; letter-spacing: 1px; }
+            
+            .nav-room-grid { grid-template-columns: 1fr; }
+            .nav-room-top { flex-wrap: wrap; justify-content: center; gap: 10px; }
+            .nav-col-left, .nav-col-center, .nav-col-right { padding: 15px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- THE IMAGE LAYER -->
-    <div class="bg-image"></div>
+    <!-- ========================================== -->
+    <!-- HOMEPAGE WRAPPER -->
+    <!-- ========================================== -->
+    <div id="homepage">
+        
+        <!-- THE IMAGE LAYER -->
+        <div class="bg-image"></div>
 
-    <!-- THE LIVE PARTICLE LAYER -->
-    <div id="tsparticles" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;"></div>
+        <!-- THE LIVE PARTICLE LAYER -->
+        <div id="tsparticles-home" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none;"></div>
 
-    <!-- HEADER WITH WELCOME TEXT -->
-    <header class="glass-panel">
-        <h1>Welcome Now let's get down to business</h1>
-    </header>
+        <!-- HEADER -->
+        <header class="glass-panel">
+            <h1>Welcome Now let's get down to business</h1>
+        </header>
 
-    <nav class="glass-panel">Navigation Menu</nav>
+        <!-- NAVIGATION MENU (CLICKABLE) -->
+        <nav class="glass-panel" onclick="goToNavRoom()">Navigation Menu</nav>
 
-    <main>
-        <!-- LEFT BOX: EINSTEIN -->
-        <div class="glass-panel content-box">
-            <img src="https://i.postimg.cc/q68vzNnY/einstein-profile-jpg.jpg" alt="Einstein" class="profile-img">
-            <span>Einstein</span>
+        <main>
+            <!-- LEFT BOX: EINSTEIN -->
+            <div class="glass-panel content-box">
+                <img src="https://i.postimg.cc/q68vzNnY/einstein-profile-jpg.jpg" alt="Einstein" class="profile-img">
+                <span>Einstein</span>
+            </div>
+
+            <!-- CENTER BOX: BUZZ -->
+            <div class="glass-panel content-box">
+                <img src="https://i.postimg.cc/gnFwmW8W/buzz-profile-jpg.jpg" alt="Buzz" class="profile-img">
+                <span>Buzz</span>
+            </div>
+
+            <!-- RIGHT BOX: GOD MODE -->
+            <div class="glass-panel content-box">
+                <img src="https://i.postimg.cc/Th9wMDdK/libray-backgrond.jpg" alt="Library Background" class="profile-img">
+                <span>God mode</span>
+            </div>
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="glass-panel">Library</footer>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- NAVIGATION ROOM (DASHBOARD) -->
+    <!-- ========================================== -->
+    <div id="navigation-room" class="hidden">
+        
+        <!-- THE LIVE PARTICLE LAYER FOR THE NAV ROOM -->
+        <div id="tsparticles-nav" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none;"></div>
+
+        <div style="display: flex; flex-direction: column; width: 100%; height: 100%; z-index: 1; position: relative;">
+            
+            <!-- TOP NAV BAR IN ROOM -->
+            <div class="nav-room-top glass-panel">
+                <button>🏠 Home</button>
+                <button>📊 Insights</button>
+                <button>⚡ Activity</button>
+                <button>👤 Profile</button>
+            </div>
+
+            <!-- MAIN DASHBOARD GRID -->
+            <div class="nav-room-grid">
+                
+                <!-- LEFT: PROFILE -->
+                <div class="nav-col-left glass-panel">
+                    <div class="avatar-circle">
+                        <span style="font-size: 30px;">👤</span>
+                    </div>
+                    <div style="font-family: 'Orbitron', sans-serif; text-align: center;">
+                        <div>Alex R.</div>
+                        <div style="font-size: 12px; color: #d946ef;">4.9 Stars</div>
+                    </div>
+                    
+                    <div class="stat-row">
+                        <div class="stat-box"><div>17</div><div>Avatar</div></div>
+                        <div class="stat-box"><div>11</div><div>Stats</div></div>
+                        <div class="stat-box"><div>16</div><div>Followers</div></div>
+                    </div>
+                </div>
+
+                <!-- CENTER: DASHBOARD -->
+                <div class="nav-col-center glass-panel">
+                    <div style="font-family: 'Orbitron', sans-serif; font-size: 16px; margin-bottom: 10px;">Dashboard</div>
+                    
+                    <div class="chart-box">
+                        <div class="chart-line"></div>
+                    </div>
+
+                    <div class="data-row">
+                        <div class="data-box">
+                            <div style="font-size: 20px; font-weight: bold; color: #d946ef;">48%</div>
+                            <div style="font-size: 10px;">Active data</div>
+                        </div>
+                        <div class="data-box">
+                            <div style="font-size: 20px; font-weight: bold; color: #06b6d4;">21.4k</div>
+                            <div style="font-size: 10px;">Report data</div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 10px; margin-top: 10px; justify-content: center;">
+                        <button style="background: transparent; border: 1px solid rgba(217, 70, 239, 0.6); color: white; padding: 8px 15px; border-radius: 20px; font-size: 12px;">⚙️ Settings</button>
+                        <button style="background: transparent; border: 1px solid rgba(217, 70, 239, 0.6); color: white; padding: 8px 15px; border-radius: 20px; font-size: 12px;">📈 Analytics</button>
+                        <button style="background: transparent; border: 1px solid rgba(217, 70, 239, 0.6); color: white; padding: 8px 15px; border-radius: 20px; font-size: 12px;">📄 Reports</button>
+                    </div>
+                </div>
+
+                <!-- RIGHT: CALENDAR & TASKS -->
+                <div class="nav-col-right glass-panel">
+                    
+                    <!-- CALENDAR HEADER -->
+                    <div class="calendar-header">
+                        <button onclick="changeMonth(-1)">◀</button>
+                        <span id="month-year-display">Month Year</span>
+                        <button onclick="changeMonth(1)">▶</button>
+                    </div>
+
+                    <!-- CALENDAR GRID -->
+                    <div class="calendar-grid" id="calendar-days">
+                        <!-- Filled by JS -->
+                    </div>
+
+                    <!-- TASKS INPUT AREA -->
+                    <div class="task-input-area">
+                        <input type="text" id="task-input" placeholder="Add a task..." onkeypress="if(event.key === 'Enter') addTask()">
+                        <button onclick="addTask()">+</button>
+                    </div>
+
+                    <!-- TASK LIST -->
+                    <div class="task-list" id="task-list">
+                        <!-- Tasks shown here -->
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- BACK BUTTON -->
+            <button class="glass-panel" style="margin-top: 15px; padding: 15px 30px; cursor: pointer; color: white; font-family: 'Orbitron', sans-serif; background: transparent;" onclick="goHome()">
+                ← Back to Home
+            </button>
+
         </div>
-
-        <!-- CENTER BOX: BUZZ -->
-        <div class="glass-panel content-box">
-            <img src="https://i.postimg.cc/gnFwmW8W/buzz-profile-jpg.jpg" alt="Buzz" class="profile-img">
-            <span>Buzz</span>
-        </div>
-
-        <!-- RIGHT BOX: GOD MODE -->
-        <div class="glass-panel content-box">
-            <img src="https://i.postimg.cc/Th9wMDdK/libray-backgrond.jpg" alt="Library Background" class="profile-img">
-            <span>God mode</span>
-        </div>
-    </main>
-
-    <!-- FOOTER -->
-    <footer class="glass-panel">Library</footer>
+    </div>
 
     <!-- THE PARTICLE SCRIPT -->
     <script>
-        tsParticles.load("tsparticles", {
-            background: { color: { value: "transparent" } }, 
-            fpsLimit: 60,
-            particles: {
-                color: { value: ["#d946ef", "#06b6d4", "#ffffff"] }, 
-                links: {
-                    color: "#d946ef",
-                    distance: 150,
-                    enable: true,
-                    opacity: 0.15, 
-                    width: 1
+        // --- NAVIGATION LOGIC ---
+        function goToNavRoom() {
+            document.getElementById('homepage').classList.add('hidden');
+            document.getElementById('navigation-room').classList.remove('hidden');
+            renderCalendar(); // Build the calendar when opening the room
+        }
+
+        function goHome() {
+            document.getElementById('homepage').classList.remove('hidden');
+            document.getElementById('navigation-room').classList.add('hidden');
+        }
+
+        // --- CALENDAR LOGIC ---
+        let currentDate = new Date();
+        let selectedDate = new Date();
+        let tasks = JSON.parse(localStorage.getItem('user_tasks')) || {};
+
+        function renderCalendar() {
+            const monthYearDisplay = document.getElementById('month-year-display');
+            const calendarDays = document.getElementById('calendar-days');
+            
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+            
+            const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+            monthYearDisplay.innerText = monthNames[month] + " " + year;
+
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            
+            let gridHTML = '';
+            
+            // Day Labels
+            const dayLabels = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+            dayLabels.forEach(day => { gridHTML += `<div class="calendar-day-label">${day}</div>`; });
+
+            // Empty boxes for days before the 1st
+            for (let i = 0; i < firstDay; i++) {
+                gridHTML += `<div class="calendar-date empty"></div>`;
+            }
+
+            // Days of the month
+            const today = new Date();
+            const isCurrentMonth = today.getMonth() === month && today.getFullYear() === year;
+            const todayDate = today.getDate();
+            const selectedDateString = selectedDate.toDateString();
+
+            for (let i = 1; i <= daysInMonth; i++) {
+                let classNames = 'calendar-date';
+                const thisDateString = new Date(year, month, i).toDateString();
+
+                if (isCurrentMonth && i === todayDate) { classNames += ' today'; }
+                if (thisDateString === selectedDateString) { classNames += ' selected'; }
+
+                gridHTML += `<div class="${classNames}" onclick="selectDay(${year}, ${month}, ${i})">${i}</div>`;
+            }
+
+            calendarDays.innerHTML = gridHTML;
+            renderTasks();
+        }
+
+        function changeMonth(direction) {
+            currentDate.setMonth(currentDate.getMonth() + direction);
+            renderCalendar();
+        }
+
+        function selectDay(year, month, day) {
+            selectedDate = new Date(year, month, day);
+            renderCalendar();
+        }
+
+        // --- TASK LOGIC ---
+        function addTask() {
+            const input = document.getElementById('task-input');
+            const text = input.value.trim();
+            if (text === '') return;
+
+            const dateKey = selectedDate.toDateString();
+            if (!tasks[dateKey]) { tasks[dateKey] = []; }
+            
+            tasks[dateKey].push(text);
+            localStorage.setItem('user_tasks', JSON.stringify(tasks));
+            
+            input.value = '';
+            renderTasks();
+        }
+
+        function deleteTask(index) {
+            const dateKey = selectedDate.toDateString();
+            if (tasks[dateKey]) {
+                tasks[dateKey].splice(index, 1);
+                localStorage.setItem('user_tasks', JSON.stringify(tasks));
+                renderTasks();
+            }
+        }
+
+        function renderTasks() {
+            const taskList = document.getElementById('task-list');
+            const dateKey = selectedDate.toDateString();
+            const dayTasks = tasks[dateKey] || [];
+
+            if (dayTasks.length === 0) {
+                taskList.innerHTML = '<div style="color: #666; text-align: center; font-size: 12px; margin-top: 10px;">No tasks for this day.</div>';
+                return;
+            }
+
+            let html = '';
+            dayTasks.forEach((task, index) => {
+                html += `
+                    <div class="task-item">
+                        <span>${task}</span>
+                        <button onclick="deleteTask(${index})">✕</button>
+                    </div>
+                `;
+            });
+            taskList.innerHTML = html;
+        }
+
+        // --- PARTICLE EFFECT FUNCTION ---
+        function loadParticles(containerId) {
+            tsParticles.load(containerId, {
+                background: { color: { value: "transparent" } }, 
+                fpsLimit: 60,
+                particles: {
+                    color: { value: ["#d946ef", "#06b6d4", "#ffffff"] }, 
+                    links: {
+                        color: "#d946ef",
+                        distance: 150,
+                        enable: true,
+                        opacity: 0.15, 
+                        width: 1
+                    },
+                    move: {
+                        direction: "none",
+                        enable: true,
+                        outModes: { default: "bounce" },
+                        random: true,
+                        speed: 0.8, 
+                        straight: false
+                    },
+                    number: {
+                        density: { enable: true, area: 800 },
+                        value: 50
+                    },
+                    opacity: { value: 0.4 },
+                    shape: { type: "circle" },
+                    size: { value: { min: 1, max: 3 } }
                 },
-                move: {
-                    direction: "none",
-                    enable: true,
-                    outModes: { default: "bounce" },
-                    random: true,
-                    speed: 0.8, 
-                    straight: false
-                },
-                number: {
-                    density: { enable: true, area: 800 },
-                    value: 50
-                },
-                opacity: { value: 0.4 },
-                shape: { type: "circle" },
-                size: { value: { min: 1, max: 3 } }
-            },
-            detectRetina: true
-        });
+                detectRetina: true
+            });
+        }
+
+        loadParticles("tsparticles-home");
+        loadParticles("tsparticles-nav");
     </script>
 
 </body>
