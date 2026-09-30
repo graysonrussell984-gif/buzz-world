@@ -26,22 +26,13 @@
             overflow-x: hidden;
         }
 
-        /* UTILITY CLASS TO HIDE ELEMENTS */
-        .hidden {
-            display: none !important;
-        }
+        .hidden { display: none !important; }
 
         /* THE HOMEPAGE BACKGROUND LAYER */
         .bg-image {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('https://i.postimg.cc/5ywKpzvD/Screenshot-20260929-094937-Google.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+            background-size: cover; background-position: center; background-repeat: no-repeat;
             z-index: -2;
             background-color: rgba(11, 7, 26, 0.4);
             background-blend-mode: overlay;
@@ -55,437 +46,111 @@
             border-radius: 50px; 
             border: 1px solid rgba(255, 255, 255, 0.4); 
             box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.15), 0 8px 32px rgba(0, 0, 0, 0.3);
-            
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 18px;
-            font-weight: bold;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-            position: relative;
-            overflow: hidden; 
-            z-index: 1;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 18px; font-weight: bold; text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+            position: relative; overflow: hidden; z-index: 1;
         }
 
         /* THE FUTURISTIC HEADER TEXT */
         header h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 22px;
-            font-weight: 900;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+            font-family: 'Orbitron', sans-serif; font-size: 22px; font-weight: 900;
+            letter-spacing: 2px; text-transform: uppercase;
             background: linear-gradient(90deg, #06b6d4 0%, #d946ef 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             background-clip: text;
             filter: drop-shadow(0 0 10px rgba(217, 70, 239, 0.6)) drop-shadow(0 0 20px rgba(6, 182, 212, 0.4));
-            text-align: center;
-            padding: 0 10px;
+            text-align: center; padding: 0 10px;
         }
 
         /* --- HOMEPAGE LAYOUT --- */
-        #homepage {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            padding: 20px;
-            gap: 15px;
-        }
-
+        #homepage { display: flex; flex-direction: column; min-height: 100vh; padding: 20px; gap: 15px; }
         #homepage header { height: 100px; width: 100%; padding: 0 20px; }
+        #homepage nav { height: 50px; width: 100%; cursor: pointer; transition: all 0.3s ease; }
+        #homepage nav:hover { box-shadow: 0 0 20px rgba(217, 70, 239, 0.6); border-color: rgba(217, 70, 239, 0.8); }
+        #homepage main { display: grid; grid-template-columns: 1fr 2fr 1fr; gap: 15px; width: 100%; flex: 1; }
         
-        #homepage nav { 
-            height: 50px; width: 100%; cursor: pointer; transition: all 0.3s ease;
-        }
-        #homepage nav:hover {
-            box-shadow: 0 0 20px rgba(217, 70, 239, 0.6);
-            border-color: rgba(217, 70, 239, 0.8);
-        }
-
-        #homepage main {
-            display: grid;
-            grid-template-columns: 1fr 2fr 1fr;
-            gap: 15px;
-            width: 100%;
-            flex: 1; 
-        }
-
-        .content-box { 
-            width: 100%; 
-            min-height: 250px; 
-            display: flex;
-            flex-direction: column;
-            padding: 20px;
-        }
-
-        .profile-img {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid rgba(217, 70, 239, 0.8);
-            margin-bottom: 20px;
-            box-shadow: 0 0 20px rgba(217, 70, 239, 0.4);
-        }
-
+        .content-box { width: 100%; min-height: 250px; display: flex; flex-direction: column; padding: 20px; }
+        .profile-img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid rgba(217, 70, 239, 0.8); margin-bottom: 20px; box-shadow: 0 0 20px rgba(217, 70, 239, 0.4); }
         #homepage footer { height: 60px; width: 100%; }
 
         /* --- NAVIGATION ROOM LAYOUT --- */
         #navigation-room {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
             background-image: url('https://i.postimg.cc/Dy6xxLm9/Screenshot-20260930-133327-Google.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            z-index: 100;
-            background-color: rgba(11, 7, 26, 0.6); 
-            background-blend-mode: overlay;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            overflow-y: auto; 
+            background-size: cover; background-position: center; background-repeat: no-repeat;
+            z-index: 100; background-color: rgba(11, 7, 26, 0.6); background-blend-mode: overlay;
+            padding: 20px; display: flex; flex-direction: column; gap: 15px; overflow-y: auto; 
         }
 
-        /* Top Navigation inside Nav Room */
-        .nav-room-top {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            padding: 15px 20px;
-            border-radius: 30px;
-            border: 1px solid rgba(217, 70, 239, 0.5);
-            box-shadow: 0 0 15px rgba(217, 70, 239, 0.3);
-            flex-wrap: wrap;
-        }
+        .nav-room-top { display: flex; justify-content: center; gap: 15px; padding: 15px 20px; border-radius: 30px; border: 1px solid rgba(217, 70, 239, 0.5); box-shadow: 0 0 15px rgba(217, 70, 239, 0.3); flex-wrap: wrap; }
+        .nav-room-top button { background: transparent; border: 1px solid rgba(217, 70, 239, 0.6); color: #fff; font-family: 'Orbitron', sans-serif; font-size: 12px; padding: 8px 20px; border-radius: 20px; cursor: pointer; box-shadow: 0 0 10px rgba(217, 70, 239, 0.2); transition: all 0.3s ease; }
+        .nav-room-top button:hover { background: rgba(217, 70, 239, 0.4); box-shadow: 0 0 15px rgba(217, 70, 239, 0.8); }
 
-        .nav-room-top button {
-            background: transparent;
-            border: 1px solid rgba(217, 70, 239, 0.6);
-            color: #fff;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 12px;
-            padding: 8px 20px;
-            border-radius: 20px;
-            cursor: pointer;
-            box-shadow: 0 0 10px rgba(217, 70, 239, 0.2);
-            transition: all 0.3s ease;
-        }
-        .nav-room-top button:hover {
-            background: rgba(217, 70, 239, 0.4);
-            box-shadow: 0 0 15px rgba(217, 70, 239, 0.8);
-        }
+        .nav-room-grid { display: grid; grid-template-columns: 1fr 2fr 1.2fr; gap: 15px; width: 100%; flex: 1; }
 
-        /* Main Dashboard Grid */
-        .nav-room-grid {
-            display: grid;
-            grid-template-columns: 0.8fr 2fr 1.2fr;
-            gap: 15px;
-            width: 100%;
-            flex: 1;
-        }
-
-        /* Left Column: Profile */
-        .nav-col-left {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            border: 1px solid rgba(217, 70, 239, 0.4);
-            border-radius: 40px;
-            box-shadow: inset 0 0 20px rgba(217, 70, 239, 0.1);
-        }
-
-        .avatar-circle {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.1);
-            border: 2px solid #d946ef;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 15px;
-            box-shadow: 0 0 20px rgba(217, 70, 239, 0.5);
-        }
-
-        .stat-row {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-        }
-        .stat-box {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 10px;
-            padding: 8px 12px;
-            text-align: center;
-            font-size: 12px;
-        }
-
+        /* Left Column: Profile & Reminders */
+        .nav-col-left { display: flex; flex-direction: column; align-items: center; padding: 20px; border: 1px solid rgba(217, 70, 239, 0.4); border-radius: 40px; box-shadow: inset 0 0 20px rgba(217, 70, 239, 0.1); height: 100%; }
+        .avatar-circle { width: 80px; height: 80px; border-radius: 50%; background: rgba(255,255,255,0.1); border: 2px solid #d946ef; display: flex; justify-content: center; align-items: center; margin-bottom: 15px; box-shadow: 0 0 20px rgba(217, 70, 239, 0.5); }
+        
+        .profile-name { font-family: 'Orbitron', sans-serif; text-align: center; margin-bottom: 15px; }
+        .stat-row { display: flex; gap: 10px; margin-bottom: 20px; }
+        .stat-box { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; padding: 8px 12px; text-align: center; font-size: 12px; min-width: 60px; }
+        
+        /* Upcoming Reminders Section */
+        .reminders-section { width: 100%; flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+        .reminders-title { font-family: 'Orbitron', sans-serif; font-size: 12px; color: #06b6d4; margin-bottom: 10px; text-align: center; width: 100%; border-bottom: 1px solid rgba(6, 182, 212, 0.3); padding-bottom: 5px; }
+        .reminders-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; width: 100%; padding-right: 5px; }
+        .reminders-list::-webkit-scrollbar { width: 4px; }
+        .reminders-list::-webkit-scrollbar-thumb { background: rgba(6, 182, 212, 0.5); border-radius: 10px; }
+        
+        .reminder-item { background: rgba(255,255,255,0.05); border-left: 3px solid #d946ef; border-radius: 5px; padding: 8px 10px; font-size: 11px; word-break: break-word; }
+        .reminder-date { color: #06b6d4; font-weight: bold; margin-bottom: 3px; }
+        
         /* Center Column: Projects & Gallery Split */
-        .nav-col-center {
-            display: flex;
-            flex-direction: column;
-            padding: 20px;
-            border: 1px solid rgba(217, 70, 239, 0.4);
-            border-radius: 40px;
-            box-shadow: inset 0 0 20px rgba(217, 70, 239, 0.1);
-            height: 100%;
-        }
-
-        .center-split-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            width: 100%;
-            height: 100%;
-        }
-
-        /* Shared styles for both panels */
-        .sub-panel {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            background: rgba(255,255,255,0.03);
-            border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.15);
-            padding: 15px;
-            overflow: hidden;
-        }
-
-        .section-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 14px;
-            margin-bottom: 10px;
-            color: #06b6d4;
-            text-align: center;
-        }
-
-        .add-item-area {
-            display: flex;
-            gap: 5px;
-            margin-bottom: 10px;
-        }
-
-        .add-item-area input {
-            flex: 1;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 10px;
-            padding: 8px 12px;
-            color: white;
-            font-size: 12px;
-            outline: none;
-        }
-
-        .add-item-area button {
-            background: #d946ef;
-            border: none;
-            border-radius: 10px;
-            color: white;
-            padding: 0 12px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .scroll-list {
-            flex: 1;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            padding-right: 5px;
-        }
-
-        /* Custom Scrollbar */
+        .nav-col-center { display: flex; flex-direction: column; padding: 20px; border: 1px solid rgba(217, 70, 239, 0.4); border-radius: 40px; box-shadow: inset 0 0 20px rgba(217, 70, 239, 0.1); height: 100%; }
+        .center-split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; height: 100%; }
+        .sub-panel { display: flex; flex-direction: column; height: 100%; background: rgba(255,255,255,0.03); border-radius: 20px; border: 1px solid rgba(255,255,255,0.15); padding: 15px; overflow: hidden; }
+        .section-title { font-family: 'Orbitron', sans-serif; font-size: 14px; margin-bottom: 10px; color: #06b6d4; text-align: center; }
+        .add-item-area { display: flex; gap: 5px; margin-bottom: 10px; }
+        .add-item-area input { flex: 1; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; padding: 8px 12px; color: white; font-size: 12px; outline: none; }
+        .add-item-area button { background: #d946ef; border: none; border-radius: 10px; color: white; padding: 0 12px; cursor: pointer; font-weight: bold; }
+        
+        .scroll-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding-right: 5px; }
         .scroll-list::-webkit-scrollbar { width: 6px; }
-        .scroll-list::-webkit-scrollbar-track { background: transparent; }
         .scroll-list::-webkit-scrollbar-thumb { background: rgba(217, 70, 239, 0.5); border-radius: 10px; }
-
-        .project-item {
-            background: rgba(255,255,255,0.05);
-            border-left: 3px solid #d946ef;
-            border-radius: 8px;
-            padding: 10px 12px;
-            font-size: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            word-break: break-word;
-        }
-
-        .project-item button {
-            background: transparent;
-            border: none;
-            color: #ff4d4d;
-            cursor: pointer;
-            font-size: 14px;
-            margin-left: 10px;
-        }
-
+        
+        .project-item { background: rgba(255,255,255,0.05); border-left: 3px solid #d946ef; border-radius: 8px; padding: 10px 12px; font-size: 12px; display: flex; justify-content: space-between; align-items: center; word-break: break-word; }
+        .project-item button { background: transparent; border: none; color: #ff4d4d; cursor: pointer; font-size: 14px; margin-left: 10px; }
+        
         /* Gallery Styles */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            align-content: start;
-        }
-
-        .gallery-item {
-            position: relative;
-            width: 100%;
-            height: 100px;
-            border-radius: 10px;
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .gallery-item button {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            background: rgba(0,0,0,0.6);
-            border: none;
-            color: #ff4d4d;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            font-size: 12px;
-        }
+        .gallery-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-content: start; }
+        .gallery-item { position: relative; width: 100%; height: 100px; border-radius: 10px; overflow: hidden; border: 1px solid rgba(255,255,255,0.2); }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+        .gallery-item button { position: absolute; top: 5px; right: 5px; background: rgba(0,0,0,0.6); border: none; color: #ff4d4d; border-radius: 50%; width: 20px; height: 20px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 12px; }
 
         /* Right Column: Calendar & Tasks */
-        .nav-col-right {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            padding: 20px;
-            border: 1px solid rgba(217, 70, 239, 0.4);
-            border-radius: 40px;
-            box-shadow: inset 0 0 20px rgba(217, 70, 239, 0.1);
-        }
-
-        .calendar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 14px;
-            margin-bottom: 10px;
-            color: #06b6d4;
-            width: 100%;
-        }
-
-        .calendar-header button {
-            background: transparent;
-            border: none;
-            color: #d946ef;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 5px;
-            text-align: center;
-            margin-bottom: 15px;
-            width: 100%;
-        }
-
-        .calendar-day-label {
-            font-size: 10px;
-            color: #aaa;
-            margin-bottom: 5px;
-        }
-
-        .calendar-date {
-            font-size: 12px;
-            padding: 6px 0;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
+        .nav-col-right { display: flex; flex-direction: column; gap: 10px; padding: 20px; border: 1px solid rgba(217, 70, 239, 0.4); border-radius: 40px; box-shadow: inset 0 0 20px rgba(217, 70, 239, 0.1); height: 100%; }
+        .calendar-header { display: flex; justify-content: space-between; align-items: center; font-family: 'Orbitron', sans-serif; font-size: 14px; margin-bottom: 10px; color: #06b6d4; width: 100%; }
+        .calendar-header button { background: transparent; border: none; color: #d946ef; cursor: pointer; font-size: 16px; }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; text-align: center; margin-bottom: 15px; width: 100%; }
+        .calendar-day-label { font-size: 10px; color: #aaa; margin-bottom: 5px; }
+        .calendar-date { font-size: 12px; padding: 6px 0; border-radius: 50%; cursor: pointer; transition: all 0.2s ease; }
         .calendar-date:hover { background: rgba(217, 70, 239, 0.3); }
         .calendar-date.today { background: #06b6d4; color: #fff; font-weight: bold; }
         .calendar-date.selected { background: #d946ef; color: #fff; font-weight: bold; box-shadow: 0 0 10px rgba(217, 70, 239, 0.8); }
         .calendar-date.empty { cursor: default; }
         .calendar-date.empty:hover { background: transparent; }
 
-        .task-input-area {
-            display: flex;
-            gap: 5px;
-            margin-bottom: 10px;
-            width: 100%;
-        }
-
-        .task-input-area input {
-            flex: 1;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 10px;
-            padding: 8px 12px;
-            color: white;
-            font-size: 12px;
-            outline: none;
-        }
-
-        .task-input-area button {
-            background: #d946ef;
-            border: none;
-            border-radius: 10px;
-            color: white;
-            padding: 0 12px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .task-list {
-            flex: 1;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            font-size: 12px;
-            width: 100%;
-        }
-
+        .task-input-area { display: flex; gap: 5px; margin-bottom: 10px; width: 100%; }
+        .task-input-area input { flex: 1; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; padding: 8px 12px; color: white; font-size: 12px; outline: none; }
+        .task-input-area button { background: #d946ef; border: none; border-radius: 10px; color: white; padding: 0 12px; cursor: pointer; font-weight: bold; }
+        
+        .task-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 5px; font-size: 12px; width: 100%; }
         .task-list::-webkit-scrollbar { width: 6px; }
-        .task-list::-webkit-scrollbar-track { background: transparent; }
         .task-list::-webkit-scrollbar-thumb { background: rgba(6, 182, 212, 0.5); border-radius: 10px; }
-
-        .task-item {
-            background: rgba(255,255,255,0.05);
-            border-left: 3px solid #06b6d4;
-            border-radius: 5px;
-            padding: 8px 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .task-item button {
-            background: transparent;
-            border: none;
-            color: #ff4d4d;
-            cursor: pointer;
-            font-size: 14px;
-        }
+        
+        .task-item { background: rgba(255,255,255,0.05); border-left: 3px solid #06b6d4; border-radius: 5px; padding: 8px 10px; display: flex; justify-content: space-between; align-items: center; }
+        .task-item button { background: transparent; border: none; color: #ff4d4d; cursor: pointer; font-size: 14px; }
 
         /* MOBILE RESPONSIVE */
         @media (max-width: 1024px) {
@@ -494,6 +159,7 @@
             .nav-room-top { flex-wrap: wrap; justify-content: center; gap: 10px; }
             .nav-col-left, .nav-col-center, .nav-col-right { padding: 15px; min-height: 300px; }
             .nav-col-left { flex-direction: row; justify-content: center; gap: 20px; }
+            .reminders-section { display: none; /* Hide reminders on very small screens to save space, or adjust layout */ }
         }
 
         @media (max-width: 768px) {
@@ -505,11 +171,8 @@
 </head>
 <body>
 
-    <!-- ========================================== -->
-    <!-- HOMEPAGE WRAPPER -->
-    <!-- ========================================== -->
+    <!-- HOMEPAGE -->
     <div id="homepage">
-        
         <div class="bg-image"></div>
         <div id="tsparticles-home" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none;"></div>
 
@@ -537,11 +200,8 @@
         <footer class="glass-panel">Library</footer>
     </div>
 
-    <!-- ========================================== -->
-    <!-- NAVIGATION ROOM (DASHBOARD) -->
-    <!-- ========================================== -->
+    <!-- NAVIGATION ROOM -->
     <div id="navigation-room" class="hidden">
-        
         <div id="tsparticles-nav" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none;"></div>
 
         <div style="display: flex; flex-direction: column; width: 100%; height: 100%; z-index: 1; position: relative;">
@@ -555,19 +215,27 @@
 
             <div class="nav-room-grid">
                 
-                <!-- LEFT: PROFILE -->
+                <!-- LEFT: PROFILE & REMINDERS -->
                 <div class="nav-col-left glass-panel">
                     <div class="avatar-circle">
                         <span style="font-size: 30px;">👤</span>
                     </div>
-                    <div style="font-family: 'Orbitron', sans-serif; text-align: center;">
-                        <div>Alex R.</div>
-                        <div style="font-size: 12px; color: #d946ef;">4.9 Stars</div>
+                    <div class="profile-name">
+                        <div>Grayson's Profile</div>
                     </div>
+                    
                     <div class="stat-row">
-                        <div class="stat-box"><div>17</div><div>Avatar</div></div>
-                        <div class="stat-box"><div>11</div><div>Stats</div></div>
-                        <div class="stat-box"><div>16</div><div>Followers</div></div>
+                        <div class="stat-box"><div id="stat-projects">0</div><div>Projects</div></div>
+                        <div class="stat-box"><div id="stat-gallery">0</div><div>Images</div></div>
+                        <div class="stat-box"><div id="stat-tasks">0</div><div>Tasks</div></div>
+                    </div>
+
+                    <!-- UPCOMING REMINDERS SECTION -->
+                    <div class="reminders-section">
+                        <div class="reminders-title">Upcoming Reminders</div>
+                        <div class="reminders-list" id="upcoming-reminders">
+                            <!-- Filled by JS -->
+                        </div>
                     </div>
                 </div>
 
@@ -575,17 +243,15 @@
                 <div class="nav-col-center glass-panel">
                     <div class="center-split-grid">
                         
-                        <!-- Left Half: My Projects -->
                         <div class="sub-panel">
                             <div class="section-title">My Projects</div>
                             <div class="add-item-area">
-                                <input type="text" id="project-input" placeholder="Add a project/note...">
+                                <input type="text" id="project-input" placeholder="Add a project...">
                                 <button onclick="addProject()">+</button>
                             </div>
                             <div class="scroll-list" id="projects-list"></div>
                         </div>
 
-                        <!-- Right Half: Gallery -->
                         <div class="sub-panel">
                             <div class="section-title">Gallery</div>
                             <div class="add-item-area">
@@ -629,11 +295,68 @@
             document.getElementById('homepage').classList.add('hidden');
             document.getElementById('navigation-room').classList.remove('hidden');
             renderCalendar();
+            updateProfileStats();
+            renderReminders();
         }
 
         function goHome() {
             document.getElementById('homepage').classList.remove('hidden');
             document.getElementById('navigation-room').classList.add('hidden');
+        }
+
+        // --- PROFILE STATS LOGIC ---
+        function updateProfileStats() {
+            const projects = JSON.parse(localStorage.getItem('user_projects')) || [];
+            const gallery = JSON.parse(localStorage.getItem('user_gallery')) || [];
+            const tasks = JSON.parse(localStorage.getItem('user_tasks')) || {};
+            
+            const todayStr = new Date().toDateString();
+            const todayTasks = tasks[todayStr] ? tasks[todayStr].length : 0;
+
+            document.getElementById('stat-projects').innerText = projects.length;
+            document.getElementById('stat-gallery').innerText = gallery.length;
+            document.getElementById('stat-tasks').innerText = todayTasks;
+        }
+
+        // --- REMINDERS LOGIC ---
+        function renderReminders() {
+            const tasks = JSON.parse(localStorage.getItem('user_tasks')) || {};
+            const today = new Date();
+            today.setHours(0,0,0,0); // Start of today
+
+            let upcoming = [];
+
+            // Loop through all saved tasks
+            Object.keys(tasks).forEach(dateKey => {
+                const taskDate = new Date(dateKey);
+                taskDate.setHours(0,0,0,0);
+
+                // If the task date is today or in the future
+                if (taskDate >= today) {
+                    tasks[dateKey].forEach(taskText => {
+                        upcoming.push({ date: taskDate, text: taskText });
+                    });
+                }
+            });
+
+            // Sort by date (soonest first)
+            upcoming.sort((a, b) => a.date - b.date);
+
+            const list = document.getElementById('upcoming-reminders');
+            
+            if (upcoming.length === 0) {
+                list.innerHTML = '<div style="color: #666; text-align: center; font-size: 11px; margin-top: 10px;">No upcoming reminders.</div>';
+                return;
+            }
+
+            // Limit to 10 reminders so it doesn't overflow
+            const limited = upcoming.slice(0, 10);
+            let html = '';
+            limited.forEach(item => {
+                const dateStr = item.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                html += `<div class="reminder-item"><div class="reminder-date">${dateStr}</div><div>${item.text}</div></div>`;
+            });
+            list.innerHTML = html;
         }
 
         // --- CALENDAR LOGIC ---
@@ -683,6 +406,8 @@
             localStorage.setItem('user_tasks', JSON.stringify(tasks));
             input.value = '';
             renderTasks();
+            renderReminders(); // Update reminders immediately
+            updateProfileStats(); // Update task counter
         }
 
         function deleteTask(index) {
@@ -691,6 +416,8 @@
                 tasks[dateKey].splice(index, 1);
                 localStorage.setItem('user_tasks', JSON.stringify(tasks));
                 renderTasks();
+                renderReminders();
+                updateProfileStats();
             }
         }
 
@@ -720,12 +447,14 @@
             localStorage.setItem('user_projects', JSON.stringify(projects));
             input.value = '';
             renderProjects();
+            updateProfileStats();
         }
 
         function deleteProject(index) {
             projects.splice(index, 1);
             localStorage.setItem('user_projects', JSON.stringify(projects));
             renderProjects();
+            updateProfileStats();
         }
 
         function renderProjects() {
@@ -752,6 +481,7 @@
                 gallery.push(e.target.result);
                 localStorage.setItem('user_gallery', JSON.stringify(gallery));
                 renderGallery();
+                updateProfileStats();
             };
             reader.readAsDataURL(file);
             event.target.value = '';
@@ -761,6 +491,7 @@
             gallery.splice(index, 1);
             localStorage.setItem('user_gallery', JSON.stringify(gallery));
             renderGallery();
+            updateProfileStats();
         }
 
         function renderGallery() {
