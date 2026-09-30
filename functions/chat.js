@@ -1,62 +1,16 @@
-export async function onRequestPost(context) {
-    try {
-        const { request, env } = context;
+export default {
+  async fetch(request, env, ctx) {
+    const url = new URL(request.url);
 
-        if (!env.GROQ_KEY) {
-            return Response.json(
-                { error: 'GROQ_KEY is missing in Cloudflare settings.' },
-                { status: 500 }
-            );
-        }
-
-        const body = await request.json();
-
-        if (!body || !Array.isArray(body.messages)) {
-            return Response.json(
-                { error: 'The messages field must be an array.' },
-                { status: 400 }
-            );
-        }
-
-        const trimmedMessages = body.messages.slice(-20).map((message) => ({
-            role: message.role || 'user',
-            content: typeof message.content === 'string' ? message.content.slice(0, 4000) : ''
-        }));
-
-        const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-            method: 'POST',
-            headers: {
-                Authorization: `Bearer ${env.GROQ_KEY}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                model: 'llama-3. 1-8b-instant',
-                messages: trimmedMessages
-            }),
-            signal: AbortSignal.timeout(20000)
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-            return Response.json(
-                {
-                    error: 'Groq API error',
-                    details: data
-                },
-                { status: response.status }
-            );
-        }
-
-        return Response.json(data);
-    } catch (error) {
-        return Response.json(
-            {
-                error: 'Cloudflare function failed',
-                details: error?.message || 'Unknown error'
-            },
-            { status: 500 }
-        );
+    // Check if the path is /chat and the method is POST
+    if (url.pathname === '/chat' && request.method === 'POST') {
+      // Your logic here
+      return new Response(JSON.stringify({ success: true }), {
+        headers: { 'content-type': 'application/json' }
+      });
     }
-}
 
+    // Return 404 for any other routes
+    return new Response('Not Found', { status: 404 });
+  },
+};
