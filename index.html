@@ -142,13 +142,13 @@
             background-position: center;
             background-repeat: no-repeat;
             z-index: 100;
-            background-color: rgba(11, 7, 26, 0.6); /* Darker overlay for readability */
+            background-color: rgba(11, 7, 26, 0.6); 
             background-blend-mode: overlay;
             padding: 20px;
             display: flex;
             flex-direction: column;
             gap: 15px;
-            overflow-y: auto; /* Allows scrolling if screen is small */
+            overflow-y: auto; 
         }
 
         /* Top Navigation inside Nav Room */
@@ -183,7 +183,7 @@
         /* Main Dashboard Grid */
         .nav-room-grid {
             display: grid;
-            grid-template-columns: 1fr 1.5fr 1.2fr;
+            grid-template-columns: 0.8fr 2fr 1.2fr;
             gap: 15px;
             width: 100%;
             flex: 1;
@@ -227,50 +227,145 @@
             font-size: 12px;
         }
 
-        /* Center Column: Dashboard */
+        /* Center Column: Projects & Gallery Split */
         .nav-col-center {
             display: flex;
             flex-direction: column;
-            gap: 15px;
             padding: 20px;
             border: 1px solid rgba(217, 70, 239, 0.4);
             border-radius: 40px;
             box-shadow: inset 0 0 20px rgba(217, 70, 239, 0.1);
+            height: 100%;
         }
 
-        .chart-box {
-            flex: 1;
-            background: rgba(255,255,255,0.05);
-            border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.2);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 150px;
-            position: relative;
-        }
-
-        .chart-line {
-            width: 80%;
-            height: 50%;
-            border-bottom: 3px solid #d946ef;
-            border-left: 3px solid transparent;
-            border-right: 3px solid transparent;
-            border-radius: 50% 50% 0 0;
-            box-shadow: 0 15px 20px -10px rgba(217, 70, 239, 0.8);
-        }
-
-        .data-row {
+        .center-split-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
+            width: 100%;
+            height: 100%;
         }
-        .data-box {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 15px;
+
+        /* Shared styles for both panels */
+        .sub-panel {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            background: rgba(255,255,255,0.03);
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.15);
             padding: 15px;
+            overflow: hidden;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            margin-bottom: 10px;
+            color: #06b6d4;
             text-align: center;
+        }
+
+        .add-item-area {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+
+        .add-item-area input {
+            flex: 1;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 10px;
+            padding: 8px 12px;
+            color: white;
+            font-size: 12px;
+            outline: none;
+        }
+
+        .add-item-area button {
+            background: #d946ef;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            padding: 0 12px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .scroll-list {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding-right: 5px;
+        }
+
+        /* Custom Scrollbar */
+        .scroll-list::-webkit-scrollbar { width: 6px; }
+        .scroll-list::-webkit-scrollbar-track { background: transparent; }
+        .scroll-list::-webkit-scrollbar-thumb { background: rgba(217, 70, 239, 0.5); border-radius: 10px; }
+
+        .project-item {
+            background: rgba(255,255,255,0.05);
+            border-left: 3px solid #d946ef;
+            border-radius: 8px;
+            padding: 10px 12px;
+            font-size: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            word-break: break-word;
+        }
+
+        .project-item button {
+            background: transparent;
+            border: none;
+            color: #ff4d4d;
+            cursor: pointer;
+            font-size: 14px;
+            margin-left: 10px;
+        }
+
+        /* Gallery Styles */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            align-content: start;
+        }
+
+        .gallery-item {
+            position: relative;
+            width: 100%;
+            height: 100px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gallery-item button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(0,0,0,0.6);
+            border: none;
+            color: #ff4d4d;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 12px;
         }
 
         /* Right Column: Calendar & Tasks */
@@ -326,29 +421,11 @@
             transition: all 0.2s ease;
         }
 
-        .calendar-date:hover {
-            background: rgba(217, 70, 239, 0.3);
-        }
-
-        .calendar-date.today {
-            background: #06b6d4;
-            color: #fff;
-            font-weight: bold;
-        }
-
-        .calendar-date.selected {
-            background: #d946ef;
-            color: #fff;
-            font-weight: bold;
-            box-shadow: 0 0 10px rgba(217, 70, 239, 0.8);
-        }
-
-        .calendar-date.empty {
-            cursor: default;
-        }
-        .calendar-date.empty:hover {
-            background: transparent;
-        }
+        .calendar-date:hover { background: rgba(217, 70, 239, 0.3); }
+        .calendar-date.today { background: #06b6d4; color: #fff; font-weight: bold; }
+        .calendar-date.selected { background: #d946ef; color: #fff; font-weight: bold; box-shadow: 0 0 10px rgba(217, 70, 239, 0.8); }
+        .calendar-date.empty { cursor: default; }
+        .calendar-date.empty:hover { background: transparent; }
 
         .task-input-area {
             display: flex;
@@ -388,6 +465,10 @@
             width: 100%;
         }
 
+        .task-list::-webkit-scrollbar { width: 6px; }
+        .task-list::-webkit-scrollbar-track { background: transparent; }
+        .task-list::-webkit-scrollbar-thumb { background: rgba(6, 182, 212, 0.5); border-radius: 10px; }
+
         .task-item {
             background: rgba(255,255,255,0.05);
             border-left: 3px solid #06b6d4;
@@ -407,14 +488,18 @@
         }
 
         /* MOBILE RESPONSIVE */
+        @media (max-width: 1024px) {
+            .nav-room-grid { grid-template-columns: 1fr; }
+            .center-split-grid { grid-template-columns: 1fr; }
+            .nav-room-top { flex-wrap: wrap; justify-content: center; gap: 10px; }
+            .nav-col-left, .nav-col-center, .nav-col-right { padding: 15px; min-height: 300px; }
+            .nav-col-left { flex-direction: row; justify-content: center; gap: 20px; }
+        }
+
         @media (max-width: 768px) {
             #homepage main { grid-template-columns: 1fr; }
             #homepage .content-box { min-height: 200px; }
             #homepage header h1 { font-size: 16px; letter-spacing: 1px; }
-            
-            .nav-room-grid { grid-template-columns: 1fr; }
-            .nav-room-top { flex-wrap: wrap; justify-content: center; gap: 10px; }
-            .nav-col-left, .nav-col-center, .nav-col-right { padding: 15px; }
         }
     </style>
 </head>
@@ -425,41 +510,30 @@
     <!-- ========================================== -->
     <div id="homepage">
         
-        <!-- THE IMAGE LAYER -->
         <div class="bg-image"></div>
-
-        <!-- THE LIVE PARTICLE LAYER -->
         <div id="tsparticles-home" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none;"></div>
 
-        <!-- HEADER -->
         <header class="glass-panel">
             <h1>Welcome Now let's get down to business</h1>
         </header>
 
-        <!-- NAVIGATION MENU (CLICKABLE) -->
         <nav class="glass-panel" onclick="goToNavRoom()">Navigation Menu</nav>
 
         <main>
-            <!-- LEFT BOX: EINSTEIN -->
             <div class="glass-panel content-box">
                 <img src="https://i.postimg.cc/q68vzNnY/einstein-profile-jpg.jpg" alt="Einstein" class="profile-img">
                 <span>Einstein</span>
             </div>
-
-            <!-- CENTER BOX: BUZZ -->
             <div class="glass-panel content-box">
                 <img src="https://i.postimg.cc/gnFwmW8W/buzz-profile-jpg.jpg" alt="Buzz" class="profile-img">
                 <span>Buzz</span>
             </div>
-
-            <!-- RIGHT BOX: GOD MODE -->
             <div class="glass-panel content-box">
                 <img src="https://i.postimg.cc/Th9wMDdK/libray-backgrond.jpg" alt="Library Background" class="profile-img">
                 <span>God mode</span>
             </div>
         </main>
 
-        <!-- FOOTER -->
         <footer class="glass-panel">Library</footer>
     </div>
 
@@ -468,12 +542,10 @@
     <!-- ========================================== -->
     <div id="navigation-room" class="hidden">
         
-        <!-- THE LIVE PARTICLE LAYER FOR THE NAV ROOM -->
         <div id="tsparticles-nav" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none;"></div>
 
         <div style="display: flex; flex-direction: column; width: 100%; height: 100%; z-index: 1; position: relative;">
             
-            <!-- TOP NAV BAR IN ROOM -->
             <div class="nav-room-top glass-panel">
                 <button>🏠 Home</button>
                 <button>📊 Insights</button>
@@ -481,7 +553,6 @@
                 <button>👤 Profile</button>
             </div>
 
-            <!-- MAIN DASHBOARD GRID -->
             <div class="nav-room-grid">
                 
                 <!-- LEFT: PROFILE -->
@@ -493,7 +564,6 @@
                         <div>Alex R.</div>
                         <div style="font-size: 12px; color: #d946ef;">4.9 Stars</div>
                     </div>
-                    
                     <div class="stat-row">
                         <div class="stat-box"><div>17</div><div>Avatar</div></div>
                         <div class="stat-box"><div>11</div><div>Stats</div></div>
@@ -501,63 +571,50 @@
                     </div>
                 </div>
 
-                <!-- CENTER: DASHBOARD -->
+                <!-- CENTER: PROJECTS & GALLERY -->
                 <div class="nav-col-center glass-panel">
-                    <div style="font-family: 'Orbitron', sans-serif; font-size: 16px; margin-bottom: 10px;">Dashboard</div>
-                    
-                    <div class="chart-box">
-                        <div class="chart-line"></div>
-                    </div>
-
-                    <div class="data-row">
-                        <div class="data-box">
-                            <div style="font-size: 20px; font-weight: bold; color: #d946ef;">48%</div>
-                            <div style="font-size: 10px;">Active data</div>
+                    <div class="center-split-grid">
+                        
+                        <!-- Left Half: My Projects -->
+                        <div class="sub-panel">
+                            <div class="section-title">My Projects</div>
+                            <div class="add-item-area">
+                                <input type="text" id="project-input" placeholder="Add a project/note...">
+                                <button onclick="addProject()">+</button>
+                            </div>
+                            <div class="scroll-list" id="projects-list"></div>
                         </div>
-                        <div class="data-box">
-                            <div style="font-size: 20px; font-weight: bold; color: #06b6d4;">21.4k</div>
-                            <div style="font-size: 10px;">Report data</div>
-                        </div>
-                    </div>
 
-                    <div style="display: flex; gap: 10px; margin-top: 10px; justify-content: center;">
-                        <button style="background: transparent; border: 1px solid rgba(217, 70, 239, 0.6); color: white; padding: 8px 15px; border-radius: 20px; font-size: 12px;">⚙️ Settings</button>
-                        <button style="background: transparent; border: 1px solid rgba(217, 70, 239, 0.6); color: white; padding: 8px 15px; border-radius: 20px; font-size: 12px;">📈 Analytics</button>
-                        <button style="background: transparent; border: 1px solid rgba(217, 70, 239, 0.6); color: white; padding: 8px 15px; border-radius: 20px; font-size: 12px;">📄 Reports</button>
+                        <!-- Right Half: Gallery -->
+                        <div class="sub-panel">
+                            <div class="section-title">Gallery</div>
+                            <div class="add-item-area">
+                                <input type="file" id="gallery-upload" accept="image/*" style="display:none;" onchange="addGalleryImage(event)">
+                                <button onclick="document.getElementById('gallery-upload').click()" style="flex: 1;">Upload Image</button>
+                            </div>
+                            <div class="scroll-list gallery-grid" id="gallery-list"></div>
+                        </div>
+
                     </div>
                 </div>
 
                 <!-- RIGHT: CALENDAR & TASKS -->
                 <div class="nav-col-right glass-panel">
-                    
-                    <!-- CALENDAR HEADER -->
                     <div class="calendar-header">
                         <button onclick="changeMonth(-1)">◀</button>
                         <span id="month-year-display">Month Year</span>
                         <button onclick="changeMonth(1)">▶</button>
                     </div>
-
-                    <!-- CALENDAR GRID -->
-                    <div class="calendar-grid" id="calendar-days">
-                        <!-- Filled by JS -->
-                    </div>
-
-                    <!-- TASKS INPUT AREA -->
+                    <div class="calendar-grid" id="calendar-days"></div>
                     <div class="task-input-area">
                         <input type="text" id="task-input" placeholder="Add a task..." onkeypress="if(event.key === 'Enter') addTask()">
                         <button onclick="addTask()">+</button>
                     </div>
-
-                    <!-- TASK LIST -->
-                    <div class="task-list" id="task-list">
-                        <!-- Tasks shown here -->
-                    </div>
-
+                    <div class="task-list" id="task-list"></div>
                 </div>
 
             </div>
 
-            <!-- BACK BUTTON -->
             <button class="glass-panel" style="margin-top: 15px; padding: 15px 30px; cursor: pointer; color: white; font-family: 'Orbitron', sans-serif; background: transparent;" onclick="goHome()">
                 ← Back to Home
             </button>
@@ -565,13 +622,13 @@
         </div>
     </div>
 
-    <!-- THE PARTICLE SCRIPT -->
+    <!-- THE SCRIPT -->
     <script>
         // --- NAVIGATION LOGIC ---
         function goToNavRoom() {
             document.getElementById('homepage').classList.add('hidden');
             document.getElementById('navigation-room').classList.remove('hidden');
-            renderCalendar(); // Build the calendar when opening the room
+            renderCalendar();
         }
 
         function goHome() {
@@ -587,69 +644,43 @@
         function renderCalendar() {
             const monthYearDisplay = document.getElementById('month-year-display');
             const calendarDays = document.getElementById('calendar-days');
-            
             const year = currentDate.getFullYear();
             const month = currentDate.getMonth();
-            
             const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
             monthYearDisplay.innerText = monthNames[month] + " " + year;
-
             const firstDay = new Date(year, month, 1).getDay();
             const daysInMonth = new Date(year, month + 1, 0).getDate();
-            
             let gridHTML = '';
-            
-            // Day Labels
             const dayLabels = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
             dayLabels.forEach(day => { gridHTML += `<div class="calendar-day-label">${day}</div>`; });
-
-            // Empty boxes for days before the 1st
-            for (let i = 0; i < firstDay; i++) {
-                gridHTML += `<div class="calendar-date empty"></div>`;
-            }
-
-            // Days of the month
+            for (let i = 0; i < firstDay; i++) { gridHTML += `<div class="calendar-date empty"></div>`; }
             const today = new Date();
             const isCurrentMonth = today.getMonth() === month && today.getFullYear() === year;
             const todayDate = today.getDate();
             const selectedDateString = selectedDate.toDateString();
-
             for (let i = 1; i <= daysInMonth; i++) {
                 let classNames = 'calendar-date';
                 const thisDateString = new Date(year, month, i).toDateString();
-
                 if (isCurrentMonth && i === todayDate) { classNames += ' today'; }
                 if (thisDateString === selectedDateString) { classNames += ' selected'; }
-
                 gridHTML += `<div class="${classNames}" onclick="selectDay(${year}, ${month}, ${i})">${i}</div>`;
             }
-
             calendarDays.innerHTML = gridHTML;
             renderTasks();
         }
 
-        function changeMonth(direction) {
-            currentDate.setMonth(currentDate.getMonth() + direction);
-            renderCalendar();
-        }
-
-        function selectDay(year, month, day) {
-            selectedDate = new Date(year, month, day);
-            renderCalendar();
-        }
+        function changeMonth(direction) { currentDate.setMonth(currentDate.getMonth() + direction); renderCalendar(); }
+        function selectDay(year, month, day) { selectedDate = new Date(year, month, day); renderCalendar(); }
 
         // --- TASK LOGIC ---
         function addTask() {
             const input = document.getElementById('task-input');
             const text = input.value.trim();
             if (text === '') return;
-
             const dateKey = selectedDate.toDateString();
             if (!tasks[dateKey]) { tasks[dateKey] = []; }
-            
             tasks[dateKey].push(text);
             localStorage.setItem('user_tasks', JSON.stringify(tasks));
-            
             input.value = '';
             renderTasks();
         }
@@ -667,23 +698,88 @@
             const taskList = document.getElementById('task-list');
             const dateKey = selectedDate.toDateString();
             const dayTasks = tasks[dateKey] || [];
-
             if (dayTasks.length === 0) {
                 taskList.innerHTML = '<div style="color: #666; text-align: center; font-size: 12px; margin-top: 10px;">No tasks for this day.</div>';
                 return;
             }
-
             let html = '';
             dayTasks.forEach((task, index) => {
-                html += `
-                    <div class="task-item">
-                        <span>${task}</span>
-                        <button onclick="deleteTask(${index})">✕</button>
-                    </div>
-                `;
+                html += `<div class="task-item"><span>${task}</span><button onclick="deleteTask(${index})">✕</button></div>`;
             });
             taskList.innerHTML = html;
         }
+
+        // --- PROJECTS LOGIC ---
+        let projects = JSON.parse(localStorage.getItem('user_projects')) || [];
+
+        function addProject() {
+            const input = document.getElementById('project-input');
+            const text = input.value.trim();
+            if (text === '') return;
+            projects.push(text);
+            localStorage.setItem('user_projects', JSON.stringify(projects));
+            input.value = '';
+            renderProjects();
+        }
+
+        function deleteProject(index) {
+            projects.splice(index, 1);
+            localStorage.setItem('user_projects', JSON.stringify(projects));
+            renderProjects();
+        }
+
+        function renderProjects() {
+            const list = document.getElementById('projects-list');
+            if (projects.length === 0) {
+                list.innerHTML = '<div style="color: #666; text-align: center; font-size: 12px; margin-top: 10px;">No projects yet. Add one!</div>';
+                return;
+            }
+            let html = '';
+            projects.forEach((proj, index) => {
+                html += `<div class="project-item"><span>${proj}</span><button onclick="deleteProject(${index})">✕</button></div>`;
+            });
+            list.innerHTML = html;
+        }
+
+        // --- GALLERY LOGIC ---
+        let gallery = JSON.parse(localStorage.getItem('user_gallery')) || [];
+
+        function addGalleryImage(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                gallery.push(e.target.result);
+                localStorage.setItem('user_gallery', JSON.stringify(gallery));
+                renderGallery();
+            };
+            reader.readAsDataURL(file);
+            event.target.value = '';
+        }
+
+        function deleteGalleryImage(index) {
+            gallery.splice(index, 1);
+            localStorage.setItem('user_gallery', JSON.stringify(gallery));
+            renderGallery();
+        }
+
+        function renderGallery() {
+            const list = document.getElementById('gallery-list');
+            if (gallery.length === 0) {
+                list.innerHTML = '<div style="color: #666; text-align: center; font-size: 12px; margin-top: 10px; grid-column: span 2;">No images yet. Upload one!</div>';
+                return;
+            }
+            let html = '';
+            gallery.forEach((imgSrc, index) => {
+                html += `<div class="gallery-item"><img src="${imgSrc}"><button onclick="deleteGalleryImage(${index})">✕</button></div>`;
+            });
+            list.innerHTML = html;
+        }
+
+        // --- INITIALIZE EVERYTHING ---
+        renderProjects();
+        renderGallery();
+        renderCalendar();
 
         // --- PARTICLE EFFECT FUNCTION ---
         function loadParticles(containerId) {
@@ -692,25 +788,9 @@
                 fpsLimit: 60,
                 particles: {
                     color: { value: ["#d946ef", "#06b6d4", "#ffffff"] }, 
-                    links: {
-                        color: "#d946ef",
-                        distance: 150,
-                        enable: true,
-                        opacity: 0.15, 
-                        width: 1
-                    },
-                    move: {
-                        direction: "none",
-                        enable: true,
-                        outModes: { default: "bounce" },
-                        random: true,
-                        speed: 0.8, 
-                        straight: false
-                    },
-                    number: {
-                        density: { enable: true, area: 800 },
-                        value: 50
-                    },
+                    links: { color: "#d946ef", distance: 150, enable: true, opacity: 0.15, width: 1 },
+                    move: { direction: "none", enable: true, outModes: { default: "bounce" }, random: true, speed: 0.8, straight: false },
+                    number: { density: { enable: true, area: 800 }, value: 50 },
                     opacity: { value: 0.4 },
                     shape: { type: "circle" },
                     size: { value: { min: 1, max: 3 } }
@@ -718,7 +798,6 @@
                 detectRetina: true
             });
         }
-
         loadParticles("tsparticles-home");
         loadParticles("tsparticles-nav");
     </script>
