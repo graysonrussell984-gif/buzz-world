@@ -46,28 +46,14 @@
             background-blend-mode: overlay;
         }
 
-        /* THE BUBBLE GLASS STYLE */
+        /* THE TRUE CLEAR BUBBLE STYLE */
         .glass-panel {
-            /* Almost completely clear */
-            background: rgba(255, 255, 255, 0.02); 
-            
-            /* The bubble shine (light reflection effect) */
-            background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 60%);
-            
-            /* Strong blur */
-            backdrop-filter: blur(25px); 
-            -webkit-backdrop-filter: blur(25px);
-            
-            /* Rounded bubble edges */
+            background: transparent; 
+            backdrop-filter: blur(2px); 
+            -webkit-backdrop-filter: blur(2px);
             border-radius: 50px; 
-            
-            /* Glowing rim */
-            border: 1px solid rgba(255, 255, 255, 0.25); 
-            
-            /* Inner glow and soft outer shadow */
-            box-shadow: 
-                inset 0 0 20px rgba(255, 255, 255, 0.1), 
-                0 8px 32px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.4); 
+            box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.15), 0 8px 32px rgba(0, 0, 0, 0.3);
             
             display: flex;
             justify-content: center;
@@ -87,23 +73,15 @@
             font-weight: 900;
             letter-spacing: 3px;
             text-transform: uppercase;
-            
-            /* Neon Gradient Text */
             background: linear-gradient(90deg, #06b6d4 0%, #d946ef 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            
-            /* To make it pop, we add a subtle drop shadow behind the text */
             filter: drop-shadow(0 0 10px rgba(217, 70, 239, 0.6)) drop-shadow(0 0 20px rgba(6, 182, 212, 0.4));
         }
 
         /* HEADER HEIGHT */
-        header { 
-            height: 100px; 
-            width: 100%; 
-            padding: 0 20px;
-        }
+        header { height: 100px; width: 100%; padding: 0 20px; }
 
         /* NAVIGATION */
         nav { height: 50px; width: 100%; }
@@ -117,7 +95,6 @@
             flex: 1;
         }
 
-        /* Style for the columns holding the profiles */
         .content-box { 
             width: 100%; 
             height: 100%; 
