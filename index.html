@@ -43,14 +43,28 @@
             background-blend-mode: overlay;
         }
 
-        /* THE TRUE GLASS BOX STYLE */
+        /* THE BUBBLE GLASS STYLE */
         .glass-panel {
-            background: rgba(255, 255, 255, 0.03); 
-            backdrop-filter: blur(20px); 
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1); 
-            border-radius: 20px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            /* Almost completely clear */
+            background: rgba(255, 255, 255, 0.02); 
+            
+            /* The bubble shine (light reflection effect) */
+            background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 60%);
+            
+            /* Strong blur */
+            backdrop-filter: blur(25px); 
+            -webkit-backdrop-filter: blur(25px);
+            
+            /* Rounded bubble edges */
+            border-radius: 50px; 
+            
+            /* Glowing rim */
+            border: 1px solid rgba(255, 255, 255, 0.25); 
+            
+            /* Inner glow and soft outer shadow */
+            box-shadow: 
+                inset 0 0 20px rgba(255, 255, 255, 0.1), 
+                0 8px 32px rgba(0, 0, 0, 0.4);
             
             display: flex;
             justify-content: center;
@@ -60,6 +74,7 @@
             text-shadow: 0 2px 4px rgba(0,0,0,0.8);
             z-index: 1;
             position: relative;
+            overflow: hidden; /* Keeps the bubble shape clean */
         }
 
         /* HEADER */
@@ -95,6 +110,7 @@
             border: 3px solid rgba(217, 70, 239, 0.8); /* Pink glow border */
             margin-bottom: 20px;
             box-shadow: 0 0 20px rgba(217, 70, 239, 0.4);
+            z-index: 2;
         }
 
         /* FOOTER */
