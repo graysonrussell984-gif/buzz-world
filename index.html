@@ -30,20 +30,24 @@
             overflow-x: hidden;
         }
 
-        /* THE BACKGROUND IMAGE LAYER */
+        /* UTILITY CLASS TO HIDE ELEMENTS */
+        .hidden {
+            display: none !important;
+        }
+
+        /* THE HOMEPAGE BACKGROUND LAYER */
         .bg-image {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            /* YOUR NEW BACKGROUND LINK IS RIGHT HERE */
-            background-image: url('https://i.postimg.cc/50VTF1Xt/pngtree-abstract-technology-background-with-pink-and-blue-waves-lights-picture-image-15713085.png');
+            background-image: url('https://i.postimg.cc/5ywKpzvD/Screenshot-20260929-094937-Google.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             z-index: -1;
-            background-color: rgba(11, 7, 26, 0.5);
+            background-color: rgba(11, 7, 26, 0.4);
             background-blend-mode: overlay;
         }
 
@@ -86,39 +90,16 @@
         /* HEADER HEIGHT */
         header { height: 100px; width: 100%; padding: 0 20px; }
 
-        /* --- NEW NAVIGATION MENU STYLE --- */
+        /* NAVIGATION (NOW CLICKABLE) */
         nav { 
-            height: auto; 
+            height: 50px; 
             width: 100%; 
-            padding: 15px 20px;
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .nav-btn {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 14px;
-            font-weight: 700;
-            color: #ffffff;
-            background: rgba(20, 10, 40, 0.7);
-            border: 2px solid #d946ef;
-            padding: 10px 25px;
-            border-radius: 30px;
-            cursor: pointer;
-            box-shadow: 0 0 10px rgba(217, 70, 239, 0.4);
+            cursor: pointer; 
             transition: all 0.3s ease;
-            text-transform: uppercase;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
-
-        .nav-btn:hover {
-            background: rgba(217, 70, 239, 0.3);
-            box-shadow: 0 0 20px rgba(217, 70, 239, 0.8);
-            transform: scale(1.05);
+        nav:hover {
+            box-shadow: 0 0 20px rgba(217, 70, 239, 0.6);
+            border-color: rgba(217, 70, 239, 0.8);
         }
 
         /* 3 COLUMN CONTENT AREA */
@@ -153,70 +134,116 @@
         /* FOOTER */
         footer { height: 60px; width: 100%; }
 
+        /* --- NEW NAVIGATION ROOM STYLES --- */
+        #navigation-room {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            /* YOUR NEW BACKGROUND IMAGE IS RIGHT HERE */
+            background-image: url('https://i.postimg.cc/50VTF1Xt/pngtree-abstract-technology-background-with-pink-and-blue-waves-lights-picture-image-15713085.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        #navigation-room h1 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ffffff;
+            text-shadow: 0 0 15px #d946ef, 0 0 30px #06b6d4;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        #navigation-room p {
+            color: #ccc;
+            margin-bottom: 30px;
+            text-align: center;
+            max-width: 600px;
+        }
+
         /* MOBILE RESPONSIVE */
         @media (max-width: 768px) {
             main { grid-template-columns: 1fr; }
             .content-box { min-height: 200px; }
             header h1 { font-size: 16px; letter-spacing: 1px; }
-            .nav-btn { font-size: 12px; padding: 8px 15px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- THE IMAGE LAYER -->
-    <div class="bg-image"></div>
+    <!-- ========================================== -->
+    <!-- HOMEPAGE WRAPPER -->
+    <!-- ========================================== -->
+    <div id="homepage" style="display: flex; flex-direction: column; width: 100%; height: 100%; gap: 15px;">
+        
+        <!-- THE IMAGE LAYER -->
+        <div class="bg-image"></div>
 
-    <!-- THE LIVE PARTICLE LAYER -->
-    <div id="tsparticles" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;"></div>
+        <!-- THE LIVE PARTICLE LAYER -->
+        <div id="tsparticles" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;"></div>
 
-    <!-- HEADER -->
-    <header class="glass-panel">
-        <h1>Welcome Now let's get down to business</h1>
-    </header>
+        <!-- HEADER -->
+        <header class="glass-panel">
+            <h1>Welcome Now let's get down to business</h1>
+        </header>
 
-    <!-- NAVIGATION MENU (CLICKABLE) -->
-    <nav class="glass-panel">
-        <button class="nav-btn" onclick="navigateTo('Home')">🏠 Home</button>
-        <button class="nav-btn" onclick="navigateTo('Insights')">📊 Insights</button>
-        <button class="nav-btn" onclick="navigateTo('Activity')">⚡ Activity</button>
-        <button class="nav-btn" onclick="navigateTo('Profile')">👤 Profile</button>
-    </nav>
+        <!-- NAVIGATION MENU (CLICKABLE) -->
+        <nav class="glass-panel" onclick="goToNavRoom()">Navigation Menu</nav>
 
-    <main>
-        <!-- LEFT BOX: EINSTEIN -->
-        <div class="glass-panel content-box" onclick="navigateTo('Einstein')">
-            <img src="https://i.postimg.cc/q68vzNnY/einstein-profile-jpg.jpg" alt="Einstein" class="profile-img">
-            <span>Einstein</span>
-        </div>
+        <main>
+            <!-- LEFT BOX: EINSTEIN -->
+            <div class="glass-panel content-box">
+                <img src="https://i.postimg.cc/q68vzNnY/einstein-profile-jpg.jpg" alt="Einstein" class="profile-img">
+                <span>Einstein</span>
+            </div>
 
-        <!-- CENTER BOX: BUZZ (Main Content Placeholder) -->
-        <div class="glass-panel content-box" id="main-content-box">
-            <img src="https://i.postimg.cc/gnFwmW8W/buzz-profile-jpg.jpg" alt="Buzz" class="profile-img">
-            <span>Buzz</span>
-        </div>
+            <!-- CENTER BOX: BUZZ -->
+            <div class="glass-panel content-box">
+                <img src="https://i.postimg.cc/gnFwmW8W/buzz-profile-jpg.jpg" alt="Buzz" class="profile-img">
+                <span>Buzz</span>
+            </div>
 
-        <!-- RIGHT BOX: GOD MODE -->
-        <div class="glass-panel content-box" onclick="navigateTo('God mode')">
-            <img src="https://i.postimg.cc/Th9wMDdK/libray-backgrond.jpg" alt="Library Background" class="profile-img">
-            <span>God mode</span>
-        </div>
-    </main>
+            <!-- RIGHT BOX: GOD MODE -->
+            <div class="glass-panel content-box">
+                <img src="https://i.postimg.cc/Th9wMDdK/libray-backgrond.jpg" alt="Library Background" class="profile-img">
+                <span>God mode</span>
+            </div>
+        </main>
 
-    <!-- FOOTER -->
-    <footer class="glass-panel">Library</footer>
+        <!-- FOOTER -->
+        <footer class="glass-panel">Library</footer>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- NEW NAVIGATION ROOM -->
+    <!-- ========================================== -->
+    <div id="navigation-room" class="hidden">
+        <h1>Navigation Room</h1>
+        <p>This is the new room. We can build whatever you want in here. The background is the new image you sent.</p>
+        <button class="glass-panel" style="padding: 15px 30px; cursor: pointer; color: white; font-family: 'Orbitron', sans-serif;" onclick="goHome()">
+            ← Back to Home
+        </button>
+    </div>
 
     <!-- THE PARTICLE SCRIPT -->
     <script>
         // --- NAVIGATION LOGIC ---
-        function navigateTo(page) {
-            const mainBox = document.getElementById('main-content-box');
-            // For now, we just swap the text in the center box to show it works.
-            // Later, we will replace this with a proper page transition.
-            mainBox.innerHTML = `
-                <h2 style="font-family: 'Orbitron', sans-serif; color: #d946ef; margin-bottom: 10px;">Room: ${page}</h2>
-                <p style="font-size: 14px; color: #ccc;">This room is under construction.</p>
-            `;
+        function goToNavRoom() {
+            document.getElementById('homepage').classList.add('hidden');
+            document.getElementById('navigation-room').classList.remove('hidden');
+        }
+
+        function goHome() {
+            document.getElementById('homepage').classList.remove('hidden');
+            document.getElementById('navigation-room').classList.add('hidden');
         }
 
         // --- PARTICLE EFFECT ---
