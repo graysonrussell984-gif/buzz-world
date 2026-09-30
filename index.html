@@ -23,7 +23,7 @@
             min-height: 100vh;
             padding: 20px;
             gap: 15px;
-            background-color: #0b071a; /* Fallback color */
+            background-color: #0b071a;
             overflow-x: hidden;
         }
 
@@ -34,7 +34,6 @@
             left: 0;
             width: 100%;
             height: 100%;
-            /* YOUR IMAGE IS RIGHT HERE */
             background-image: url('https://i.postimg.cc/5ywKpzvD/Screenshot-20260929-094937-Google.jpg');
             background-size: cover;
             background-position: center;
@@ -78,7 +77,25 @@
             flex: 1;
         }
 
-        .content-box { width: 100%; height: 100%; }
+        /* Style for the columns holding the profiles */
+        .content-box { 
+            width: 100%; 
+            height: 100%; 
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        /* The circular profile images */
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(217, 70, 239, 0.8); /* Pink glow border */
+            margin-bottom: 20px;
+            box-shadow: 0 0 20px rgba(217, 70, 239, 0.4);
+        }
 
         /* FOOTER */
         footer { height: 60px; width: 100%; }
@@ -86,7 +103,7 @@
         /* MOBILE RESPONSIVE */
         @media (max-width: 768px) {
             main { grid-template-columns: 1fr; }
-            .content-box { min-height: 150px; }
+            .content-box { min-height: 200px; }
         }
     </style>
 </head>
@@ -102,9 +119,23 @@
     <nav class="glass-panel">Navigation Menu</nav>
 
     <main>
-        <div class="glass-panel content-box">Content</div>
-        <div class="glass-panel content-box">Main Content</div>
-        <div class="glass-panel content-box">Content</div>
+        <!-- LEFT BOX: EINSTEIN -->
+        <div class="glass-panel content-box">
+            <img src="https://i.postimg.cc/q68vzNnY/einstein-profile-jpg.jpg" alt="Einstein" class="profile-img">
+            <span>Einstein</span>
+        </div>
+
+        <!-- CENTER BOX: BUZZ -->
+        <div class="glass-panel content-box">
+            <img src="https://i.postimg.cc/gnFwmW8W/buzz-profile-jpg.jpg" alt="Buzz" class="profile-img">
+            <span>Buzz</span>
+        </div>
+
+        <!-- RIGHT BOX: LIBRARY -->
+        <div class="glass-panel content-box">
+            <img src="https://i.postimg.cc/kVzJsQvS/library-profil-jpg.jpg" alt="Library" class="profile-img">
+            <span>Library</span>
+        </div>
     </main>
 
     <footer class="glass-panel">Footer</footer>
@@ -112,10 +143,10 @@
     <!-- THE PARTICLE SCRIPT -->
     <script>
         tsParticles.load("tsparticles", {
-            background: { color: { value: "transparent" } }, // Transparent so the image shows
+            background: { color: { value: "transparent" } }, 
             fpsLimit: 60,
             particles: {
-                color: { value: ["#d946ef", "#06b6d4", "#ffffff"] }, // Pink, Blue, White
+                color: { value: ["#d946ef", "#06b6d4", "#ffffff"] }, 
                 links: {
                     color: "#d946ef",
                     distance: 150,
