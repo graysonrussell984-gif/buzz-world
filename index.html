@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Website</title>
     
+    <!-- THE FUTURISTIC FONT -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+    
     <!-- THE PARTICLE LIBRARY -->
     <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
 
@@ -74,11 +77,33 @@
             text-shadow: 0 2px 4px rgba(0,0,0,0.8);
             z-index: 1;
             position: relative;
-            overflow: hidden; /* Keeps the bubble shape clean */
+            overflow: hidden; 
         }
 
-        /* HEADER */
-        header { height: 80px; width: 100%; }
+        /* THE FUTURISTIC HEADER TEXT */
+        header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            
+            /* Neon Gradient Text */
+            background: linear-gradient(90deg, #06b6d4 0%, #d946ef 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            
+            /* To make it pop, we add a subtle drop shadow behind the text */
+            filter: drop-shadow(0 0 10px rgba(217, 70, 239, 0.6)) drop-shadow(0 0 20px rgba(6, 182, 212, 0.4));
+        }
+
+        /* HEADER HEIGHT */
+        header { 
+            height: 100px; 
+            width: 100%; 
+            padding: 0 20px;
+        }
 
         /* NAVIGATION */
         nav { height: 50px; width: 100%; }
@@ -107,7 +132,7 @@
             height: 120px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid rgba(217, 70, 239, 0.8); /* Pink glow border */
+            border: 3px solid rgba(217, 70, 239, 0.8);
             margin-bottom: 20px;
             box-shadow: 0 0 20px rgba(217, 70, 239, 0.4);
             z-index: 2;
@@ -120,6 +145,7 @@
         @media (max-width: 768px) {
             main { grid-template-columns: 1fr; }
             .content-box { min-height: 200px; }
+            header h1 { font-size: 18px; letter-spacing: 1px; }
         }
     </style>
 </head>
@@ -131,7 +157,11 @@
     <!-- THE LIVE PARTICLE LAYER -->
     <div id="tsparticles" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;"></div>
 
-    <header class="glass-panel">Header</header>
+    <!-- HEADER WITH WELCOME TEXT -->
+    <header class="glass-panel">
+        <h1>Welcome to my home</h1>
+    </header>
+
     <nav class="glass-panel">Navigation Menu</nav>
 
     <main>
