@@ -69,27 +69,32 @@
         .profile-img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid rgba(217, 70, 239, 0.8); margin-bottom: 20px; box-shadow: 0 0 20px rgba(217, 70, 239, 0.4); }
         #homepage footer { height: 60px; width: 100%; }
 
-        /* --- NAVIGATION ROOM (GOD MODE) --- */
+        /* --- GOD MODE ROOM (DASHBOARD) --- */
         #navigation-room {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100dvh;
             background-image: url('https://i.postimg.cc/VkVdkDLn/Dragon-ball.jpg');
             background-size: contain; 
             background-position: center; 
             background-repeat: no-repeat;
             background-color: #0b071a;
             z-index: 100; 
-            padding: 20px; 
             display: flex; 
             flex-direction: column; 
-            gap: 15px; 
             overflow: hidden;
         }
-        .nav-room-top { display: flex; justify-content: center; align-items: center; padding: 15px 20px; border-radius: 30px; border: 1px solid rgba(217, 70, 239, 0.5); box-shadow: 0 0 15px rgba(217, 70, 239, 0.3); flex-shrink: 0; gap: 15px; }
-        .nav-room-top h1 { font-family: 'Orbitron', sans-serif; font-size: 20px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; background: linear-gradient(90deg, #06b6d4 0%, #d946ef 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; filter: drop-shadow(0 0 10px rgba(217, 70, 239, 0.6)); text-align: center; }
-        .hamburger-btn { background: transparent; border: none; color: #fff; font-size: 22px; cursor: pointer; padding: 5px 10px; border-radius: 8px; }
-        .hamburger-btn:hover { background: rgba(255,255,255,0.1); }
-        .nav-room-grid { display: grid; grid-template-columns: 1fr 2fr 1.2fr; gap: 15px; width: 100%; flex: 1; min-height: 0; overflow: hidden; }
-        .nav-col-left { display: flex; flex-direction: column; align-items: center; padding: 20px; border: 1px solid rgba(217, 70, 239, 0.4); border-radius: 40px; box-shadow: inset 0 0 20px rgba(217, 70, 239, 0.1); height: 100%; min-height: 0; background: rgba(11, 7, 26, 0.7); backdrop-filter: blur(4px); }
+        .godmode-header { display: flex; align-items: center; justify-content: space-between; padding: 15px 20px; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(5px); border-bottom: 1px solid rgba(255,255,255,0.1); flex-shrink: 0; z-index: 10; }
+        .godmode-header h2 { font-family: 'Orbitron', sans-serif; font-size: 18px; color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
+        .godmode-header button { background: transparent; border: none; color: #fff; font-size: 16px; cursor: pointer; font-family: 'Orbitron', sans-serif; text-shadow: 0 2px 4px rgba(0,0,0,0.8); padding: 5px 10px; border-radius: 5px; }
+        .godmode-header button:hover { background: rgba(255,255,255,0.1); }
+
+        .godmode-scroll-area {
+            flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 15px; min-height: 0;
+        }
+        .godmode-scroll-area::-webkit-scrollbar { width: 6px; }
+        .godmode-scroll-area::-webkit-scrollbar-thumb { background: rgba(217, 70, 239, 0.5); border-radius: 10px; }
+
+        .nav-room-grid { display: grid; grid-template-columns: 1fr 2fr 1.2fr; gap: 15px; width: 100%; min-height: 0; }
+        .nav-col-left { display: flex; flex-direction: column; align-items: center; padding: 20px; border: 1px solid rgba(217, 70, 239, 0.4); border-radius: 40px; box-shadow: inset 0 0 20px rgba(217, 70, 239, 0.1); height: 100%; min-height: 0; background: rgba(11, 7, 26, 0.85); backdrop-filter: blur(4px); }
         .avatar-circle { width: 80px; height: 80px; border-radius: 50%; background: rgba(255,255,255,0.1); border: 2px solid #d946ef; display: flex; justify-content: center; align-items: center; margin-bottom: 15px; box-shadow: 0 0 20px rgba(217, 70, 239, 0.5); overflow: hidden; flex-shrink: 0; }
         .avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
         .profile-name { font-family: 'Orbitron', sans-serif; text-align: center; margin-bottom: 15px; font-size: 14px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; background: linear-gradient(90deg, #06b6d4 0%, #d946ef 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; filter: drop-shadow(0 0 8px rgba(217, 70, 239, 0.5)); flex-shrink: 0; }
@@ -102,7 +107,7 @@
         .reminders-list::-webkit-scrollbar-thumb { background: rgba(6, 182, 212, 0.5); border-radius: 10px; }
         .reminder-item { background: rgba(255,255,255,0.05); border-left: 3px solid #d946ef; border-radius: 5px; padding: 8px 10px; font-size: 11px; word-break: break-word; }
         .reminder-date { color: #06b6d4; font-weight: bold; margin-bottom: 3px; }
-        .nav-col-center { display: flex; flex-direction: column; padding: 20px; border: 1px solid rgba(217, 70, 239, 0.4); border-radius: 40px; box-shadow: inset 0 0 20px rgba(217, 70, 239, 0.1); height: 100%; min-height: 0; background: rgba(11, 7, 26, 0.7); backdrop-filter: blur(4px); }
+        .nav-col-center { display: flex; flex-direction: column; padding: 20px; border: 1px solid rgba(217, 70, 239, 0.4); border-radius: 40px; box-shadow: inset 0 0 20px rgba(217, 70, 239, 0.1); height: 100%; min-height: 0; background: rgba(11, 7, 26, 0.85); backdrop-filter: blur(4px); }
         .center-split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; height: 100%; min-height: 0; }
         .sub-panel { display: flex; flex-direction: column; height: 100%; background: rgba(255,255,255,0.03); border-radius: 20px; border: 1px solid rgba(255,255,255,0.15); padding: 15px; overflow: hidden; min-height: 0; }
         .section-title { font-family: 'Orbitron', sans-serif; font-size: 14px; margin-bottom: 10px; color: #06b6d4; text-align: center; flex-shrink: 0; }
@@ -118,7 +123,7 @@
         .gallery-item { position: relative; width: 100%; height: 100px; border-radius: 10px; overflow: hidden; border: 1px solid rgba(255,255,255,0.2); }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
         .gallery-item button { position: absolute; top: 5px; right: 5px; background: rgba(0,0,0,0.6); border: none; color: #ff4d4d; border-radius: 50%; width: 20px; height: 20px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 12px; }
-        .nav-col-right { display: flex; flex-direction: column; gap: 10px; padding: 20px; border: 1px solid rgba(217, 70, 239, 0.4); border-radius: 40px; box-shadow: inset 0 0 20px rgba(217, 70, 239, 0.1); height: 100%; min-height: 0; background: rgba(11, 7, 26, 0.7); backdrop-filter: blur(4px); }
+        .nav-col-right { display: flex; flex-direction: column; gap: 10px; padding: 20px; border: 1px solid rgba(217, 70, 239, 0.4); border-radius: 40px; box-shadow: inset 0 0 20px rgba(217, 70, 239, 0.1); height: 100%; min-height: 0; background: rgba(11, 7, 26, 0.85); backdrop-filter: blur(4px); }
         .calendar-header { display: flex; justify-content: space-between; align-items: center; font-family: 'Orbitron', sans-serif; font-size: 14px; margin-bottom: 10px; color: #06b6d4; width: 100%; flex-shrink: 0; }
         .calendar-header button { background: transparent; border: none; color: #d946ef; cursor: pointer; font-size: 16px; }
         .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; text-align: center; margin-bottom: 15px; width: 100%; flex-shrink: 0; }
@@ -137,9 +142,8 @@
         .task-list::-webkit-scrollbar-thumb { background: rgba(6, 182, 212, 0.5); border-radius: 10px; }
         .task-item { background: rgba(255,255,255,0.05); border-left: 3px solid #06b6d4; border-radius: 5px; padding: 8px 10px; display: flex; justify-content: space-between; align-items: center; }
         .task-item button { background: transparent; border: none; color: #ff4d4d; cursor: pointer; font-size: 14px; }
-        .back-home-btn { margin-top: 5px; padding: 12px 30px; cursor: pointer; color: white; font-family: 'Orbitron', sans-serif; background: rgba(11, 7, 26, 0.7); backdrop-filter: blur(4px); border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 30px; flex-shrink: 0; align-self: center; }
 
-        /* --- EINSTEIN & BUZZ ROOM LAYOUT --- */
+        /* --- EINSTEIN, BUZZ & GOD MODE CHAT ROOMS --- */
         #einstein-room, #buzz-room {
             position: fixed; top: 0; left: 0; width: 100%; height: 100dvh;
             background-size: contain; background-position: center; background-repeat: no-repeat;
@@ -148,14 +152,14 @@
         #einstein-room { background-image: url('https://i.postimg.cc/NMYVtnpv/Screenshot-20260930-221454-Google.jpg'); }
         #buzz-room { background-image: url('https://i.postimg.cc/NLWXFThN/buzz-bg-jpg.jpg'); background-size: cover; }
         
-        .einstein-header { display: flex; align-items: center; justify-content: space-between; padding: 15px 20px; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(5px); border-bottom: 1px solid rgba(255,255,255,0.1); flex-shrink: 0; }
-        .einstein-header h2 { font-family: 'Orbitron', sans-serif; font-size: 18px; color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
-        .einstein-header button { background: transparent; border: none; color: #fff; font-size: 16px; cursor: pointer; font-family: 'Orbitron', sans-serif; text-shadow: 0 2px 4px rgba(0,0,0,0.8); padding: 5px 10px; border-radius: 5px; }
-        .einstein-header button:hover { background: rgba(255,255,255,0.1); }
-        .einstein-chat-area { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px; min-height: 0; }
-        .einstein-msg { max-width: 80%; padding: 12px 16px; border-radius: 15px; line-height: 1.5; font-family: 'Courier New', Courier, monospace; font-size: 15px; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); }
-        .einstein-msg.ai { background-color: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.3); color: #fff; align-self: flex-start; }
-        .einstein-msg.user { background-color: rgba(74, 144, 226, 0.7); color: #fff; align-self: flex-end; }
+        .room-header { display: flex; align-items: center; justify-content: space-between; padding: 15px 20px; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(5px); border-bottom: 1px solid rgba(255,255,255,0.1); flex-shrink: 0; z-index: 10; }
+        .room-header h2 { font-family: 'Orbitron', sans-serif; font-size: 18px; color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
+        .room-header button { background: transparent; border: none; color: #fff; font-size: 16px; cursor: pointer; font-family: 'Orbitron', sans-serif; text-shadow: 0 2px 4px rgba(0,0,0,0.8); padding: 5px 10px; border-radius: 5px; }
+        .room-header button:hover { background: rgba(255,255,255,0.1); }
+        .chat-area { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px; min-height: 0; }
+        .chat-msg { max-width: 80%; padding: 12px 16px; border-radius: 15px; line-height: 1.5; font-family: 'Courier New', Courier, monospace; font-size: 15px; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); }
+        .chat-msg.ai { background-color: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.3); color: #fff; align-self: flex-start; }
+        .chat-msg.user { background-color: rgba(74, 144, 226, 0.7); color: #fff; align-self: flex-end; }
 
         /* --- CUSTOM CHATBOX (DARK THEME) --- */
         .custom-chatbox {
@@ -163,7 +167,7 @@
             border-radius: 24px; padding: 16px 20px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.5);
             display: flex; flex-direction: column; width: 100%; max-width: 800px;
-            margin: 0 auto 20px auto; position: relative; flex-shrink: 0;
+            margin: 0 auto 20px auto; position: relative; flex-shrink: 0; z-index: 10;
         }
         .custom-input-row { display: flex; align-items: center; margin-bottom: 12px; }
         .custom-input-row input {
@@ -279,7 +283,7 @@
                 <img src="https://i.postimg.cc/gnFwmW8W/buzz-profile-jpg.jpg" alt="Buzz" class="profile-img">
                 <span>Buzz</span>
             </div>
-            <div class="glass-panel content-box" onclick="goToNavRoom()">
+            <div class="glass-panel content-box" onclick="openGodMode()">
                 <img src="https://i.postimg.cc/Th9wMDdK/libray-backgrond.jpg" alt="Library Background" class="profile-img">
                 <span>God mode</span>
             </div>
@@ -288,69 +292,73 @@
         <footer class="glass-panel">Library</footer>
     </div>
 
-    <!-- NAVIGATION ROOM (GOD MODE) -->
+    <!-- GOD MODE ROOM (DASHBOARD + CHAT) -->
     <div id="navigation-room" class="hidden">
         <div id="tsparticles-nav" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none;"></div>
 
-        <div class="nav-room-top glass-panel">
-            <button class="hamburger-btn" onclick="toggleSidebar()">☰</button>
-            <h1>Let's get to the bag</h1>
+        <div class="godmode-header">
+            <button onclick="toggleSidebar()">☰</button>
+            <h2>God Mode</h2>
+            <button onclick="closeGodMode()">← Back</button>
         </div>
 
-        <div class="nav-room-grid">
-            <div class="nav-col-left">
-                <div class="avatar-circle"><img src="https://i.postimg.cc/xTWNKK7X/home-bg-jpg.jpg" alt="Grayson"></div>
-                <div class="profile-name">What we doing today</div>
-                <div class="stat-row">
-                    <div class="stat-box"><div id="stat-projects">0</div><div>Projects</div></div>
-                    <div class="stat-box"><div id="stat-gallery">0</div><div>Images</div></div>
-                    <div class="stat-box"><div id="stat-tasks">0</div><div>Tasks</div></div>
-                </div>
-                <div class="reminders-section">
-                    <div class="reminders-title">Upcoming Reminders</div>
-                    <div class="reminders-list" id="upcoming-reminders"></div>
-                </div>
-            </div>
-
-            <div class="nav-col-center">
-                <div class="center-split-grid">
-                    <div class="sub-panel">
-                        <div class="section-title">My Projects</div>
-                        <div class="add-item-area">
-                            <input type="text" id="project-input" placeholder="Add a project...">
-                            <button onclick="addProject()">+</button>
-                        </div>
-                        <div class="scroll-list" id="projects-list"></div>
+        <div class="godmode-scroll-area">
+            <div class="nav-room-grid">
+                <div class="nav-col-left">
+                    <div class="avatar-circle"><img src="https://i.postimg.cc/xTWNKK7X/home-bg-jpg.jpg" alt="Grayson"></div>
+                    <div class="profile-name">What we doing today</div>
+                    <div class="stat-row">
+                        <div class="stat-box"><div id="stat-projects">0</div><div>Projects</div></div>
+                        <div class="stat-box"><div id="stat-gallery">0</div><div>Images</div></div>
+                        <div class="stat-box"><div id="stat-tasks">0</div><div>Tasks</div></div>
                     </div>
-                    <div class="sub-panel">
-                        <div class="section-title">Gallery</div>
-                        <div class="add-item-area">
-                            <input type="file" id="gallery-upload" accept="image/*" style="display:none;" onchange="addGalleryImage(event)">
-                            <button onclick="document.getElementById('gallery-upload').click()" style="flex: 1;">Upload Image</button>
-                        </div>
-                        <div class="scroll-list gallery-grid" id="gallery-list"></div>
+                    <div class="reminders-section">
+                        <div class="reminders-title">Upcoming Reminders</div>
+                        <div class="reminders-list" id="upcoming-reminders"></div>
                     </div>
                 </div>
-            </div>
 
-            <div class="nav-col-right">
-                <div class="calendar-header">
-                    <button onclick="changeMonth(-1)">◀</button>
-                    <span id="month-year-display">Month Year</span>
-                    <button onclick="changeMonth(1)">▶</button>
+                <div class="nav-col-center">
+                    <div class="center-split-grid">
+                        <div class="sub-panel">
+                            <div class="section-title">My Projects</div>
+                            <div class="add-item-area">
+                                <input type="text" id="project-input" placeholder="Add a project...">
+                                <button onclick="addProject()">+</button>
+                            </div>
+                            <div class="scroll-list" id="projects-list"></div>
+                        </div>
+                        <div class="sub-panel">
+                            <div class="section-title">Gallery</div>
+                            <div class="add-item-area">
+                                <input type="file" id="gallery-upload" accept="image/*" style="display:none;" onchange="addGalleryImage(event)">
+                                <button onclick="document.getElementById('gallery-upload').click()" style="flex: 1;">Upload Image</button>
+                            </div>
+                            <div class="scroll-list gallery-grid" id="gallery-list"></div>
+                        </div>
+                    </div>
                 </div>
-                <div class="calendar-grid" id="calendar-days"></div>
-                <div class="task-input-area">
-                    <input type="text" id="task-input" placeholder="Add a task..." onkeypress="if(event.key === 'Enter') addTask()">
-                    <button onclick="addTask()">+</button>
+
+                <div class="nav-col-right">
+                    <div class="calendar-header">
+                        <button onclick="changeMonth(-1)">◀</button>
+                        <span id="month-year-display">Month Year</span>
+                        <button onclick="changeMonth(1)">▶</button>
+                    </div>
+                    <div class="calendar-grid" id="calendar-days"></div>
+                    <div class="task-input-area">
+                        <input type="text" id="task-input" placeholder="Add a task..." onkeypress="if(event.key === 'Enter') addTask()">
+                        <button onclick="addTask()">+</button>
+                    </div>
+                    <div class="task-list" id="task-list"></div>
                 </div>
-                <div class="task-list" id="task-list"></div>
             </div>
         </div>
 
-        <button class="back-home-btn" onclick="goHome()">← Back to Home</button>
+        <!-- GOD MODE CHAT AREA -->
+        <div class="chat-area" id="godmode-chat-box" style="flex: 1; min-height: 100px; max-height: 200px;"></div>
 
-        <!-- CHAT BAR FOR GOD MODE -->
+        <!-- GOD MODE CHAT BOX -->
         <div class="custom-chatbox">
             <div class="attachment-menu hidden" id="godmode-attachment-menu">
                 <button onclick="triggerFileInput('camera')">📷 Camera</button>
@@ -376,14 +384,14 @@
     <!-- ========================================== -->
     <div id="einstein-room" class="hidden">
         
-        <div class="einstein-header">
+        <div class="room-header">
             <button onclick="toggleSidebar()">☰</button>
             <h2>Einstein</h2>
             <button onclick="closeEinstein()">← Back</button>
         </div>
 
-        <div class="einstein-chat-area" id="einstein-chat-box">
-            <div class="einstein-msg ai">I am Einstein. I am strictly for school. Let's fix that grammar.</div>
+        <div class="chat-area" id="einstein-chat-box">
+            <div class="chat-msg ai">I am Einstein. I am strictly for school. Let's fix that grammar.</div>
         </div>
 
         <div class="custom-chatbox">
@@ -412,14 +420,14 @@
     <!-- ========================================== -->
     <div id="buzz-room" class="hidden">
         
-        <div class="einstein-header">
+        <div class="room-header">
             <button onclick="toggleSidebar()">☰</button>
             <h2>Buzz</h2>
             <button onclick="closeBuzz()">← Back</button>
         </div>
 
-        <div class="einstein-chat-area" id="buzz-chat-box">
-            <div class="einstein-msg ai">I am Buzz. I remember everything. How can I help you today?</div>
+        <div class="chat-area" id="buzz-chat-box">
+            <div class="chat-msg ai">I am Buzz. I remember everything. How can I help you today?</div>
         </div>
 
         <div class="custom-chatbox">
@@ -466,6 +474,19 @@
             renderCalendar();
             updateProfileStats();
             renderReminders();
+        }
+
+        function openGodMode() {
+            document.getElementById('homepage').classList.add('hidden');
+            document.getElementById('navigation-room').classList.remove('hidden');
+            renderCalendar();
+            updateProfileStats();
+            renderReminders();
+        }
+
+        function closeGodMode() {
+            document.getElementById('navigation-room').classList.add('hidden');
+            document.getElementById('homepage').classList.remove('hidden');
         }
 
         function goHome() {
@@ -555,14 +576,14 @@
 
             const chatBox = document.getElementById('einstein-chat-box');
             const userMsg = document.createElement('div');
-            userMsg.className = 'einstein-msg user';
+            userMsg.className = 'chat-msg user';
             userMsg.textContent = text;
             chatBox.appendChild(userMsg);
             input.value = '';
             chatBox.scrollTop = chatBox.scrollHeight;
 
             const thinkingMsg = document.createElement('div');
-            thinkingMsg.className = 'einstein-msg ai';
+            thinkingMsg.className = 'chat-msg ai';
             thinkingMsg.textContent = "Thinking...";
             chatBox.appendChild(thinkingMsg);
             chatBox.scrollTop = chatBox.scrollHeight;
@@ -581,13 +602,13 @@
                 const data = await response.json();
                 chatBox.removeChild(thinkingMsg);
                 const aiMsg = document.createElement('div');
-                aiMsg.className = 'einstein-msg ai';
+                aiMsg.className = 'chat-msg ai';
                 aiMsg.textContent = data.choices ? data.choices[0].message.content : "Error connecting to AI.";
                 chatBox.appendChild(aiMsg);
             } catch (error) {
                 if (chatBox.contains(thinkingMsg)) chatBox.removeChild(thinkingMsg);
                 const err = document.createElement('div');
-                err.className = 'einstein-msg ai';
+                err.className = 'chat-msg ai';
                 err.textContent = "Error: " + error.message;
                 chatBox.appendChild(err);
             }
@@ -601,14 +622,14 @@
 
             const chatBox = document.getElementById('buzz-chat-box');
             const userMsg = document.createElement('div');
-            userMsg.className = 'einstein-msg user';
+            userMsg.className = 'chat-msg user';
             userMsg.textContent = text;
             chatBox.appendChild(userMsg);
             input.value = '';
             chatBox.scrollTop = chatBox.scrollHeight;
 
             const thinkingMsg = document.createElement('div');
-            thinkingMsg.className = 'einstein-msg ai';
+            thinkingMsg.className = 'chat-msg ai';
             thinkingMsg.textContent = "Thinking...";
             chatBox.appendChild(thinkingMsg);
             chatBox.scrollTop = chatBox.scrollHeight;
@@ -627,13 +648,13 @@
                 const data = await response.json();
                 chatBox.removeChild(thinkingMsg);
                 const aiMsg = document.createElement('div');
-                aiMsg.className = 'einstein-msg ai';
+                aiMsg.className = 'chat-msg ai';
                 aiMsg.textContent = data.choices ? data.choices[0].message.content : "Error connecting to AI.";
                 chatBox.appendChild(aiMsg);
             } catch (error) {
                 if (chatBox.contains(thinkingMsg)) chatBox.removeChild(thinkingMsg);
                 const err = document.createElement('div');
-                err.className = 'einstein-msg ai';
+                err.className = 'chat-msg ai';
                 err.textContent = "Error: " + error.message;
                 chatBox.appendChild(err);
             }
@@ -645,22 +666,19 @@
             const text = input.value.trim();
             if (text === '') return;
 
-            // God Mode uses the navigation room, so we create a temporary popup chat
-            // Or we can just append to a hidden chat area. Let's use an alert-style response.
-            
+            const chatBox = document.getElementById('godmode-chat-box');
+            const userMsg = document.createElement('div');
+            userMsg.className = 'chat-msg user';
+            userMsg.textContent = text;
+            chatBox.appendChild(userMsg);
+            input.value = '';
+            chatBox.scrollTop = chatBox.scrollHeight;
+
             const thinkingMsg = document.createElement('div');
-            thinkingMsg.className = 'einstein-msg ai';
+            thinkingMsg.className = 'chat-msg ai';
             thinkingMsg.textContent = "Thinking...";
-            thinkingMsg.style.position = 'fixed';
-            thinkingMsg.style.bottom = '120px';
-            thinkingMsg.style.right = '20px';
-            thinkingMsg.style.zIndex = '9999';
-            thinkingMsg.style.background = '#1e1e1e';
-            thinkingMsg.style.border = '1px solid #333';
-            thinkingMsg.style.padding = '12px 16px';
-            thinkingMsg.style.borderRadius = '15px';
-            thinkingMsg.style.maxWidth = '300px';
-            document.body.appendChild(thinkingMsg);
+            chatBox.appendChild(thinkingMsg);
+            chatBox.scrollTop = chatBox.scrollHeight;
 
             try {
                 const response = await fetch("/chat", {
@@ -674,45 +692,22 @@
                     })
                 });
                 const data = await response.json();
-                document.body.removeChild(thinkingMsg);
-                
+                chatBox.removeChild(thinkingMsg);
                 const aiMsg = document.createElement('div');
-                aiMsg.className = 'einstein-msg ai';
+                aiMsg.className = 'chat-msg ai';
                 aiMsg.textContent = data.choices ? data.choices[0].message.content : "Error connecting to AI.";
-                aiMsg.style.position = 'fixed';
-                aiMsg.style.bottom = '120px';
-                aiMsg.style.right = '20px';
-                aiMsg.style.zIndex = '9999';
-                aiMsg.style.background = '#1e1e1e';
-                aiMsg.style.border = '1px solid #333';
-                aiMsg.style.padding = '12px 16px';
-                aiMsg.style.borderRadius = '15px';
-                aiMsg.style.maxWidth = '300px';
-                document.body.appendChild(aiMsg);
-                
-                // Remove after 8 seconds
-                setTimeout(() => { if(document.body.contains(aiMsg)) document.body.removeChild(aiMsg); }, 8000);
-                
+                chatBox.appendChild(aiMsg);
             } catch (error) {
-                if (document.body.contains(thinkingMsg)) document.body.removeChild(thinkingMsg);
+                if (chatBox.contains(thinkingMsg)) chatBox.removeChild(thinkingMsg);
                 const err = document.createElement('div');
+                err.className = 'chat-msg ai';
                 err.textContent = "Error: " + error.message;
-                err.style.position = 'fixed';
-                err.style.bottom = '120px';
-                err.style.right = '20px';
-                err.style.zIndex = '9999';
-                err.style.background = '#1e1e1e';
-                err.style.padding = '12px';
-                err.style.borderRadius = '10px';
-                err.style.color = '#ff4d4d';
-                document.body.appendChild(err);
-                setTimeout(() => { if(document.body.contains(err)) document.body.removeChild(err); }, 8000);
+                chatBox.appendChild(err);
             }
-            
-            input.value = '';
+            chatBox.scrollTop = chatBox.scrollHeight;
         }
 
-        // --- NAVIGATION ROOM LOGIC ---
+        // --- DASHBOARD LOGIC ---
         function updateProfileStats() {
             const projects = JSON.parse(localStorage.getItem('user_projects')) || [];
             const gallery = JSON.parse(localStorage.getItem('user_gallery')) || [];
