@@ -4,11 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Website</title>
-    
-    <!-- THE FUTURISTIC FONT -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
-    
-    <!-- THE PARTICLE LIBRARY -->
     <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
 
     <style>
@@ -20,7 +16,7 @@
         #sidebar-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0,0,0,0.6); z-index: 999; }
         #sidebar {
             position: fixed; top: 0; left: 0; width: 280px; height: 100vh;
-            background-image: url('https://i.postimg.cc/76npSNQf/HD-wallpaper-albert-einstein-funny-inteligent-science-space.jpg');
+            background-image: url('https://i.postimg.cc/KjfYS5Hn/90b49f50-f33c-4f15-ac81-95ce280ed1b3.jpg');
             background-size: cover; background-position: center;
             z-index: 1000; transition: transform 0.3s ease-in-out;
             box-shadow: 5px 0 15px rgba(0,0,0,0.5);
@@ -37,7 +33,6 @@
         }
         .sidebar-content a:hover { background: rgba(217, 70, 239, 0.3); box-shadow: 0 0 15px rgba(217, 70, 239, 0.6); }
 
-        /* THE HOMEPAGE BACKGROUND LAYER */
         .bg-image {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('https://i.postimg.cc/5ywKpzvD/Screenshot-20260929-094937-Google.jpg');
@@ -45,7 +40,6 @@
             z-index: -2; background-color: rgba(11, 7, 26, 0.4); background-blend-mode: overlay;
         }
 
-        /* THE TRUE CLEAR BUBBLE STYLE */
         .glass-panel {
             background: transparent; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
             border-radius: 50px; border: 1px solid rgba(255, 255, 255, 0.4); 
@@ -55,7 +49,6 @@
             position: relative; overflow: hidden; z-index: 1;
         }
 
-        /* THE FUTURISTIC HEADER TEXT */
         header h1 {
             font-family: 'Orbitron', sans-serif; font-size: 22px; font-weight: 900;
             letter-spacing: 2px; text-transform: uppercase;
@@ -76,18 +69,27 @@
         .profile-img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid rgba(217, 70, 239, 0.8); margin-bottom: 20px; box-shadow: 0 0 20px rgba(217, 70, 239, 0.4); }
         #homepage footer { height: 60px; width: 100%; }
 
-        /* --- NAVIGATION ROOM LAYOUT --- */
+        /* --- NAVIGATION ROOM (GOD MODE) --- */
         #navigation-room {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background-image: url('https://i.postimg.cc/Dy6xxLm9/Screenshot-20260930-133327-Google.jpg');
-            background-size: cover; background-position: center; background-repeat: no-repeat;
-            z-index: 100; background-color: rgba(11, 7, 26, 0.6); background-blend-mode: overlay;
-            padding: 20px; display: flex; flex-direction: column; gap: 15px; overflow-y: auto;
+            background-image: url('https://i.postimg.cc/VkVdkDLn/Dragon-ball.jpg');
+            background-size: contain; 
+            background-position: center; 
+            background-repeat: no-repeat;
+            background-color: #0b071a;
+            z-index: 100; 
+            padding: 20px; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 15px; 
+            overflow: hidden;
         }
-        .nav-room-top { display: flex; justify-content: center; align-items: center; padding: 15px 20px; border-radius: 30px; border: 1px solid rgba(217, 70, 239, 0.5); box-shadow: 0 0 15px rgba(217, 70, 239, 0.3); flex-shrink: 0; }
+        .nav-room-top { display: flex; justify-content: center; align-items: center; padding: 15px 20px; border-radius: 30px; border: 1px solid rgba(217, 70, 239, 0.5); box-shadow: 0 0 15px rgba(217, 70, 239, 0.3); flex-shrink: 0; gap: 15px; }
         .nav-room-top h1 { font-family: 'Orbitron', sans-serif; font-size: 20px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; background: linear-gradient(90deg, #06b6d4 0%, #d946ef 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; filter: drop-shadow(0 0 10px rgba(217, 70, 239, 0.6)); text-align: center; }
-        .nav-room-grid { display: grid; grid-template-columns: 1fr 2fr 1.2fr; gap: 15px; width: 100%; flex: 1; min-height: 0; }
-        .nav-col-left { display: flex; flex-direction: column; align-items: center; padding: 20px; border: 1px solid rgba(217, 70, 239, 0.4); border-radius: 40px; box-shadow: inset 0 0 20px rgba(217, 70, 239, 0.1); height: 100%; min-height: 0; }
+        .hamburger-btn { background: transparent; border: none; color: #fff; font-size: 22px; cursor: pointer; padding: 5px 10px; border-radius: 8px; }
+        .hamburger-btn:hover { background: rgba(255,255,255,0.1); }
+        .nav-room-grid { display: grid; grid-template-columns: 1fr 2fr 1.2fr; gap: 15px; width: 100%; flex: 1; min-height: 0; overflow: hidden; }
+        .nav-col-left { display: flex; flex-direction: column; align-items: center; padding: 20px; border: 1px solid rgba(217, 70, 239, 0.4); border-radius: 40px; box-shadow: inset 0 0 20px rgba(217, 70, 239, 0.1); height: 100%; min-height: 0; background: rgba(11, 7, 26, 0.7); backdrop-filter: blur(4px); }
         .avatar-circle { width: 80px; height: 80px; border-radius: 50%; background: rgba(255,255,255,0.1); border: 2px solid #d946ef; display: flex; justify-content: center; align-items: center; margin-bottom: 15px; box-shadow: 0 0 20px rgba(217, 70, 239, 0.5); overflow: hidden; flex-shrink: 0; }
         .avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
         .profile-name { font-family: 'Orbitron', sans-serif; text-align: center; margin-bottom: 15px; font-size: 14px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; background: linear-gradient(90deg, #06b6d4 0%, #d946ef 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; filter: drop-shadow(0 0 8px rgba(217, 70, 239, 0.5)); flex-shrink: 0; }
@@ -100,7 +102,7 @@
         .reminders-list::-webkit-scrollbar-thumb { background: rgba(6, 182, 212, 0.5); border-radius: 10px; }
         .reminder-item { background: rgba(255,255,255,0.05); border-left: 3px solid #d946ef; border-radius: 5px; padding: 8px 10px; font-size: 11px; word-break: break-word; }
         .reminder-date { color: #06b6d4; font-weight: bold; margin-bottom: 3px; }
-        .nav-col-center { display: flex; flex-direction: column; padding: 20px; border: 1px solid rgba(217, 70, 239, 0.4); border-radius: 40px; box-shadow: inset 0 0 20px rgba(217, 70, 239, 0.1); height: 100%; min-height: 0; }
+        .nav-col-center { display: flex; flex-direction: column; padding: 20px; border: 1px solid rgba(217, 70, 239, 0.4); border-radius: 40px; box-shadow: inset 0 0 20px rgba(217, 70, 239, 0.1); height: 100%; min-height: 0; background: rgba(11, 7, 26, 0.7); backdrop-filter: blur(4px); }
         .center-split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; height: 100%; min-height: 0; }
         .sub-panel { display: flex; flex-direction: column; height: 100%; background: rgba(255,255,255,0.03); border-radius: 20px; border: 1px solid rgba(255,255,255,0.15); padding: 15px; overflow: hidden; min-height: 0; }
         .section-title { font-family: 'Orbitron', sans-serif; font-size: 14px; margin-bottom: 10px; color: #06b6d4; text-align: center; flex-shrink: 0; }
@@ -116,7 +118,7 @@
         .gallery-item { position: relative; width: 100%; height: 100px; border-radius: 10px; overflow: hidden; border: 1px solid rgba(255,255,255,0.2); }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
         .gallery-item button { position: absolute; top: 5px; right: 5px; background: rgba(0,0,0,0.6); border: none; color: #ff4d4d; border-radius: 50%; width: 20px; height: 20px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 12px; }
-        .nav-col-right { display: flex; flex-direction: column; gap: 10px; padding: 20px; border: 1px solid rgba(217, 70, 239, 0.4); border-radius: 40px; box-shadow: inset 0 0 20px rgba(217, 70, 239, 0.1); height: 100%; min-height: 0; }
+        .nav-col-right { display: flex; flex-direction: column; gap: 10px; padding: 20px; border: 1px solid rgba(217, 70, 239, 0.4); border-radius: 40px; box-shadow: inset 0 0 20px rgba(217, 70, 239, 0.1); height: 100%; min-height: 0; background: rgba(11, 7, 26, 0.7); backdrop-filter: blur(4px); }
         .calendar-header { display: flex; justify-content: space-between; align-items: center; font-family: 'Orbitron', sans-serif; font-size: 14px; margin-bottom: 10px; color: #06b6d4; width: 100%; flex-shrink: 0; }
         .calendar-header button { background: transparent; border: none; color: #d946ef; cursor: pointer; font-size: 16px; }
         .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; text-align: center; margin-bottom: 15px; width: 100%; flex-shrink: 0; }
@@ -135,16 +137,17 @@
         .task-list::-webkit-scrollbar-thumb { background: rgba(6, 182, 212, 0.5); border-radius: 10px; }
         .task-item { background: rgba(255,255,255,0.05); border-left: 3px solid #06b6d4; border-radius: 5px; padding: 8px 10px; display: flex; justify-content: space-between; align-items: center; }
         .task-item button { background: transparent; border: none; color: #ff4d4d; cursor: pointer; font-size: 14px; }
-        .back-home-btn { margin-top: 15px; margin-bottom: 20px; padding: 15px 30px; cursor: pointer; color: white; font-family: 'Orbitron', sans-serif; background: transparent; flex-shrink: 0; }
+        .back-home-btn { margin-top: 5px; padding: 12px 30px; cursor: pointer; color: white; font-family: 'Orbitron', sans-serif; background: rgba(11, 7, 26, 0.7); backdrop-filter: blur(4px); border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 30px; flex-shrink: 0; align-self: center; }
 
-        /* --- EINSTEIN ROOM LAYOUT --- */
-        #einstein-room {
+        /* --- EINSTEIN & BUZZ ROOM LAYOUT --- */
+        #einstein-room, #buzz-room {
             position: fixed; top: 0; left: 0; width: 100%; height: 100dvh;
-            /* UPDATED BACKGROUND IMAGE */
-            background-image: url('https://i.postimg.cc/NMYVtnpv/Screenshot-20260930-221454-Google.jpg');
             background-size: contain; background-position: center; background-repeat: no-repeat;
             background-color: #121212; z-index: 100; display: flex; flex-direction: column; overflow: hidden;
         }
+        #einstein-room { background-image: url('https://i.postimg.cc/NMYVtnpv/Screenshot-20260930-221454-Google.jpg'); }
+        #buzz-room { background-image: url('https://i.postimg.cc/NLWXFThN/buzz-bg-jpg.jpg'); background-size: cover; }
+        
         .einstein-header { display: flex; align-items: center; justify-content: space-between; padding: 15px 20px; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(5px); border-bottom: 1px solid rgba(255,255,255,0.1); flex-shrink: 0; }
         .einstein-header h2 { font-family: 'Orbitron', sans-serif; font-size: 18px; color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
         .einstein-header button { background: transparent; border: none; color: #fff; font-size: 16px; cursor: pointer; font-family: 'Orbitron', sans-serif; text-shadow: 0 2px 4px rgba(0,0,0,0.8); padding: 5px 10px; border-radius: 5px; }
@@ -249,8 +252,8 @@
     <div id="sidebar" class="sidebar-closed">
         <div class="sidebar-content">
             <h2>Einstein's Lab</h2>
-            <a onclick="closeEinstein(); toggleSidebar();">🏠 Home</a>
-            <a onclick="goToNavRoom(); toggleSidebar();">Close</a>
+            <a onclick="goHome(); toggleSidebar();">🏠 Home</a>
+            <a onclick="toggleSidebar();">Close</a>
             <a onclick="alert('Settings coming soon!'); toggleSidebar();">⚙️ Settings</a>
             <a onclick="alert('Profile coming soon!'); toggleSidebar();">👤 Profile</a>
         </div>
@@ -272,11 +275,11 @@
                 <img src="https://i.postimg.cc/q68vzNnY/einstein-profile-jpg.jpg" alt="Einstein" class="profile-img">
                 <span>Einstein</span>
             </div>
-            <div class="glass-panel content-box">
+            <div class="glass-panel content-box" onclick="openBuzz()">
                 <img src="https://i.postimg.cc/gnFwmW8W/buzz-profile-jpg.jpg" alt="Buzz" class="profile-img">
                 <span>Buzz</span>
             </div>
-            <div class="glass-panel content-box">
+            <div class="glass-panel content-box" onclick="goToNavRoom()">
                 <img src="https://i.postimg.cc/Th9wMDdK/libray-backgrond.jpg" alt="Library Background" class="profile-img">
                 <span>God mode</span>
             </div>
@@ -285,16 +288,17 @@
         <footer class="glass-panel">Library</footer>
     </div>
 
-    <!-- NAVIGATION ROOM -->
+    <!-- NAVIGATION ROOM (GOD MODE) -->
     <div id="navigation-room" class="hidden">
         <div id="tsparticles-nav" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none;"></div>
 
         <div class="nav-room-top glass-panel">
+            <button class="hamburger-btn" onclick="toggleSidebar()">☰</button>
             <h1>Let's get to the bag</h1>
         </div>
 
         <div class="nav-room-grid">
-            <div class="nav-col-left glass-panel">
+            <div class="nav-col-left">
                 <div class="avatar-circle"><img src="https://i.postimg.cc/xTWNKK7X/home-bg-jpg.jpg" alt="Grayson"></div>
                 <div class="profile-name">What we doing today</div>
                 <div class="stat-row">
@@ -308,7 +312,7 @@
                 </div>
             </div>
 
-            <div class="nav-col-center glass-panel">
+            <div class="nav-col-center">
                 <div class="center-split-grid">
                     <div class="sub-panel">
                         <div class="section-title">My Projects</div>
@@ -329,7 +333,7 @@
                 </div>
             </div>
 
-            <div class="nav-col-right glass-panel">
+            <div class="nav-col-right">
                 <div class="calendar-header">
                     <button onclick="changeMonth(-1)">◀</button>
                     <span id="month-year-display">Month Year</span>
@@ -344,7 +348,27 @@
             </div>
         </div>
 
-        <button class="glass-panel back-home-btn" onclick="goHome()">← Back to Home</button>
+        <button class="back-home-btn" onclick="goHome()">← Back to Home</button>
+
+        <!-- CHAT BAR FOR GOD MODE -->
+        <div class="custom-chatbox">
+            <div class="attachment-menu hidden" id="godmode-attachment-menu">
+                <button onclick="triggerFileInput('camera')">📷 Camera</button>
+                <button onclick="triggerFileInput('photo')">🖼️ Gallery</button>
+                <button onclick="triggerFileInput('document')">📄 Document</button>
+            </div>
+
+            <div class="custom-input-row">
+                <input type="text" id="godmode-input" placeholder="Ask anything..." onkeypress="if(event.key === 'Enter') sendGodModeMessage()">
+            </div>
+            <div class="custom-icons-row">
+                <button class="icon-btn-left" onclick="document.getElementById('godmode-attachment-menu').classList.toggle('hidden')">+</button>
+                <div class="icon-btn-right">
+                    <span class="mic-icon" id="godmode-mic-button" onclick="toggleVoiceInput('godmode')">🎙️</span>
+                    <button class="send-btn-circle" onclick="sendGodModeMessage()">↑</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- ========================================== -->
@@ -363,7 +387,7 @@
         </div>
 
         <div class="custom-chatbox">
-            <div class="attachment-menu hidden" id="attachment-menu">
+            <div class="attachment-menu hidden" id="einstein-attachment-menu">
                 <button onclick="triggerFileInput('camera')">📷 Camera</button>
                 <button onclick="triggerFileInput('photo')">🖼️ Gallery</button>
                 <button onclick="triggerFileInput('document')">📄 Document</button>
@@ -373,10 +397,46 @@
                 <input type="text" id="einstein-input" placeholder="Ask anything..." onkeypress="if(event.key === 'Enter') sendEinsteinMessage()">
             </div>
             <div class="custom-icons-row">
-                <button class="icon-btn-left" onclick="toggleAttachmentMenu()">+</button>
+                <button class="icon-btn-left" onclick="document.getElementById('einstein-attachment-menu').classList.toggle('hidden')">+</button>
                 <div class="icon-btn-right">
-                    <span class="mic-icon" id="mic-button" onclick="toggleVoiceInput()">🎙️</span>
+                    <span class="mic-icon" id="einstein-mic-button" onclick="toggleVoiceInput('einstein')">🎙️</span>
                     <button class="send-btn-circle" onclick="sendEinsteinMessage()">↑</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- BUZZ ROOM -->
+    <!-- ========================================== -->
+    <div id="buzz-room" class="hidden">
+        
+        <div class="einstein-header">
+            <button onclick="toggleSidebar()">☰</button>
+            <h2>Buzz</h2>
+            <button onclick="closeBuzz()">← Back</button>
+        </div>
+
+        <div class="einstein-chat-area" id="buzz-chat-box">
+            <div class="einstein-msg ai">I am Buzz. I remember everything. How can I help you today?</div>
+        </div>
+
+        <div class="custom-chatbox">
+            <div class="attachment-menu hidden" id="buzz-attachment-menu">
+                <button onclick="triggerFileInput('camera')">📷 Camera</button>
+                <button onclick="triggerFileInput('photo')">🖼️ Gallery</button>
+                <button onclick="triggerFileInput('document')">📄 Document</button>
+            </div>
+
+            <div class="custom-input-row">
+                <input type="text" id="buzz-input" placeholder="Ask anything..." onkeypress="if(event.key === 'Enter') sendBuzzMessage()">
+            </div>
+            <div class="custom-icons-row">
+                <button class="icon-btn-left" onclick="document.getElementById('buzz-attachment-menu').classList.toggle('hidden')">+</button>
+                <div class="icon-btn-right">
+                    <span class="mic-icon" id="buzz-mic-button" onclick="toggleVoiceInput('buzz')">🎙️</span>
+                    <button class="send-btn-circle" onclick="sendBuzzMessage()">↑</button>
                 </div>
             </div>
         </div>
@@ -412,6 +472,7 @@
             document.getElementById('homepage').classList.remove('hidden');
             document.getElementById('navigation-room').classList.add('hidden');
             document.getElementById('einstein-room').classList.add('hidden');
+            document.getElementById('buzz-room').classList.add('hidden');
         }
 
         function openEinstein() {
@@ -424,44 +485,25 @@
             document.getElementById('homepage').classList.remove('hidden');
         }
 
-        // --- EINSTEIN ROOM LOGIC ---
-        function toggleAttachmentMenu() {
-            const menu = document.getElementById('attachment-menu');
-            menu.classList.toggle('hidden');
+        function openBuzz() {
+            document.getElementById('homepage').classList.add('hidden');
+            document.getElementById('buzz-room').classList.remove('hidden');
         }
 
+        function closeBuzz() {
+            document.getElementById('buzz-room').classList.add('hidden');
+            document.getElementById('homepage').classList.remove('hidden');
+        }
+
+        // --- ATTACHMENT & VOICE LOGIC ---
         function triggerFileInput(type) {
             document.getElementById('file-' + type).click();
-            document.getElementById('attachment-menu').classList.add('hidden');
+            document.querySelectorAll('.attachment-menu').forEach(menu => menu.classList.add('hidden'));
         }
 
-        function sendEinsteinMessage() {
-            const input = document.getElementById('einstein-input');
-            const text = input.value.trim();
-            if (text === '') return;
-
-            const chatBox = document.getElementById('einstein-chat-box');
-
-            const userMsg = document.createElement('div');
-            userMsg.className = 'einstein-msg user';
-            userMsg.textContent = text;
-            chatBox.appendChild(userMsg);
-            input.value = '';
-            chatBox.scrollTop = chatBox.scrollHeight;
-
-            setTimeout(() => {
-                const aiMsg = document.createElement('div');
-                aiMsg.className = 'einstein-msg ai';
-                aiMsg.textContent = "Got it. I will help you with that.";
-                chatBox.appendChild(aiMsg);
-                chatBox.scrollTop = chatBox.scrollHeight;
-            }, 800);
-        }
-
-        // --- VOICE INPUT LOGIC ---
         let recognition;
         let isListening = false;
-        const micBtn = document.getElementById('mic-button');
+        let currentMicTarget = null;
 
         if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -472,36 +514,202 @@
 
             recognition.onstart = function() {
                 isListening = true;
-                micBtn.classList.add('listening');
+                if (currentMicTarget) document.getElementById(currentMicTarget + '-mic-button').classList.add('listening');
             };
 
             recognition.onresult = function(event) {
                 const transcript = event.results[0][0].transcript;
-                document.getElementById('einstein-input').value = transcript;
+                if (currentMicTarget) document.getElementById(currentMicTarget + '-input').value = transcript;
             };
 
             recognition.onend = function() {
                 isListening = false;
-                micBtn.classList.remove('listening');
+                if (currentMicTarget) document.getElementById(currentMicTarget + '-mic-button').classList.remove('listening');
             };
 
             recognition.onerror = function(event) {
                 console.error('Speech recognition error', event.error);
                 isListening = false;
-                micBtn.classList.remove('listening');
+                if (currentMicTarget) document.getElementById(currentMicTarget + '-mic-button').classList.remove('listening');
             };
         }
 
-        function toggleVoiceInput() {
+        function toggleVoiceInput(chat) {
             if (!recognition) {
                 alert("Voice input is not supported in this browser. Please use Chrome, Edge, or Safari.");
                 return;
             }
+            currentMicTarget = chat;
             if (isListening) {
                 recognition.stop();
             } else {
                 recognition.start();
             }
+        }
+
+        // --- AI CHAT LOGIC ---
+        async function sendEinsteinMessage() {
+            const input = document.getElementById('einstein-input');
+            const text = input.value.trim();
+            if (text === '') return;
+
+            const chatBox = document.getElementById('einstein-chat-box');
+            const userMsg = document.createElement('div');
+            userMsg.className = 'einstein-msg user';
+            userMsg.textContent = text;
+            chatBox.appendChild(userMsg);
+            input.value = '';
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            const thinkingMsg = document.createElement('div');
+            thinkingMsg.className = 'einstein-msg ai';
+            thinkingMsg.textContent = "Thinking...";
+            chatBox.appendChild(thinkingMsg);
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            try {
+                const response = await fetch("/chat", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        messages: [
+                            { role: "system", content: "You are Einstein, an AI for Grayson's schoolwork. Keep vocabulary at a 10th-grade level. Keep sentences short and plain. Fix grammar only." },
+                            { role: "user", content: text }
+                        ]
+                    })
+                });
+                const data = await response.json();
+                chatBox.removeChild(thinkingMsg);
+                const aiMsg = document.createElement('div');
+                aiMsg.className = 'einstein-msg ai';
+                aiMsg.textContent = data.choices ? data.choices[0].message.content : "Error connecting to AI.";
+                chatBox.appendChild(aiMsg);
+            } catch (error) {
+                if (chatBox.contains(thinkingMsg)) chatBox.removeChild(thinkingMsg);
+                const err = document.createElement('div');
+                err.className = 'einstein-msg ai';
+                err.textContent = "Error: " + error.message;
+                chatBox.appendChild(err);
+            }
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        async function sendBuzzMessage() {
+            const input = document.getElementById('buzz-input');
+            const text = input.value.trim();
+            if (text === '') return;
+
+            const chatBox = document.getElementById('buzz-chat-box');
+            const userMsg = document.createElement('div');
+            userMsg.className = 'einstein-msg user';
+            userMsg.textContent = text;
+            chatBox.appendChild(userMsg);
+            input.value = '';
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            const thinkingMsg = document.createElement('div');
+            thinkingMsg.className = 'einstein-msg ai';
+            thinkingMsg.textContent = "Thinking...";
+            chatBox.appendChild(thinkingMsg);
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            try {
+                const response = await fetch("/chat", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        messages: [
+                            { role: "system", content: "You are Buzz, a personal AI assistant for Grayson Russell. Be honest. Do not lie. Follow his rules. Go above and beyond for everything except school papers." },
+                            { role: "user", content: text }
+                        ]
+                    })
+                });
+                const data = await response.json();
+                chatBox.removeChild(thinkingMsg);
+                const aiMsg = document.createElement('div');
+                aiMsg.className = 'einstein-msg ai';
+                aiMsg.textContent = data.choices ? data.choices[0].message.content : "Error connecting to AI.";
+                chatBox.appendChild(aiMsg);
+            } catch (error) {
+                if (chatBox.contains(thinkingMsg)) chatBox.removeChild(thinkingMsg);
+                const err = document.createElement('div');
+                err.className = 'einstein-msg ai';
+                err.textContent = "Error: " + error.message;
+                chatBox.appendChild(err);
+            }
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        async function sendGodModeMessage() {
+            const input = document.getElementById('godmode-input');
+            const text = input.value.trim();
+            if (text === '') return;
+
+            // God Mode uses the navigation room, so we create a temporary popup chat
+            // Or we can just append to a hidden chat area. Let's use an alert-style response.
+            
+            const thinkingMsg = document.createElement('div');
+            thinkingMsg.className = 'einstein-msg ai';
+            thinkingMsg.textContent = "Thinking...";
+            thinkingMsg.style.position = 'fixed';
+            thinkingMsg.style.bottom = '120px';
+            thinkingMsg.style.right = '20px';
+            thinkingMsg.style.zIndex = '9999';
+            thinkingMsg.style.background = '#1e1e1e';
+            thinkingMsg.style.border = '1px solid #333';
+            thinkingMsg.style.padding = '12px 16px';
+            thinkingMsg.style.borderRadius = '15px';
+            thinkingMsg.style.maxWidth = '300px';
+            document.body.appendChild(thinkingMsg);
+
+            try {
+                const response = await fetch("/chat", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        messages: [
+                            { role: "system", content: "You are Buzz, Grayson's personal AI. Be direct, honest, and helpful. Help him with his projects, tasks, and planning." },
+                            { role: "user", content: text }
+                        ]
+                    })
+                });
+                const data = await response.json();
+                document.body.removeChild(thinkingMsg);
+                
+                const aiMsg = document.createElement('div');
+                aiMsg.className = 'einstein-msg ai';
+                aiMsg.textContent = data.choices ? data.choices[0].message.content : "Error connecting to AI.";
+                aiMsg.style.position = 'fixed';
+                aiMsg.style.bottom = '120px';
+                aiMsg.style.right = '20px';
+                aiMsg.style.zIndex = '9999';
+                aiMsg.style.background = '#1e1e1e';
+                aiMsg.style.border = '1px solid #333';
+                aiMsg.style.padding = '12px 16px';
+                aiMsg.style.borderRadius = '15px';
+                aiMsg.style.maxWidth = '300px';
+                document.body.appendChild(aiMsg);
+                
+                // Remove after 8 seconds
+                setTimeout(() => { if(document.body.contains(aiMsg)) document.body.removeChild(aiMsg); }, 8000);
+                
+            } catch (error) {
+                if (document.body.contains(thinkingMsg)) document.body.removeChild(thinkingMsg);
+                const err = document.createElement('div');
+                err.textContent = "Error: " + error.message;
+                err.style.position = 'fixed';
+                err.style.bottom = '120px';
+                err.style.right = '20px';
+                err.style.zIndex = '9999';
+                err.style.background = '#1e1e1e';
+                err.style.padding = '12px';
+                err.style.borderRadius = '10px';
+                err.style.color = '#ff4d4d';
+                document.body.appendChild(err);
+                setTimeout(() => { if(document.body.contains(err)) document.body.removeChild(err); }, 8000);
+            }
+            
+            input.value = '';
         }
 
         // --- NAVIGATION ROOM LOGIC ---
