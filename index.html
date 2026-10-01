@@ -23,9 +23,9 @@
         #sidebar-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0,0,0,0.6); z-index: 999; }
         #sidebar {
             position: fixed; top: 0; left: 0; width: 280px; height: 100vh;
-            background-image: url('https://i.postimg.cc/76npSNQf/HD-wallpaper-albert-einstein-funny-inteligent-science-space.jpg');
+            /* Background image is now set dynamically by JavaScript */
             background-size: cover; background-position: center;
-            z-index: 1000; transition: transform 0.3s ease-in-out;
+            z-index: 1000; transition: transform 0.3s ease-in-out, background-image 0.3s ease-in-out;
             box-shadow: 5px 0 15px rgba(0,0,0,0.5);
             display: flex; flex-direction: column; padding: 20px;
             background-color: rgba(11, 7, 26, 0.75); background-blend-mode: overlay;
@@ -155,8 +155,18 @@
         }
         /* Specific Backgrounds */
         #einstein-room { background-image: url('https://i.postimg.cc/NMYVtnpv/Screenshot-20260930-221454-Google.jpg'); }
-        #buzz-room { background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop'); background-size: cover; }
-        #godmode-room { background-image: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?q=80&w=2048&auto=format&fit=crop'); background-size: cover; }
+        
+        /* UPDATED BUZZ ROOM BACKGROUND */
+        #buzz-room { 
+            background-image: url('https://i.postimg.cc/T3CnqV2x/Screenshot-20260930-194303-Pinterest.jpg'); 
+            background-size: cover; 
+        }
+        
+        /* UPDATED GOD MODE ROOM BACKGROUND */
+        #godmode-room { 
+            background-image: url('https://i.postimg.cc/VkVdkDLn/Dragon-ball.jpg'); 
+            background-size: cover; 
+        }
 
         .agent-header { display: flex; align-items: center; justify-content: space-between; padding: 15px 20px; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(5px); border-bottom: 1px solid rgba(255,255,255,0.1); flex-shrink: 0; position: relative; }
         .agent-header h2 { font-family: 'Orbitron', sans-serif; font-size: 18px; color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
@@ -504,6 +514,25 @@
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml6dnl2YmlveGp0eWx5ZGN6cnR3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA2OTY4NDIsImV4cCI6MjEwNjI3Mjg0Mn0.FmyW2aBNLZi0q83YqlF5Yj2EhOqWqhzqyKNNN7eQWO0';
         const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
+        // ==========================================
+        // 🎨 DYNAMIC SIDEBAR BACKGROUNDS
+        // ==========================================
+        const sidebarBackgrounds = {
+            default: "url('https://i.postimg.cc/76npSNQf/HD-wallpaper-albert-einstein-funny-inteligent-science-space.jpg')",
+            einstein: "url('https://i.postimg.cc/76npSNQf/HD-wallpaper-albert-einstein-funny-inteligent-science-space.jpg')", // Default
+            buzz: "url('https://i.postimg.cc/G3F8xFqC/Screenshot-20260929-110506-Deep-Seek.jpg')",
+            godmode: "url('https://i.postimg.cc/KjfYS5Hn/90b49f50-f33c-4f15-ac81-95ce280ed1b3.jpg')"
+        };
+
+        function updateSidebarBackground(agent) {
+            const sidebar = document.getElementById('sidebar');
+            if (sidebarBackgrounds[agent]) {
+                sidebar.style.backgroundImage = sidebarBackgrounds[agent];
+            } else {
+                sidebar.style.backgroundImage = sidebarBackgrounds.default;
+            }
+        }
+
         // --- SIDEBAR LOGIC ---
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
@@ -518,6 +547,7 @@
             document.getElementById('homepage').classList.add('hidden');
             document.querySelectorAll('.agent-room').forEach(room => room.classList.add('hidden'));
             document.getElementById('navigation-room').classList.remove('hidden');
+            updateSidebarBackground('default'); // Reset sidebar to default
             loadAllData();
         }
 
@@ -525,30 +555,35 @@
             document.getElementById('homepage').classList.remove('hidden');
             document.getElementById('navigation-room').classList.add('hidden');
             document.querySelectorAll('.agent-room').forEach(room => room.classList.add('hidden'));
+            updateSidebarBackground('default'); // Reset sidebar to default
         }
 
         // --- OPEN AGENT ROOMS ---
         async function openEinstein() {
             document.getElementById('homepage').classList.add('hidden');
             document.getElementById('einstein-room').classList.remove('hidden');
+            updateSidebarBackground('einstein'); // Set Einstein sidebar
             await loadChatHistory('einstein', 'einstein-chat-box', "I am Einstein. I am strictly for school. Let's fix that grammar.");
         }
 
         async function openBuzz() {
             document.getElementById('homepage').classList.add('hidden');
             document.getElementById('buzz-room').classList.remove('hidden');
+            updateSidebarBackground('buzz'); // Set Buzz sidebar
             await loadChatHistory('buzz', 'buzz-chat-box', "To infinity and beyond! I'm Buzz. Ready for action.");
         }
 
         async function openGodMode() {
             document.getElementById('homepage').classList.add('hidden');
             document.getElementById('godmode-room').classList.remove('hidden');
+            updateSidebarBackground('godmode'); // Set God Mode sidebar
             await loadChatHistory('godmode', 'godmode-chat-box', "You have entered God Mode. What shall we create today?");
         }
 
         function closeAgent(roomId) {
             document.getElementById(roomId).classList.add('hidden');
             document.getElementById('homepage').classList.remove('hidden');
+            updateSidebarBackground('default'); // Reset sidebar to default
         }
 
         // --- CHAT LOGIC ---
@@ -558,7 +593,6 @@
 
         function triggerFileInput(type) {
             document.getElementById('file-' + type).click();
-            // Hide all attachment menus
             document.querySelectorAll('.attachment-menu').forEach(menu => menu.classList.add('hidden'));
         }
 
