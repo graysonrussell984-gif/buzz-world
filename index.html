@@ -11,6 +11,9 @@
     <!-- THE PARTICLE LIBRARY -->
     <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
 
+    <!-- THE SUPABASE LIBRARY -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: Arial, sans-serif; color: #ffffff; background-color: #0b071a; min-height: 100vh; overflow-x: hidden; }
@@ -144,25 +147,29 @@
         .task-item button { background: transparent; border: none; color: #ff4d4d; cursor: pointer; font-size: 14px; }
         .back-home-btn { margin-top: 15px; margin-bottom: 20px; padding: 15px 30px; cursor: pointer; color: white; font-family: 'Orbitron', sans-serif; background: transparent; flex-shrink: 0; }
 
-        /* --- EINSTEIN ROOM LAYOUT --- */
-        #einstein-room {
+        /* --- AGENT ROOMS LAYOUT --- */
+        .agent-room {
             position: fixed; top: 0; left: 0; width: 100%; height: 100dvh;
-            background-image: url('https://i.postimg.cc/NMYVtnpv/Screenshot-20260930-221454-Google.jpg');
-            background-size: contain; background-position: center; background-repeat: no-repeat;
             background-color: #121212; z-index: 100; display: flex; flex-direction: column; overflow: hidden;
+            background-size: contain; background-position: center; background-repeat: no-repeat;
         }
-        .einstein-header { display: flex; align-items: center; justify-content: space-between; padding: 15px 20px; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(5px); border-bottom: 1px solid rgba(255,255,255,0.1); flex-shrink: 0; position: relative; }
-        .einstein-header h2 { font-family: 'Orbitron', sans-serif; font-size: 18px; color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
-        .einstein-header button { background: transparent; border: none; color: #fff; font-size: 16px; cursor: pointer; font-family: 'Orbitron', sans-serif; text-shadow: 0 2px 4px rgba(0,0,0,0.8); padding: 5px 10px; border-radius: 5px; }
-        .einstein-header button:hover { background: rgba(255,255,255,0.1); }
-        .einstein-chat-area { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px; min-height: 0; }
-        .einstein-msg { max-width: 80%; padding: 12px 16px; border-radius: 15px; line-height: 1.5; font-family: 'Courier New', Courier, monospace; font-size: 15px; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); }
-        .einstein-msg.ai { background-color: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.3); color: #fff; align-self: flex-start; }
-        .einstein-msg.user { background-color: rgba(74, 144, 226, 0.7); color: #fff; align-self: flex-end; }
+        /* Specific Backgrounds */
+        #einstein-room { background-image: url('https://i.postimg.cc/NMYVtnpv/Screenshot-20260930-221454-Google.jpg'); }
+        #buzz-room { background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop'); background-size: cover; }
+        #godmode-room { background-image: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?q=80&w=2048&auto=format&fit=crop'); background-size: cover; }
+
+        .agent-header { display: flex; align-items: center; justify-content: space-between; padding: 15px 20px; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(5px); border-bottom: 1px solid rgba(255,255,255,0.1); flex-shrink: 0; position: relative; }
+        .agent-header h2 { font-family: 'Orbitron', sans-serif; font-size: 18px; color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
+        .agent-header button { background: transparent; border: none; color: #fff; font-size: 16px; cursor: pointer; font-family: 'Orbitron', sans-serif; text-shadow: 0 2px 4px rgba(0,0,0,0.8); padding: 5px 10px; border-radius: 5px; }
+        .agent-header button:hover { background: rgba(255,255,255,0.1); }
+        .agent-chat-area { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px; min-height: 0; }
+        .agent-msg { max-width: 80%; padding: 12px 16px; border-radius: 15px; line-height: 1.5; font-family: 'Courier New', Courier, monospace; font-size: 15px; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); }
+        .agent-msg.ai { background-color: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.3); color: #fff; align-self: flex-start; }
+        .agent-msg.user { background-color: rgba(74, 144, 226, 0.7); color: #fff; align-self: flex-end; }
 
         /* --- CUSTOM CHATBOX (DARK THEME) --- */
         .custom-chatbox {
-            background: #1e1e1e; border: 1px solid #333;
+            background: rgba(30, 30, 30, 0.85); backdrop-filter: blur(10px); border: 1px solid #333;
             border-radius: 24px; padding: 16px 20px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.5);
             display: flex; flex-direction: column; width: 100%; max-width: 800px;
@@ -263,9 +270,9 @@
             .calendar-grid { gap: 2px; }
             .calendar-date { padding: 3px 0; font-size: 10px; }
             
-            .einstein-header h2 { font-size: 14px; }
-            .einstein-header button { font-size: 14px; padding: 3px 6px; }
-            .einstein-msg { font-size: 13px; padding: 8px 12px; }
+            .agent-header h2 { font-size: 14px; }
+            .agent-header button { font-size: 14px; padding: 3px 6px; }
+            .agent-msg { font-size: 13px; padding: 8px 12px; }
             .custom-chatbox { padding: 10px 12px; margin: 0 10px 10px 10px; border-radius: 15px; }
             .custom-input-row input { font-size: 13px; }
             .icon-btn-left { font-size: 18px; width: 25px; height: 25px; }
@@ -290,6 +297,8 @@
             <a onclick="goHome(); toggleSidebar();">🏠 Home</a>
             <a onclick="goToNavRoom(); toggleSidebar();">📊 Navigation Room</a>
             <a onclick="openEinstein(); toggleSidebar();">🧠 Einstein Room</a>
+            <a onclick="openBuzz(); toggleSidebar();">🚀 Buzz Room</a>
+            <a onclick="openGodMode(); toggleSidebar();">⚡ God Mode</a>
             <a onclick="alert('Settings coming soon!'); toggleSidebar();">⚙️ Settings</a>
             <a onclick="alert('Profile coming soon!'); toggleSidebar();">👤 Profile</a>
         </div>
@@ -312,11 +321,11 @@
                 <img src="https://i.postimg.cc/q68vzNnY/einstein-profile-jpg.jpg" alt="Einstein" class="profile-img">
                 <span>Einstein</span>
             </div>
-            <div class="glass-panel content-box">
+            <div class="glass-panel content-box" onclick="openBuzz()">
                 <img src="https://i.postimg.cc/gnFwmW8W/buzz-profile-jpg.jpg" alt="Buzz" class="profile-img">
                 <span>Buzz</span>
             </div>
-            <div class="glass-panel content-box">
+            <div class="glass-panel content-box" onclick="openGodMode()">
                 <img src="https://i.postimg.cc/Th9wMDdK/libray-backgrond.jpg" alt="Library Background" class="profile-img">
                 <span>God mode</span>
             </div>
@@ -391,37 +400,94 @@
     <!-- ========================================== -->
     <!-- EINSTEIN ROOM -->
     <!-- ========================================== -->
-    <div id="einstein-room" class="hidden">
-        
-        <div class="einstein-header">
+    <div id="einstein-room" class="agent-room hidden">
+        <div class="agent-header">
             <button class="menu-btn" onclick="toggleSidebar()">☰</button>
             <h2>Einstein</h2>
-            <button onclick="closeEinstein()">← Back</button>
+            <button onclick="closeAgent('einstein-room')">← Back</button>
         </div>
-
-        <div class="einstein-chat-area" id="einstein-chat-box">
-            <div class="einstein-msg ai">I am Einstein. I am strictly for school. Let's fix that grammar.</div>
+        <div class="agent-chat-area" id="einstein-chat-box">
+            <!-- Chat messages load here -->
         </div>
-
         <div class="custom-chatbox">
-            <div class="attachment-menu hidden" id="attachment-menu">
+            <div class="attachment-menu hidden" id="attachment-menu-einstein">
                 <button onclick="triggerFileInput('camera')">📷 Camera</button>
                 <button onclick="triggerFileInput('photo')">🖼️ Gallery</button>
                 <button onclick="triggerFileInput('document')">📄 Document</button>
             </div>
-
             <div class="custom-input-row">
-                <input type="text" id="einstein-input" placeholder="Ask anything..." onkeypress="if(event.key === 'Enter') sendEinsteinMessage()">
+                <input type="text" id="einstein-input" placeholder="Ask anything..." onkeypress="if(event.key === 'Enter') sendMessage('einstein', 'einstein-input', 'einstein-chat-box')">
             </div>
             <div class="custom-icons-row">
-                <button class="icon-btn-left" onclick="toggleAttachmentMenu()">+</button>
+                <button class="icon-btn-left" onclick="toggleAttachmentMenu('attachment-menu-einstein')">+</button>
                 <div class="icon-btn-right">
-                    <span class="mic-icon" id="mic-button" onclick="toggleVoiceInput()">🎙️</span>
-                    <button class="send-btn-circle" onclick="sendEinsteinMessage()">↑</button>
+                    <span class="mic-icon" id="mic-button-einstein" onclick="toggleVoiceInput('einstein-input', 'mic-button-einstein')">🎙️</span>
+                    <button class="send-btn-circle" onclick="sendMessage('einstein', 'einstein-input', 'einstein-chat-box')">↑</button>
                 </div>
             </div>
         </div>
+    </div>
 
+    <!-- ========================================== -->
+    <!-- BUZZ ROOM -->
+    <!-- ========================================== -->
+    <div id="buzz-room" class="agent-room hidden">
+        <div class="agent-header">
+            <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+            <h2>Buzz</h2>
+            <button onclick="closeAgent('buzz-room')">← Back</button>
+        </div>
+        <div class="agent-chat-area" id="buzz-chat-box">
+            <!-- Chat messages load here -->
+        </div>
+        <div class="custom-chatbox">
+            <div class="attachment-menu hidden" id="attachment-menu-buzz">
+                <button onclick="triggerFileInput('camera')">📷 Camera</button>
+                <button onclick="triggerFileInput('photo')">🖼️ Gallery</button>
+                <button onclick="triggerFileInput('document')">📄 Document</button>
+            </div>
+            <div class="custom-input-row">
+                <input type="text" id="buzz-input" placeholder="Ask anything..." onkeypress="if(event.key === 'Enter') sendMessage('buzz', 'buzz-input', 'buzz-chat-box')">
+            </div>
+            <div class="custom-icons-row">
+                <button class="icon-btn-left" onclick="toggleAttachmentMenu('attachment-menu-buzz')">+</button>
+                <div class="icon-btn-right">
+                    <span class="mic-icon" id="mic-button-buzz" onclick="toggleVoiceInput('buzz-input', 'mic-button-buzz')">🎙️</span>
+                    <button class="send-btn-circle" onclick="sendMessage('buzz', 'buzz-input', 'buzz-chat-box')">↑</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- GOD MODE ROOM -->
+    <!-- ========================================== -->
+    <div id="godmode-room" class="agent-room hidden">
+        <div class="agent-header">
+            <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+            <h2>God Mode</h2>
+            <button onclick="closeAgent('godmode-room')">← Back</button>
+        </div>
+        <div class="agent-chat-area" id="godmode-chat-box">
+            <!-- Chat messages load here -->
+        </div>
+        <div class="custom-chatbox">
+            <div class="attachment-menu hidden" id="attachment-menu-godmode">
+                <button onclick="triggerFileInput('camera')">📷 Camera</button>
+                <button onclick="triggerFileInput('photo')">🖼️ Gallery</button>
+                <button onclick="triggerFileInput('document')">📄 Document</button>
+            </div>
+            <div class="custom-input-row">
+                <input type="text" id="godmode-input" placeholder="Ask anything..." onkeypress="if(event.key === 'Enter') sendMessage('godmode', 'godmode-input', 'godmode-chat-box')">
+            </div>
+            <div class="custom-icons-row">
+                <button class="icon-btn-left" onclick="toggleAttachmentMenu('attachment-menu-godmode')">+</button>
+                <div class="icon-btn-right">
+                    <span class="mic-icon" id="mic-button-godmode" onclick="toggleVoiceInput('godmode-input', 'mic-button-godmode')">🎙️</span>
+                    <button class="send-btn-circle" onclick="sendMessage('godmode', 'godmode-input', 'godmode-chat-box')">↑</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- HIDDEN FILE INPUTS -->
@@ -432,14 +498,11 @@
     <!-- THE SCRIPT -->
     <script>
         // ==========================================
-        // 🚀 SUPABASE PREPARATION (Ready for later)
+        // 🚀 SUPABASE INITIALIZATION
         // ==========================================
-        // When you are ready, we will uncomment these lines and add your Supabase URL and Key.
-        // const { createClient } = supabase;
-        // const supabaseUrl = 'YOUR_SUPABASE_URL';
-        // const supabaseKey = 'YOUR_SUPABASE_ANON_KEY';
-        // const supabaseClient = createClient(supabaseUrl, supabaseKey);
-        // ==========================================
+        const supabaseUrl = 'https://izvyvbioxjtylydczrtw.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml6dnl2YmlveGp0eWx5ZGN6cnR3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA2OTY4NDIsImV4cCI6MjEwNjI3Mjg0Mn0.FmyW2aBNLZi0q83YqlF5Yj2EhOqWqhzqyKNNN7eQWO0';
+        const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
         // --- SIDEBAR LOGIC ---
         function toggleSidebar() {
@@ -453,69 +516,108 @@
         // --- NAVIGATION LOGIC ---
         function goToNavRoom() {
             document.getElementById('homepage').classList.add('hidden');
-            document.getElementById('einstein-room').classList.add('hidden');
+            document.querySelectorAll('.agent-room').forEach(room => room.classList.add('hidden'));
             document.getElementById('navigation-room').classList.remove('hidden');
-            renderCalendar();
-            updateProfileStats();
-            renderReminders();
+            loadAllData();
         }
 
         function goHome() {
             document.getElementById('homepage').classList.remove('hidden');
             document.getElementById('navigation-room').classList.add('hidden');
-            document.getElementById('einstein-room').classList.add('hidden');
+            document.querySelectorAll('.agent-room').forEach(room => room.classList.add('hidden'));
         }
 
-        function openEinstein() {
+        // --- OPEN AGENT ROOMS ---
+        async function openEinstein() {
             document.getElementById('homepage').classList.add('hidden');
-            document.getElementById('navigation-room').classList.add('hidden');
             document.getElementById('einstein-room').classList.remove('hidden');
+            await loadChatHistory('einstein', 'einstein-chat-box', "I am Einstein. I am strictly for school. Let's fix that grammar.");
         }
 
-        function closeEinstein() {
-            document.getElementById('einstein-room').classList.add('hidden');
+        async function openBuzz() {
+            document.getElementById('homepage').classList.add('hidden');
+            document.getElementById('buzz-room').classList.remove('hidden');
+            await loadChatHistory('buzz', 'buzz-chat-box', "To infinity and beyond! I'm Buzz. Ready for action.");
+        }
+
+        async function openGodMode() {
+            document.getElementById('homepage').classList.add('hidden');
+            document.getElementById('godmode-room').classList.remove('hidden');
+            await loadChatHistory('godmode', 'godmode-chat-box', "You have entered God Mode. What shall we create today?");
+        }
+
+        function closeAgent(roomId) {
+            document.getElementById(roomId).classList.add('hidden');
             document.getElementById('homepage').classList.remove('hidden');
         }
 
-        // --- EINSTEIN ROOM LOGIC ---
-        function toggleAttachmentMenu() {
-            const menu = document.getElementById('attachment-menu');
-            menu.classList.toggle('hidden');
+        // --- CHAT LOGIC ---
+        function toggleAttachmentMenu(menuId) {
+            document.getElementById(menuId).classList.toggle('hidden');
         }
 
         function triggerFileInput(type) {
             document.getElementById('file-' + type).click();
-            document.getElementById('attachment-menu').classList.add('hidden');
+            // Hide all attachment menus
+            document.querySelectorAll('.attachment-menu').forEach(menu => menu.classList.add('hidden'));
         }
 
-        function sendEinsteinMessage() {
-            const input = document.getElementById('einstein-input');
+        function addMessageToChatBox(chatBoxId, sender, text) {
+            const chatBox = document.getElementById(chatBoxId);
+            const msg = document.createElement('div');
+            msg.className = 'agent-msg ' + sender;
+            msg.textContent = text;
+            chatBox.appendChild(msg);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        async function loadChatHistory(agent, chatBoxId, defaultGreeting) {
+            const chatBox = document.getElementById(chatBoxId);
+            chatBox.innerHTML = ''; 
+
+            const { data, error } = await supabaseClient
+                .from('chat_history')
+                .select('*')
+                .eq('agent', agent)
+                .order('created_at', { ascending: true });
+
+            if (error) { console.error('Error loading chat:', error); return; }
+
+            if (data.length === 0) {
+                addMessageToChatBox(chatBoxId, 'ai', defaultGreeting);
+            } else {
+                data.forEach(msg => {
+                    addMessageToChatBox(chatBoxId, msg.sender, msg.message);
+                });
+            }
+        }
+
+        async function sendMessage(agent, inputId, chatBoxId) {
+            const input = document.getElementById(inputId);
             const text = input.value.trim();
             if (text === '') return;
 
-            const chatBox = document.getElementById('einstein-chat-box');
-
-            const userMsg = document.createElement('div');
-            userMsg.className = 'einstein-msg user';
-            userMsg.textContent = text;
-            chatBox.appendChild(userMsg);
+            addMessageToChatBox(chatBoxId, 'user', text);
             input.value = '';
-            chatBox.scrollTop = chatBox.scrollHeight;
 
-            // PLACEHOLDER FOR OPENAI API (ChatGPT)
-            setTimeout(() => {
-                const aiMsg = document.createElement('div');
-                aiMsg.className = 'einstein-msg ai';
-                aiMsg.textContent = "I am ready to help you once my OpenAI API key is connected!";
-                chatBox.appendChild(aiMsg);
-                chatBox.scrollTop = chatBox.scrollHeight;
+            await supabaseClient.from('chat_history').insert([
+                { agent: agent, sender: 'user', message: text }
+            ]);
+
+            setTimeout(async () => {
+                let aiResponse = `[${agent.toUpperCase()} AI Placeholder] Connect the OpenAI API to activate my full intelligence!`;
+                
+                addMessageToChatBox(chatBoxId, 'ai', aiResponse);
+
+                await supabaseClient.from('chat_history').insert([
+                    { agent: agent, sender: 'ai', message: aiResponse }
+                ]);
             }, 800);
         }
 
         // --- VOICE INPUT LOGIC ---
         let recognition;
         let isListening = false;
-        const micBtn = document.getElementById('mic-button');
 
         if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -523,85 +625,171 @@
             recognition.continuous = false;
             recognition.interimResults = false;
             recognition.lang = 'en-US';
-
-            recognition.onstart = function() {
-                isListening = true;
-                micBtn.classList.add('listening');
-            };
-
-            recognition.onresult = function(event) {
-                const transcript = event.results[0][0].transcript;
-                document.getElementById('einstein-input').value = transcript;
-            };
-
-            recognition.onend = function() {
-                isListening = false;
-                micBtn.classList.remove('listening');
-            };
-
-            recognition.onerror = function(event) {
-                console.error('Speech recognition error', event.error);
-                isListening = false;
-                micBtn.classList.remove('listening');
-            };
+            
+            recognition.onstart = function() { isListening = true; };
+            recognition.onend = function() { isListening = false; };
+            recognition.onerror = function(event) { console.error('Speech error', event.error); isListening = false; };
         }
 
-        function toggleVoiceInput() {
-            if (!recognition) {
-                alert("Voice input is not supported in this browser. Please use Chrome, Edge, or Safari.");
-                return;
-            }
+        function toggleVoiceInput(inputId, micId) {
+            if (!recognition) return alert("Voice input not supported in this browser.");
+            const micBtn = document.getElementById(micId);
+            
             if (isListening) {
                 recognition.stop();
+                micBtn.classList.remove('listening');
             } else {
+                recognition.onresult = function(event) { 
+                    document.getElementById(inputId).value = event.results[0][0].transcript; 
+                };
                 recognition.start();
+                micBtn.classList.add('listening');
             }
         }
 
-        // --- NAVIGATION ROOM LOGIC (Local Storage Fallback until Supabase) ---
-        function updateProfileStats() {
-            const projects = JSON.parse(localStorage.getItem('user_projects')) || [];
-            const gallery = JSON.parse(localStorage.getItem('user_gallery')) || [];
-            const tasks = JSON.parse(localStorage.getItem('user_tasks')) || {};
-            const todayStr = new Date().toDateString();
-            const todayTasks = tasks[todayStr] ? tasks[todayStr].length : 0;
-            document.getElementById('stat-projects').innerText = projects.length;
-            document.getElementById('stat-gallery').innerText = gallery.length;
-            document.getElementById('stat-tasks').innerText = todayTasks;
+        // ==========================================
+        // ☁️ SUPABASE DATA LOGIC (Navigation Room)
+        // ==========================================
+
+        let projects = [];
+        let gallery = [];
+        let tasks = {};
+        let currentDate = new Date();
+        let selectedDate = new Date();
+
+        async function loadAllData() {
+            await fetchProjects();
+            await fetchGallery();
+            await fetchTasks();
+            updateProfileStats();
+            renderCalendar();
         }
 
-        function renderReminders() {
-            const tasks = JSON.parse(localStorage.getItem('user_tasks')) || {};
-            const today = new Date();
-            today.setHours(0,0,0,0); 
-            let upcoming = [];
-            Object.keys(tasks).forEach(dateKey => {
-                const taskDate = new Date(dateKey);
-                taskDate.setHours(0,0,0,0);
-                if (taskDate >= today) {
-                    tasks[dateKey].forEach(taskText => {
-                        upcoming.push({ date: taskDate, text: taskText });
-                    });
-                }
-            });
-            upcoming.sort((a, b) => a.date - b.date);
-            const list = document.getElementById('upcoming-reminders');
-            if (upcoming.length === 0) {
-                list.innerHTML = '<div style="color: #666; text-align: center; font-size: 11px; margin-top: 10px;">No upcoming reminders.</div>';
+        async function fetchProjects() {
+            const { data, error } = await supabaseClient.from('projects').select('*').order('created_at', { ascending: true });
+            if (error) { console.error('Error fetching projects:', error); return; }
+            projects = data;
+            renderProjects();
+        }
+
+        async function addProject() {
+            const input = document.getElementById('project-input');
+            const text = input.value.trim();
+            if (text === '') return;
+            const { error } = await supabaseClient.from('projects').insert([{ title: text }]);
+            if (error) { alert('Error adding project!'); console.error(error); return; }
+            input.value = '';
+            await fetchProjects();
+            updateProfileStats();
+        }
+
+        async function deleteProject(id) {
+            const { error } = await supabaseClient.from('projects').delete().eq('id', id);
+            if (error) { console.error(error); return; }
+            await fetchProjects();
+            updateProfileStats();
+        }
+
+        function renderProjects() {
+            const list = document.getElementById('projects-list');
+            if (projects.length === 0) {
+                list.innerHTML = '<div style="color: #666; text-align: center; font-size: 12px; margin-top: 10px;">No projects yet. Add one!</div>';
                 return;
             }
-            const limited = upcoming.slice(0, 10);
             let html = '';
-            limited.forEach(item => {
-                const dateStr = item.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-                html += `<div class="reminder-item"><div class="reminder-date">${dateStr}</div><div>${item.text}</div></div>`;
+            projects.forEach((proj) => {
+                html += `<div class="project-item"><span>${proj.title}</span><button onclick="deleteProject('${proj.id}')">✕</button></div>`;
             });
             list.innerHTML = html;
         }
 
-        let currentDate = new Date();
-        let selectedDate = new Date();
-        let tasks = JSON.parse(localStorage.getItem('user_tasks')) || {};
+        async function fetchGallery() {
+            const { data, error } = await supabaseClient.from('gallery').select('*').order('created_at', { ascending: true });
+            if (error) { console.error('Error fetching gallery:', error); return; }
+            gallery = data;
+            renderGallery();
+        }
+
+        async function addGalleryImage(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = async function(e) {
+                const base64Image = e.target.result;
+                const { error } = await supabaseClient.from('gallery').insert([{ image_data: base64Image }]);
+                if (error) { alert('Error uploading image!'); console.error(error); return; }
+                await fetchGallery();
+                updateProfileStats();
+            };
+            reader.readAsDataURL(file);
+            event.target.value = '';
+        }
+
+        async function deleteGalleryImage(id) {
+            const { error } = await supabaseClient.from('gallery').delete().eq('id', id);
+            if (error) { console.error(error); return; }
+            await fetchGallery();
+            updateProfileStats();
+        }
+
+        function renderGallery() {
+            const list = document.getElementById('gallery-list');
+            if (gallery.length === 0) {
+                list.innerHTML = '<div style="color: #666; text-align: center; font-size: 12px; margin-top: 10px; grid-column: span 2;">No images yet. Upload one!</div>';
+                return;
+            }
+            let html = '';
+            gallery.forEach((item) => {
+                html += `<div class="gallery-item"><img src="${item.image_data}"><button onclick="deleteGalleryImage('${item.id}')">✕</button></div>`;
+            });
+            list.innerHTML = html;
+        }
+
+        async function fetchTasks() {
+            const { data, error } = await supabaseClient.from('tasks').select('*');
+            if (error) { console.error('Error fetching tasks:', error); return; }
+            tasks = {};
+            data.forEach(task => {
+                if (!tasks[task.task_date]) tasks[task.task_date] = [];
+                tasks[task.task_date].push({ id: task.id, text: task.task_text });
+            });
+            renderTasks();
+            renderReminders();
+        }
+
+        async function addTask() {
+            const input = document.getElementById('task-input');
+            const text = input.value.trim();
+            if (text === '') return;
+            const dateKey = selectedDate.toDateString();
+            const { error } = await supabaseClient.from('tasks').insert([{ task_date: dateKey, task_text: text }]);
+            if (error) { alert('Error adding task!'); console.error(error); return; }
+            input.value = '';
+            await fetchTasks();
+            updateProfileStats();
+        }
+
+        async function deleteTask(id) {
+            const { error } = await supabaseClient.from('tasks').delete().eq('id', id);
+            if (error) { console.error(error); return; }
+            await fetchTasks();
+            updateProfileStats();
+        }
+
+        function renderTasks() {
+            const taskList = document.getElementById('task-list');
+            const dateKey = selectedDate.toDateString();
+            const dayTasks = tasks[dateKey] || [];
+            if (dayTasks.length === 0) {
+                taskList.innerHTML = '<div style="color: #666; text-align: center; font-size: 12px; margin-top: 10px;">No tasks for this day.</div>';
+                return;
+            }
+            let html = '';
+            dayTasks.forEach((task) => {
+                html += `<div class="task-item"><span>${task.text}</span><button onclick="deleteTask('${task.id}')">✕</button></div>`;
+            });
+            taskList.innerHTML = html;
+        }
 
         function renderCalendar() {
             const monthYearDisplay = document.getElementById('month-year-display');
@@ -616,10 +804,12 @@
             const dayLabels = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
             dayLabels.forEach(day => { gridHTML += `<div class="calendar-day-label">${day}</div>`; });
             for (let i = 0; i < firstDay; i++) { gridHTML += `<div class="calendar-date empty"></div>`; }
+            
             const today = new Date();
             const isCurrentMonth = today.getMonth() === month && today.getFullYear() === year;
             const todayDate = today.getDate();
             const selectedDateString = selectedDate.toDateString();
+            
             for (let i = 1; i <= daysInMonth; i++) {
                 let classNames = 'calendar-date';
                 const thisDateString = new Date(year, month, i).toDateString();
@@ -634,118 +824,40 @@
         function changeMonth(direction) { currentDate.setMonth(currentDate.getMonth() + direction); renderCalendar(); }
         function selectDay(year, month, day) { selectedDate = new Date(year, month, day); renderCalendar(); }
 
-        function addTask() {
-            const input = document.getElementById('task-input');
-            const text = input.value.trim();
-            if (text === '') return;
-            const dateKey = selectedDate.toDateString();
-            if (!tasks[dateKey]) { tasks[dateKey] = []; }
-            tasks[dateKey].push(text);
-            localStorage.setItem('user_tasks', JSON.stringify(tasks));
-            input.value = '';
-            renderTasks();
-            renderReminders(); 
-            updateProfileStats(); 
+        function updateProfileStats() {
+            document.getElementById('stat-projects').innerText = projects.length;
+            document.getElementById('stat-gallery').innerText = gallery.length;
+            const todayStr = new Date().toDateString();
+            const todayTasks = tasks[todayStr] ? tasks[todayStr].length : 0;
+            document.getElementById('stat-tasks').innerText = todayTasks;
         }
 
-        function deleteTask(index) {
-            const dateKey = selectedDate.toDateString();
-            if (tasks[dateKey]) {
-                tasks[dateKey].splice(index, 1);
-                localStorage.setItem('user_tasks', JSON.stringify(tasks));
-                renderTasks();
-                renderReminders();
-                updateProfileStats();
-            }
-        }
-
-        function renderTasks() {
-            const taskList = document.getElementById('task-list');
-            const dateKey = selectedDate.toDateString();
-            const dayTasks = tasks[dateKey] || [];
-            if (dayTasks.length === 0) {
-                taskList.innerHTML = '<div style="color: #666; text-align: center; font-size: 12px; margin-top: 10px;">No tasks for this day.</div>';
-                return;
-            }
-            let html = '';
-            dayTasks.forEach((task, index) => {
-                html += `<div class="task-item"><span>${task}</span><button onclick="deleteTask(${index})">✕</button></div>`;
+        function renderReminders() {
+            const today = new Date();
+            today.setHours(0,0,0,0); 
+            let upcoming = [];
+            Object.keys(tasks).forEach(dateKey => {
+                const taskDate = new Date(dateKey);
+                taskDate.setHours(0,0,0,0);
+                if (taskDate >= today) {
+                    tasks[dateKey].forEach(task => {
+                        upcoming.push({ date: taskDate, text: task.text });
+                    });
+                }
             });
-            taskList.innerHTML = html;
-        }
-
-        let projects = JSON.parse(localStorage.getItem('user_projects')) || [];
-
-        function addProject() {
-            const input = document.getElementById('project-input');
-            const text = input.value.trim();
-            if (text === '') return;
-            projects.push(text);
-            localStorage.setItem('user_projects', JSON.stringify(projects));
-            input.value = '';
-            renderProjects();
-            updateProfileStats();
-        }
-
-        function deleteProject(index) {
-            projects.splice(index, 1);
-            localStorage.setItem('user_projects', JSON.stringify(projects));
-            renderProjects();
-            updateProfileStats();
-        }
-
-        function renderProjects() {
-            const list = document.getElementById('projects-list');
-            if (projects.length === 0) {
-                list.innerHTML = '<div style="color: #666; text-align: center; font-size: 12px; margin-top: 10px;">No projects yet. Add one!</div>';
+            upcoming.sort((a, b) => a.date - b.date);
+            const list = document.getElementById('upcoming-reminders');
+            if (upcoming.length === 0) {
+                list.innerHTML = '<div style="color: #666; text-align: center; font-size: 11px; margin-top: 10px;">No upcoming reminders.</div>';
                 return;
             }
             let html = '';
-            projects.forEach((proj, index) => {
-                html += `<div class="project-item"><span>${proj}</span><button onclick="deleteProject(${index})">✕</button></div>`;
+            upcoming.slice(0, 10).forEach(item => {
+                const dateStr = item.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                html += `<div class="reminder-item"><div class="reminder-date">${dateStr}</div><div>${item.text}</div></div>`;
             });
             list.innerHTML = html;
         }
-
-        let gallery = JSON.parse(localStorage.getItem('user_gallery')) || [];
-
-        function addGalleryImage(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                gallery.push(e.target.result);
-                localStorage.setItem('user_gallery', JSON.stringify(gallery));
-                renderGallery();
-                updateProfileStats();
-            };
-            reader.readAsDataURL(file);
-            event.target.value = '';
-        }
-
-        function deleteGalleryImage(index) {
-            gallery.splice(index, 1);
-            localStorage.setItem('user_gallery', JSON.stringify(gallery));
-            renderGallery();
-            updateProfileStats();
-        }
-
-        function renderGallery() {
-            const list = document.getElementById('gallery-list');
-            if (gallery.length === 0) {
-                list.innerHTML = '<div style="color: #666; text-align: center; font-size: 12px; margin-top: 10px; grid-column: span 2;">No images yet. Upload one!</div>';
-                return;
-            }
-            let html = '';
-            gallery.forEach((imgSrc, index) => {
-                html += `<div class="gallery-item"><img src="${imgSrc}"><button onclick="deleteGalleryImage(${index})">✕</button></div>`;
-            });
-            list.innerHTML = html;
-        }
-
-        renderProjects();
-        renderGallery();
-        renderCalendar();
 
         function loadParticles(containerId) {
             tsParticles.load(containerId, {
@@ -763,8 +875,10 @@
                 detectRetina: true
             });
         }
+
         loadParticles("tsparticles-home");
         loadParticles("tsparticles-nav");
+        loadAllData(); 
     </script>
 
 </body>
