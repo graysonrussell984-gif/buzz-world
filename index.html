@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Website</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Einstein's Lab</title>
     
     <!-- THE FUTURISTIC FONT -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
@@ -37,6 +37,13 @@
         }
         .sidebar-content a:hover { background: rgba(217, 70, 239, 0.3); box-shadow: 0 0 15px rgba(217, 70, 239, 0.6); }
 
+        /* --- HEADER MENU BUTTON --- */
+        .menu-btn {
+            position: absolute; left: 20px; top: 50%; transform: translateY(-50%);
+            background: transparent; border: none; color: #fff; font-size: 24px; 
+            cursor: pointer; z-index: 10; text-shadow: 0 0 5px rgba(0,0,0,0.8);
+        }
+
         /* THE HOMEPAGE BACKGROUND LAYER */
         .bg-image {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -67,7 +74,7 @@
 
         /* --- HOMEPAGE LAYOUT --- */
         #homepage { display: flex; flex-direction: column; min-height: 100vh; padding: 20px; gap: 15px; }
-        #homepage header { height: 100px; width: 100%; padding: 0 20px; }
+        #homepage header { height: 100px; width: 100%; padding: 0 20px; position: relative; }
         #homepage nav { height: 50px; width: 100%; cursor: pointer; transition: all 0.3s ease; }
         #homepage nav:hover { box-shadow: 0 0 20px rgba(217, 70, 239, 0.6); border-color: rgba(217, 70, 239, 0.8); }
         #homepage main { display: grid; grid-template-columns: 1fr 2fr 1fr; gap: 15px; width: 100%; flex: 1; }
@@ -84,7 +91,7 @@
             z-index: 100; background-color: rgba(11, 7, 26, 0.6); background-blend-mode: overlay;
             padding: 20px; display: flex; flex-direction: column; gap: 15px; overflow-y: auto;
         }
-        .nav-room-top { display: flex; justify-content: center; align-items: center; padding: 15px 20px; border-radius: 30px; border: 1px solid rgba(217, 70, 239, 0.5); box-shadow: 0 0 15px rgba(217, 70, 239, 0.3); flex-shrink: 0; }
+        .nav-room-top { display: flex; justify-content: center; align-items: center; padding: 15px 20px; border-radius: 30px; border: 1px solid rgba(217, 70, 239, 0.5); box-shadow: 0 0 15px rgba(217, 70, 239, 0.3); flex-shrink: 0; position: relative; }
         .nav-room-top h1 { font-family: 'Orbitron', sans-serif; font-size: 20px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; background: linear-gradient(90deg, #06b6d4 0%, #d946ef 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; filter: drop-shadow(0 0 10px rgba(217, 70, 239, 0.6)); text-align: center; }
         .nav-room-grid { display: grid; grid-template-columns: 1fr 2fr 1.2fr; gap: 15px; width: 100%; flex: 1; min-height: 0; }
         .nav-col-left { display: flex; flex-direction: column; align-items: center; padding: 20px; border: 1px solid rgba(217, 70, 239, 0.4); border-radius: 40px; box-shadow: inset 0 0 20px rgba(217, 70, 239, 0.1); height: 100%; min-height: 0; }
@@ -140,11 +147,11 @@
         /* --- EINSTEIN ROOM LAYOUT --- */
         #einstein-room {
             position: fixed; top: 0; left: 0; width: 100%; height: 100dvh;
-            background-image: url('https://i.postimg.cc/639v8tSX/chakbnoard-jpg.jpg');
+            background-image: url('https://i.postimg.cc/NMYVtnpv/Screenshot-20260930-221454-Google.jpg');
             background-size: contain; background-position: center; background-repeat: no-repeat;
             background-color: #121212; z-index: 100; display: flex; flex-direction: column; overflow: hidden;
         }
-        .einstein-header { display: flex; align-items: center; justify-content: space-between; padding: 15px 20px; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(5px); border-bottom: 1px solid rgba(255,255,255,0.1); flex-shrink: 0; }
+        .einstein-header { display: flex; align-items: center; justify-content: space-between; padding: 15px 20px; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(5px); border-bottom: 1px solid rgba(255,255,255,0.1); flex-shrink: 0; position: relative; }
         .einstein-header h2 { font-family: 'Orbitron', sans-serif; font-size: 18px; color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
         .einstein-header button { background: transparent; border: none; color: #fff; font-size: 16px; cursor: pointer; font-family: 'Orbitron', sans-serif; text-shadow: 0 2px 4px rgba(0,0,0,0.8); padding: 5px 10px; border-radius: 5px; }
         .einstein-header button:hover { background: rgba(255,255,255,0.1); }
@@ -212,7 +219,7 @@
             .center-split-grid { grid-template-columns: 1fr; }
             .nav-room-top { padding: 10px; }
             .nav-room-top h1 { font-size: 16px; letter-spacing: 1px; }
-            .nav-col-left, .nav-col-center, .nav-col-right { padding: 15px; height: 400px; min-height: 0; }
+            .nav-col-left, .nav-col-center, .nav-col-right { padding: 15px; height: auto; min-height: 300px; }
             .nav-col-left { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 15px; }
             .avatar-circle { width: 60px; height: 60px; margin-bottom: 0; }
             .profile-name { margin-bottom: 0; width: 100%; text-align: center; }
@@ -237,6 +244,38 @@
             .send-btn-circle { width: 35px; height: 35px; font-size: 18px; }
             .attachment-menu { left: 15px; bottom: 75px; }
         }
+        /* --- EXTRA SMALL SCREENS (Phones) --- */
+        @media (max-width: 480px) {
+            #homepage { padding: 10px; gap: 10px; }
+            #homepage header { height: 70px; padding: 0 15px; }
+            #homepage header h1 { font-size: 13px; }
+            #homepage nav { height: 40px; font-size: 14px; }
+            #homepage .content-box { min-height: 150px; padding: 15px; }
+            .profile-img { width: 80px; height: 80px; margin-bottom: 10px; }
+            #homepage footer { height: 40px; font-size: 14px; }
+            
+            .nav-room-top { padding: 8px 12px; }
+            .nav-room-top h1 { font-size: 12px; }
+            .nav-col-left, .nav-col-center, .nav-col-right { padding: 10px; border-radius: 20px; }
+            .stat-box { padding: 5px 8px; font-size: 10px; min-width: 50px; }
+            .reminders-section { height: 120px; }
+            
+            .calendar-grid { gap: 2px; }
+            .calendar-date { padding: 3px 0; font-size: 10px; }
+            
+            .einstein-header h2 { font-size: 14px; }
+            .einstein-header button { font-size: 14px; padding: 3px 6px; }
+            .einstein-msg { font-size: 13px; padding: 8px 12px; }
+            .custom-chatbox { padding: 10px 12px; margin: 0 10px 10px 10px; border-radius: 15px; }
+            .custom-input-row input { font-size: 13px; }
+            .icon-btn-left { font-size: 18px; width: 25px; height: 25px; }
+            .mic-icon { font-size: 16px; }
+            .send-btn-circle { width: 30px; height: 30px; font-size: 15px; }
+            .attachment-menu { left: 10px; bottom: 65px; padding: 5px; }
+            .attachment-menu button { font-size: 12px; padding: 10px 15px; }
+            
+            .menu-btn { font-size: 20px; left: 15px; }
+        }
     </style>
 </head>
 <body>
@@ -248,8 +287,9 @@
     <div id="sidebar" class="sidebar-closed">
         <div class="sidebar-content">
             <h2>Einstein's Lab</h2>
-            <a onclick="closeEinstein(); toggleSidebar();">🏠 Home</a>
-            <a onclick="goToNavRoom(); toggleSidebar();">Close</a>
+            <a onclick="goHome(); toggleSidebar();">🏠 Home</a>
+            <a onclick="goToNavRoom(); toggleSidebar();">📊 Navigation Room</a>
+            <a onclick="openEinstein(); toggleSidebar();">🧠 Einstein Room</a>
             <a onclick="alert('Settings coming soon!'); toggleSidebar();">⚙️ Settings</a>
             <a onclick="alert('Profile coming soon!'); toggleSidebar();">👤 Profile</a>
         </div>
@@ -261,6 +301,7 @@
         <div id="tsparticles-home" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none;"></div>
 
         <header class="glass-panel">
+            <button class="menu-btn" onclick="toggleSidebar()">☰</button>
             <h1>Welcome Now let's get down to business</h1>
         </header>
 
@@ -289,6 +330,7 @@
         <div id="tsparticles-nav" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none;"></div>
 
         <div class="nav-room-top glass-panel">
+            <button class="menu-btn" onclick="toggleSidebar()">☰</button>
             <h1>Let's get to the bag</h1>
         </div>
 
@@ -352,7 +394,7 @@
     <div id="einstein-room" class="hidden">
         
         <div class="einstein-header">
-            <button onclick="toggleSidebar()">☰</button>
+            <button class="menu-btn" onclick="toggleSidebar()">☰</button>
             <h2>Einstein</h2>
             <button onclick="closeEinstein()">← Back</button>
         </div>
@@ -389,6 +431,16 @@
 
     <!-- THE SCRIPT -->
     <script>
+        // ==========================================
+        // 🚀 SUPABASE PREPARATION (Ready for later)
+        // ==========================================
+        // When you are ready, we will uncomment these lines and add your Supabase URL and Key.
+        // const { createClient } = supabase;
+        // const supabaseUrl = 'YOUR_SUPABASE_URL';
+        // const supabaseKey = 'YOUR_SUPABASE_ANON_KEY';
+        // const supabaseClient = createClient(supabaseUrl, supabaseKey);
+        // ==========================================
+
         // --- SIDEBAR LOGIC ---
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
@@ -401,6 +453,7 @@
         // --- NAVIGATION LOGIC ---
         function goToNavRoom() {
             document.getElementById('homepage').classList.add('hidden');
+            document.getElementById('einstein-room').classList.add('hidden');
             document.getElementById('navigation-room').classList.remove('hidden');
             renderCalendar();
             updateProfileStats();
@@ -415,6 +468,7 @@
 
         function openEinstein() {
             document.getElementById('homepage').classList.add('hidden');
+            document.getElementById('navigation-room').classList.add('hidden');
             document.getElementById('einstein-room').classList.remove('hidden');
         }
 
@@ -448,10 +502,11 @@
             input.value = '';
             chatBox.scrollTop = chatBox.scrollHeight;
 
+            // PLACEHOLDER FOR OPENAI API (ChatGPT)
             setTimeout(() => {
                 const aiMsg = document.createElement('div');
                 aiMsg.className = 'einstein-msg ai';
-                aiMsg.textContent = "Got it. I will help you with that.";
+                aiMsg.textContent = "I am ready to help you once my OpenAI API key is connected!";
                 chatBox.appendChild(aiMsg);
                 chatBox.scrollTop = chatBox.scrollHeight;
             }, 800);
@@ -503,7 +558,7 @@
             }
         }
 
-        // --- NAVIGATION ROOM LOGIC ---
+        // --- NAVIGATION ROOM LOGIC (Local Storage Fallback until Supabase) ---
         function updateProfileStats() {
             const projects = JSON.parse(localStorage.getItem('user_projects')) || [];
             const gallery = JSON.parse(localStorage.getItem('user_gallery')) || [];
