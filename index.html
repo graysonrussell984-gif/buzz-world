@@ -251,6 +251,14 @@
         }
         .attachment-menu button:hover { background: rgba(255,255,255,0.1); }
 
+        /* --- DESKTOP FIX FOR GOD MODE --- */
+        @media (min-width: 769px) {
+            #godmode-room {
+                background-size: contain;
+                background-position: center center;
+            }
+        }
+
         /* --- MOBILE RESPONSIVE FIXES --- */
         @media (max-width: 1024px) {
             .nav-room-grid { grid-template-columns: 1fr; flex: none; }
