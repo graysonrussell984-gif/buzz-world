@@ -4,68 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Website</title>
-   
-    <!-- THE FUTURISTIC FONT -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
-   
-    <!-- THE PARTICLE LIBRARY -->
     <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
-
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: Arial, sans-serif; color: #ffffff; background-color: #0b071a; min-height: 100vh; overflow-x: hidden; }
         .hidden { display: none !important; }
+        .hidden-file-input { position: absolute; left: -9999px; top: -9999px; opacity: 0; width: 0; height: 0; }
 
-        /* --- SIDEBAR STYLES --- */
         #sidebar-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0,0,0,0.6); z-index: 999; }
-        #sidebar {
-            position: fixed; top: 0; left: 0; width: 280px; height: 100vh;
-            background-image: url('https://i.postimg.cc/76npSNQf/HD-wallpaper-albert-einstein-funny-inteligent-science-space.jpg');
-            background-size: cover; background-position: center;
-            z-index: 1000; transition: transform 0.3s ease-in-out;
-            box-shadow: 5px 0 15px rgba(0,0,0,0.5);
-            display: flex; flex-direction: column; padding: 20px;
-            background-color: rgba(11, 7, 26, 0.75); background-blend-mode: overlay;
-        }
+        #sidebar { position: fixed; top: 0; left: 0; width: 280px; height: 100vh; background-image: url('https://i.postimg.cc/76npSNQf/HD-wallpaper-albert-einstein-funny-inteligent-science-space.jpg'); background-size: cover; background-position: center; z-index: 1000; transition: transform 0.3s ease-in-out; box-shadow: 5px 0 15px rgba(0,0,0,0.5); display: flex; flex-direction: column; padding: 20px; background-color: rgba(11, 7, 26, 0.75); background-blend-mode: overlay; }
         #sidebar.sidebar-closed { transform: translateX(-100%); }
         #sidebar.sidebar-open { transform: translateX(0); }
         .sidebar-content h2 { font-family: 'Orbitron', sans-serif; color: #06b6d4; text-align: center; margin-bottom: 30px; text-shadow: 0 0 10px #06b6d4; font-size: 20px; }
-        .sidebar-content a {
-            display: block; color: #fff; text-decoration: none; font-family: 'Orbitron', sans-serif; font-size: 14px;
-            padding: 15px; border-radius: 10px; margin-bottom: 10px; background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(217, 70, 239, 0.4); transition: all 0.3s ease; cursor: pointer; text-align: center;
-        }
+        .sidebar-content a { display: block; color: #fff; text-decoration: none; font-family: 'Orbitron', sans-serif; font-size: 14px; padding: 15px; border-radius: 10px; margin-bottom: 10px; background: rgba(255,255,255,0.1); border: 1px solid rgba(217, 70, 239, 0.4); transition: all 0.3s ease; cursor: pointer; text-align: center; }
         .sidebar-content a:hover { background: rgba(217, 70, 239, 0.3); box-shadow: 0 0 15px rgba(217, 70, 239, 0.6); }
 
-        /* THE HOMEPAGE BACKGROUND LAYER */
-        .bg-image {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('https://i.postimg.cc/5ywKpzvD/Screenshot-20260929-094937-Google.jpg');
-            background-size: cover; background-position: center; background-repeat: no-repeat;
-            z-index: -2; background-color: rgba(11, 7, 26, 0.4); background-blend-mode: overlay;
-        }
+        .bg-image { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url('https://i.postimg.cc/5ywKpzvD/Screenshot-20260929-094937-Google.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; z-index: -2; background-color: rgba(11, 7, 26, 0.4); background-blend-mode: overlay; }
 
-        /* THE TRUE CLEAR BUBBLE STYLE */
-        .glass-panel {
-            background: transparent; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
-            border-radius: 50px; border: 1px solid rgba(255, 255, 255, 0.4);
-            box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.15), 0 8px 32px rgba(0, 0, 0, 0.3);
-            display: flex; justify-content: center; align-items: center;
-            font-size: 18px; font-weight: bold; text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-            position: relative; overflow: hidden; z-index: 1;
-        }
+        .glass-panel { background: transparent; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); border-radius: 50px; border: 1px solid rgba(255, 255, 255, 0.4); box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.15), 0 8px 32px rgba(0, 0, 0, 0.3); display: flex; justify-content: center; align-items: center; font-size: 18px; font-weight: bold; text-shadow: 0 2px 4px rgba(0,0,0,0.8); position: relative; overflow: hidden; z-index: 1; }
 
-        /* THE FUTURISTIC HEADER TEXT */
-        header h1, .nav-room-top h1 {
-            font-family: 'Orbitron', sans-serif; font-size: 22px; font-weight: 900;
-            letter-spacing: 2px; text-transform: uppercase;
-            background: linear-gradient(90deg, #06b6d4 0%, #d946ef 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            background-clip: text; filter: drop-shadow(0 0 10px rgba(217, 70, 239, 0.6)) drop-shadow(0 0 20px rgba(6, 182, 212, 0.4));
-            text-align: center; padding: 0 10px;
-        }
+        header h1, .nav-room-top h1 { font-family: 'Orbitron', sans-serif; font-size: 22px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; background: linear-gradient(90deg, #06b6d4 0%, #d946ef 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; filter: drop-shadow(0 0 10px rgba(217, 70, 239, 0.6)) drop-shadow(0 0 20px rgba(6, 182, 212, 0.4)); text-align: center; padding: 0 10px; }
 
-        /* --- HOMEPAGE LAYOUT --- */
         #homepage { display: flex; flex-direction: column; min-height: 100vh; padding: 20px; gap: 15px; }
         #homepage header { height: 100px; width: 100%; padding: 0 20px; }
         #homepage nav { height: 50px; width: 100%; cursor: pointer; transition: all 0.3s ease; }
@@ -76,14 +36,7 @@
         .profile-img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid rgba(217, 70, 239, 0.8); margin-bottom: 20px; box-shadow: 0 0 20px rgba(217, 70, 239, 0.4); }
         #homepage footer { height: 60px; width: 100%; }
 
-        /* --- NAVIGATION ROOM LAYOUT --- */
-        #navigation-room {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background-image: url('https://i.postimg.cc/Dy6xxLm9/Screenshot-20260930-133327-Google.jpg');
-            background-size: cover; background-position: center; background-repeat: no-repeat;
-            z-index: 100; background-color: rgba(11, 7, 26, 0.6); background-blend-mode: overlay;
-            padding: 20px; display: flex; flex-direction: column; gap: 15px; overflow-y: auto;
-        }
+        #navigation-room { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background-image: url('https://i.postimg.cc/Dy6xxLm9/Screenshot-20260930-133327-Google.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; z-index: 100; background-color: rgba(11, 7, 26, 0.6); background-blend-mode: overlay; padding: 20px; display: flex; flex-direction: column; gap: 15px; overflow-y: auto; }
         .nav-room-top { display: flex; justify-content: center; align-items: center; padding: 15px 20px; border-radius: 30px; border: 1px solid rgba(217, 70, 239, 0.5); box-shadow: 0 0 15px rgba(217, 70, 239, 0.3); flex-shrink: 0; }
         .nav-room-grid { display: grid; grid-template-columns: 1fr 2fr 1.2fr; gap: 15px; width: 100%; flex: 1; min-height: 0; }
         .nav-col-left { display: flex; flex-direction: column; align-items: center; padding: 20px; border: 1px solid rgba(217, 70, 239, 0.4); border-radius: 40px; box-shadow: inset 0 0 20px rgba(217, 70, 239, 0.1); height: 100%; min-height: 0; }
@@ -136,20 +89,7 @@
         .task-item button { background: transparent; border: none; color: #ff4d4d; cursor: pointer; font-size: 14px; }
         .back-home-btn { margin-top: 15px; margin-bottom: 20px; padding: 15px 30px; cursor: pointer; color: white; font-family: 'Orbitron', sans-serif; background: transparent; flex-shrink: 0; }
 
-        /* --- BUZZ ROOM LAYOUT --- */
-        #buzz-room {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; height: 100dvh;
-            background-image: url('https://i.postimg.cc/T3CnqV2x/Screenshot-20260930-194303-Pinterest.jpg');
-            background-size: contain;
-            background-position: center center;
-            background-repeat: no-repeat;
-            background-attachment: scroll;
-            background-color: #121212;
-            z-index: 100;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
+        #buzz-room { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; height: 100dvh; background-image: url('https://i.postimg.cc/T3CnqV2x/Screenshot-20260930-194303-Pinterest.jpg'); background-size: contain; background-position: center center; background-repeat: no-repeat; background-attachment: scroll; background-color: #121212; z-index: 100; display: flex; flex-direction: column; overflow: hidden; }
         .buzz-header { display: flex; align-items: center; justify-content: space-between; padding: 15px 20px; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(5px); border-bottom: 1px solid rgba(255,255,255,0.1); flex-shrink: 0; }
         .buzz-header h2 { font-family: 'Orbitron', sans-serif; font-size: 18px; color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
         .buzz-header button { background: transparent; border: none; color: #fff; font-size: 16px; cursor: pointer; font-family: 'Orbitron', sans-serif; text-shadow: 0 2px 4px rgba(0,0,0,0.8); padding: 5px 10px; border-radius: 5px; }
@@ -158,14 +98,9 @@
         .buzz-msg { max-width: 80%; padding: 12px 16px; border-radius: 15px; line-height: 1.5; font-family: 'Courier New', Courier, monospace; font-size: 15px; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); }
         .buzz-msg.ai { background-color: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.3); color: #fff; align-self: flex-start; }
         .buzz-msg.user { background-color: rgba(74, 144, 226, 0.7); color: #fff; align-self: flex-end; }
+        .buzz-msg img { max-width: 100%; border-radius: 10px; margin-bottom: 8px; display: block; }
 
-        /* --- EINSTEIN ROOM LAYOUT --- */
-        #einstein-room {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; height: 100dvh;
-            background-image: url('https://i.postimg.cc/NMYVtnpv/Screenshot-20260930-221454-Google.jpg');
-            background-size: contain; background-position: center; background-repeat: no-repeat;
-            background-color: #121212; z-index: 100; display: flex; flex-direction: column; overflow: hidden;
-        }
+        #einstein-room { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; height: 100dvh; background-image: url('https://i.postimg.cc/NMYVtnpv/Screenshot-20260930-221454-Google.jpg'); background-size: contain; background-position: center; background-repeat: no-repeat; background-color: #121212; z-index: 100; display: flex; flex-direction: column; overflow: hidden; }
         .einstein-header { display: flex; align-items: center; justify-content: space-between; padding: 15px 20px; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(5px); border-bottom: 1px solid rgba(255,255,255,0.1); flex-shrink: 0; }
         .einstein-header h2 { font-family: 'Orbitron', sans-serif; font-size: 18px; color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
         .einstein-header button { background: transparent; border: none; color: #fff; font-size: 16px; cursor: pointer; font-family: 'Orbitron', sans-serif; text-shadow: 0 2px 4px rgba(0,0,0,0.8); padding: 5px 10px; border-radius: 5px; }
@@ -174,21 +109,9 @@
         .einstein-msg { max-width: 80%; padding: 12px 16px; border-radius: 15px; line-height: 1.5; font-family: 'Courier New', Courier, monospace; font-size: 15px; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); }
         .einstein-msg.ai { background-color: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.3); color: #fff; align-self: flex-start; }
         .einstein-msg.user { background-color: rgba(74, 144, 226, 0.7); color: #fff; align-self: flex-end; }
+        .einstein-msg img { max-width: 100%; border-radius: 10px; margin-bottom: 8px; display: block; }
 
-        /* --- GOD MODE ROOM LAYOUT --- */
-        #godmode-room {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; height: 100dvh;
-            background-image: url('https://i.postimg.cc/VkVdkDLn/Dragon-ball.jpg');
-            background-size: cover;
-            background-position: center center;
-            background-repeat: no-repeat;
-            background-attachment: scroll;
-            background-color: #121212;
-            z-index: 100;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
+        #godmode-room { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; height: 100dvh; background-image: url('https://i.postimg.cc/VkVdkDLn/Dragon-ball.jpg'); background-size: cover; background-position: center center; background-repeat: no-repeat; background-attachment: scroll; background-color: #121212; z-index: 100; display: flex; flex-direction: column; overflow: hidden; }
         .godmode-header { display: flex; align-items: center; justify-content: space-between; padding: 15px 20px; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(5px); border-bottom: 1px solid rgba(255,255,255,0.1); flex-shrink: 0; }
         .godmode-header h2 { font-family: 'Orbitron', sans-serif; font-size: 18px; color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
         .godmode-header button { background: transparent; border: none; color: #fff; font-size: 16px; cursor: pointer; font-family: 'Orbitron', sans-serif; text-shadow: 0 2px 4px rgba(0,0,0,0.8); padding: 5px 10px; border-radius: 5px; }
@@ -197,92 +120,34 @@
         .godmode-msg { max-width: 80%; padding: 12px 16px; border-radius: 15px; line-height: 1.5; font-family: 'Courier New', Courier, monospace; font-size: 15px; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); }
         .godmode-msg.ai { background-color: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.3); color: #fff; align-self: flex-start; }
         .godmode-msg.user { background-color: rgba(74, 144, 226, 0.7); color: #fff; align-self: flex-end; }
+        .godmode-msg img { max-width: 100%; border-radius: 10px; margin-bottom: 8px; display: block; }
 
-        /* --- CUSTOM CHATBOX (DARK THEME) --- */
-        .custom-chatbox {
-            background: #1e1e1e; border: 1px solid #333;
-            border-radius: 24px; padding: 16px 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-            display: flex; flex-direction: column; width: 100%; max-width: 800px;
-            margin: 0 auto 20px auto; position: relative; flex-shrink: 0;
-        }
+        .custom-chatbox { background: #1e1e1e; border: 1px solid #333; border-radius: 24px; padding: 16px 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); display: flex; flex-direction: column; width: 100%; max-width: 800px; margin: 0 auto 20px auto; position: relative; flex-shrink: 0; }
         .custom-input-row { display: flex; align-items: center; margin-bottom: 12px; }
-        .custom-input-row input {
-            flex: 1; border: none; outline: none; font-size: 16px;
-            color: #ffffff; background: transparent; font-family: Arial, sans-serif;
-        }
+        .custom-input-row input { flex: 1; border: none; outline: none; font-size: 16px; color: #ffffff; background: transparent; font-family: Arial, sans-serif; }
         .custom-input-row input::placeholder { color: #888; }
         .custom-icons-row { display: flex; justify-content: space-between; align-items: center; }
-       
-        .icon-btn-left {
-            background: transparent; border: none; cursor: pointer;
-            font-size: 24px; color: #ffffff; font-weight: 300;
-            display: flex; align-items: center; justify-content: center;
-            width: 40px; height: 40px;
-        }
-       
+        .icon-btn-left { background: transparent; border: none; cursor: pointer; font-size: 24px; color: #ffffff; font-weight: 300; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; }
         .icon-btn-right { display: flex; align-items: center; gap: 15px; }
-       
         .mic-icon { color: #ffffff; font-size: 20px; cursor: pointer; transition: color 0.3s; }
         .mic-icon.listening { color: #d946ef; animation: pulse 1s infinite; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
-
-        .send-btn-circle {
-            width: 40px; height: 40px; border-radius: 50%;
-            background: #4a5568; color: white; border: none; cursor: pointer;
-            display: flex; justify-content: center; align-items: center;
-            font-size: 20px; font-weight: bold;
-        }
+        .send-btn-circle { width: 40px; height: 40px; border-radius: 50%; background: #4a5568; color: white; border: none; cursor: pointer; display: flex; justify-content: center; align-items: center; font-size: 20px; font-weight: bold; }
         .send-btn-circle:hover { background: #2d3748; }
 
-        /* --- ATTACHMENT MENU --- */
-        .attachment-menu {
-            position: absolute; bottom: 80px; left: 20px;
-            background: #2d3748; border-radius: 15px; padding: 10px;
-            display: flex; flex-direction: column; gap: 5px;
-            z-index: 200; box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            border: 1px solid #4a5568;
-        }
-        .attachment-menu button {
-            background: transparent; color: #fff; border: none;
-            font-size: 14px; display: flex; align-items: center; gap: 10px;
-            padding: 12px 20px; border-radius: 10px; cursor: pointer;
-            font-family: 'Orbitron', sans-serif; font-weight: 500; text-align: left;
-        }
+        .attachment-menu { position: absolute; bottom: 80px; left: 20px; background: #2d3748; border-radius: 15px; padding: 10px; display: flex; flex-direction: column; gap: 5px; z-index: 200; box-shadow: 0 10px 25px rgba(0,0,0,0.5); border: 1px solid #4a5568; }
+        .attachment-menu button { background: transparent; color: #fff; border: none; font-size: 14px; display: flex; align-items: center; gap: 10px; padding: 12px 20px; border-radius: 10px; cursor: pointer; font-family: 'Orbitron', sans-serif; font-weight: 500; text-align: left; }
         .attachment-menu button:hover { background: rgba(255,255,255,0.1); }
 
-        /* --- ATTACHMENT PREVIEW CHIP --- */
-        .attachment-preview {
-            display: flex; align-items: center; gap: 10px;
-            background: #2a2a2a; border: 1px solid #4a5568;
-            border-radius: 12px; padding: 8px 12px; margin-bottom: 10px;
-        }
-        .attachment-preview img {
-            width: 50px; height: 50px; border-radius: 8px; object-fit: cover;
-        }
-        .attachment-preview .file-icon {
-            font-size: 32px;
-        }
-        .attachment-preview .file-name {
-            flex: 1; font-size: 13px; color: #e0e0e0;
-            overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-        }
-        .attachment-preview .remove-btn {
-            background: #ff4d4d; color: white; border: none;
-            width: 24px; height: 24px; border-radius: 50%;
-            cursor: pointer; font-size: 12px;
-            display: flex; justify-content: center; align-items: center;
-        }
+        .attachment-preview { display: flex; align-items: center; gap: 10px; background: #2a2a2a; border: 1px solid #4a5568; border-radius: 12px; padding: 8px 12px; margin-bottom: 10px; }
+        .attachment-preview img { width: 50px; height: 50px; border-radius: 8px; object-fit: cover; }
+        .attachment-preview .file-icon { font-size: 32px; }
+        .attachment-preview .file-name { flex: 1; font-size: 13px; color: #e0e0e0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .attachment-preview .remove-btn { background: #ff4d4d; color: white; border: none; width: 24px; height: 24px; border-radius: 50%; cursor: pointer; font-size: 12px; display: flex; justify-content: center; align-items: center; }
 
-        /* --- DESKTOP FIX FOR GOD MODE --- */
         @media (min-width: 769px) {
-            #godmode-room {
-                background-size: contain;
-                background-position: center center;
-            }
+            #godmode-room { background-size: contain; background-position: center center; }
         }
-
-        /* --- MOBILE RESPONSIVE FIXES --- */
         @media (max-width: 1024px) {
             .nav-room-grid { grid-template-columns: 1fr; flex: none; }
             .center-split-grid { grid-template-columns: 1fr; }
@@ -305,7 +170,6 @@
             .add-item-area button { padding: 0 10px; }
             .calendar-date { padding: 4px 0; font-size: 11px; }
             .project-item, .reminder-item, .task-item { font-size: 11px; padding: 6px 8px; }
-           
             .custom-chatbox { margin: 0 15px 15px 15px; width: auto; border-radius: 20px; padding: 12px 15px; flex-shrink: 0; }
             .custom-input-row input { font-size: 14px; }
             .icon-btn-left { font-size: 20px; width: 30px; height: 30px; }
@@ -317,21 +181,18 @@
 </head>
 <body>
 
-    <!-- SIDEBAR OVERLAY -->
     <div id="sidebar-overlay" class="hidden" onclick="toggleSidebar()"></div>
 
-    <!-- SLIDE-OUT SIDEBAR -->
     <div id="sidebar" class="sidebar-closed">
         <div class="sidebar-content">
             <h2>Einstein's Lab</h2>
-            <a onclick="closeAllRooms(); toggleSidebar();">🏠 Home</a>
-            <a onclick="goToNavRoom(); toggleSidebar();">Close</a>
+            <a onclick="goHome(); toggleSidebar();">🏠 Home</a>
+            <a onclick="toggleSidebar();">Close</a>
             <a onclick="alert('Settings coming soon!'); toggleSidebar();">⚙️ Settings</a>
             <a onclick="alert('Profile coming soon!'); toggleSidebar();">👤 Profile</a>
         </div>
     </div>
 
-    <!-- HOMEPAGE -->
     <div id="homepage">
         <div class="bg-image"></div>
         <div id="tsparticles-home" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none;"></div>
@@ -360,14 +221,9 @@
         <footer class="glass-panel">Library</footer>
     </div>
 
-    <!-- NAVIGATION ROOM -->
     <div id="navigation-room" class="hidden">
         <div id="tsparticles-nav" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none;"></div>
-
-        <div class="nav-room-top glass-panel">
-            <h1>Let's get to the bag</h1>
-        </div>
-
+        <div class="nav-room-top glass-panel"><h1>Let's get to the bag</h1></div>
         <div class="nav-room-grid">
             <div class="nav-col-left glass-panel">
                 <div class="avatar-circle"><img src="https://i.postimg.cc/xTWNKK7X/home-bg-jpg.jpg" alt="Grayson"></div>
@@ -382,7 +238,6 @@
                     <div class="reminders-list" id="upcoming-reminders"></div>
                 </div>
             </div>
-
             <div class="nav-col-center glass-panel">
                 <div class="center-split-grid">
                     <div class="sub-panel">
@@ -403,7 +258,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="nav-col-right glass-panel">
                 <div class="calendar-header">
                     <button onclick="changeMonth(-1)">◀</button>
@@ -418,147 +272,133 @@
                 <div class="task-list" id="task-list"></div>
             </div>
         </div>
-
         <button class="glass-panel back-home-btn" onclick="goHome()">← Back to Home</button>
     </div>
 
-    <!-- ========================================== -->
-    <!-- BUZZ ROOM -->
-    <!-- ========================================== -->
     <div id="buzz-room" class="hidden">
-       
         <div class="buzz-header">
             <button onclick="toggleSidebar()">☰</button>
             <h2>Buzz</h2>
             <button onclick="closeBuzz()">← Back</button>
         </div>
-
         <div class="buzz-chat-area" id="buzz-chat-box">
             <div class="buzz-msg ai">I am Buzz. I remember everything. How can I help you today?</div>
         </div>
-
         <div class="custom-chatbox">
             <div class="attachment-menu hidden" id="buzz-attachment-menu">
                 <button onclick="triggerFileInput('camera','buzz')">📷 Camera</button>
                 <button onclick="triggerFileInput('photo','buzz')">🖼️ Gallery</button>
                 <button onclick="triggerFileInput('document','buzz')">📄 Document</button>
             </div>
-
             <div class="attachment-preview hidden" id="buzz-attachment-preview"></div>
-
             <div class="custom-input-row">
                 <input type="text" id="buzz-input" placeholder="Ask anything..." onkeypress="if(event.key === 'Enter') sendBuzzMessage()">
             </div>
             <div class="custom-icons-row">
                 <button class="icon-btn-left" onclick="toggleBuzzAttachmentMenu()">+</button>
                 <div class="icon-btn-right">
-                    <span class="mic-icon" id="buzz-mic-button" onclick="toggleBuzzVoiceInput()">🎙️</span>
+                    <span class="mic-icon" id="buzz-mic-button">🎙️</span>
                     <button class="send-btn-circle" onclick="sendBuzzMessage()">↑</button>
                 </div>
             </div>
         </div>
-
     </div>
 
-    <!-- ========================================== -->
-    <!-- EINSTEIN ROOM -->
-    <!-- ========================================== -->
     <div id="einstein-room" class="hidden">
-       
         <div class="einstein-header">
             <button onclick="toggleSidebar()">☰</button>
             <h2>Einstein</h2>
             <button onclick="closeEinstein()">← Back</button>
         </div>
-
         <div class="einstein-chat-area" id="einstein-chat-box">
             <div class="einstein-msg ai">I am Einstein. I am strictly for school. Let's fix that grammar.</div>
         </div>
-
         <div class="custom-chatbox">
             <div class="attachment-menu hidden" id="attachment-menu">
                 <button onclick="triggerFileInput('camera','einstein')">📷 Camera</button>
                 <button onclick="triggerFileInput('photo','einstein')">🖼️ Gallery</button>
                 <button onclick="triggerFileInput('document','einstein')">📄 Document</button>
             </div>
-
             <div class="attachment-preview hidden" id="einstein-attachment-preview"></div>
-
             <div class="custom-input-row">
                 <input type="text" id="einstein-input" placeholder="Ask anything..." onkeypress="if(event.key === 'Enter') sendEinsteinMessage()">
             </div>
             <div class="custom-icons-row">
                 <button class="icon-btn-left" onclick="toggleAttachmentMenu()">+</button>
                 <div class="icon-btn-right">
-                    <span class="mic-icon" id="mic-button" onclick="toggleVoiceInput()">🎙️</span>
+                    <span class="mic-icon" id="mic-button">🎙️</span>
                     <button class="send-btn-circle" onclick="sendEinsteinMessage()">↑</button>
                 </div>
             </div>
         </div>
-
     </div>
 
-    <!-- ========================================== -->
-    <!-- GOD MODE ROOM -->
-    <!-- ========================================== -->
     <div id="godmode-room" class="hidden">
-       
         <div class="godmode-header">
             <button onclick="toggleSidebar()">☰</button>
             <h2>God Mode</h2>
             <button onclick="closeGodMode()">← Back</button>
         </div>
-
         <div class="godmode-chat-area" id="godmode-chat-box">
             <div class="godmode-msg ai">I am God Mode. How can I help you today?</div>
         </div>
-
         <div class="custom-chatbox">
             <div class="attachment-menu hidden" id="godmode-attachment-menu">
                 <button onclick="triggerFileInput('camera','godmode')">📷 Camera</button>
                 <button onclick="triggerFileInput('photo','godmode')">🖼️ Gallery</button>
                 <button onclick="triggerFileInput('document','godmode')">📄 Document</button>
             </div>
-
             <div class="attachment-preview hidden" id="godmode-attachment-preview"></div>
-
             <div class="custom-input-row">
                 <input type="text" id="godmode-input" placeholder="Ask anything..." onkeypress="if(event.key === 'Enter') sendGodModeMessage()">
             </div>
             <div class="custom-icons-row">
                 <button class="icon-btn-left" onclick="toggleGodModeAttachmentMenu()">+</button>
                 <div class="icon-btn-right">
-                    <span class="mic-icon" id="godmode-mic-button" onclick="toggleGodModeVoiceInput()">🎙️</span>
+                    <span class="mic-icon" id="godmode-mic-button">🎙️</span>
                     <button class="send-btn-circle" onclick="sendGodModeMessage()">↑</button>
                 </div>
             </div>
         </div>
-
     </div>
 
-    <!-- HIDDEN FILE INPUTS -->
-    <input type="file" id="file-camera" accept="image/*" capture="environment" style="display:none;">
-    <input type="file" id="file-photo" accept="image/*" style="display:none;">
-    <input type="file" id="file-document" accept=".pdf,.doc,.docx,.txt" style="display:none;">
+    <input type="file" id="file-camera" accept="image/*" capture="environment" class="hidden-file-input">
+    <input type="file" id="file-photo" accept="image/*" class="hidden-file-input">
+    <input type="file" id="file-document" accept=".pdf,.doc,.docx,.txt" class="hidden-file-input">
 
-    <!-- THE SCRIPT -->
     <script>
+        // ==========================================
+        // ROOM PERSISTENCE (survives page reload)
+        // ==========================================
+        const ROOM_KEY = 'current_room';
+
+        function saveRoom(roomId) {
+            try { sessionStorage.setItem(ROOM_KEY, roomId); } catch (e) {}
+        }
+
+        function restoreRoom() {
+            let roomId = null;
+            try { roomId = sessionStorage.getItem(ROOM_KEY); } catch (e) {}
+            if (!roomId) roomId = 'homepage';
+
+            const allRooms = ['homepage', 'navigation-room', 'buzz-room', 'einstein-room', 'godmode-room'];
+            allRooms.forEach(function(id) {
+                const el = document.getElementById(id);
+                if (el) el.classList.add('hidden');
+            });
+            const target = document.getElementById(roomId);
+            if (target) target.classList.remove('hidden');
+        }
+
         // ==========================================
         // ATTACHMENT STORAGE
         // ==========================================
-        const attachments = {
-            buzz: null,
-            einstein: null,
-            godmode: null
-        };
-
-        // --- FILE PICKER LOGIC ---
+        const attachments = { buzz: null, einstein: null, godmode: null };
         let activeRoomForFile = null;
 
         function triggerFileInput(type, room) {
             activeRoomForFile = room;
             document.getElementById('file-' + type).click();
-            // Close all attachment menus
             document.getElementById('attachment-menu').classList.add('hidden');
             document.getElementById('buzz-attachment-menu').classList.add('hidden');
             document.getElementById('godmode-attachment-menu').classList.add('hidden');
@@ -585,15 +425,9 @@
         function renderAttachmentPreview(room) {
             const container = document.getElementById(room + '-attachment-preview');
             if (!container) return;
-
             const att = attachments[room];
             container.innerHTML = '';
-
-            if (!att) {
-                container.classList.add('hidden');
-                return;
-            }
-
+            if (!att) { container.classList.add('hidden'); return; }
             container.classList.remove('hidden');
 
             if (att.isImage) {
@@ -606,7 +440,6 @@
                 icon.textContent = '📄';
                 container.appendChild(icon);
             }
-
             const name = document.createElement('span');
             name.className = 'file-name';
             name.textContent = att.name;
@@ -622,7 +455,6 @@
             container.appendChild(removeBtn);
         }
 
-        // Attach listeners to file inputs
         document.getElementById('file-camera').addEventListener('change', handleFileSelect);
         document.getElementById('file-photo').addEventListener('change', handleFileSelect);
         document.getElementById('file-document').addEventListener('change', handleFileSelect);
@@ -638,13 +470,16 @@
             overlay.classList.toggle('hidden');
         }
 
-        // --- NAVIGATION LOGIC ---
+        // ==========================================
+        // NAVIGATION LOGIC
+        // ==========================================
         function goToNavRoom() {
             document.getElementById('homepage').classList.add('hidden');
             document.getElementById('navigation-room').classList.remove('hidden');
             document.getElementById('buzz-room').classList.add('hidden');
             document.getElementById('einstein-room').classList.add('hidden');
             document.getElementById('godmode-room').classList.add('hidden');
+            saveRoom('navigation-room');
             renderCalendar();
             updateProfileStats();
             renderReminders();
@@ -656,50 +491,59 @@
             document.getElementById('buzz-room').classList.add('hidden');
             document.getElementById('einstein-room').classList.add('hidden');
             document.getElementById('godmode-room').classList.add('hidden');
+            saveRoom('homepage');
         }
 
         function closeAllRooms() {
-            document.getElementById('homepage').classList.remove('hidden');
-            document.getElementById('navigation-room').classList.add('hidden');
-            document.getElementById('buzz-room').classList.add('hidden');
-            document.getElementById('einstein-room').classList.add('hidden');
-            document.getElementById('godmode-room').classList.add('hidden');
+            goHome();
         }
 
-        // --- BUZZ ROOM LOGIC ---
+        // --- BUZZ ROOM ---
         function openBuzz() {
             document.getElementById('homepage').classList.add('hidden');
             document.getElementById('buzz-room').classList.remove('hidden');
             document.getElementById('einstein-room').classList.add('hidden');
             document.getElementById('godmode-room').classList.add('hidden');
+            saveRoom('buzz-room');
         }
 
         function closeBuzz() {
             document.getElementById('buzz-room').classList.add('hidden');
             document.getElementById('homepage').classList.remove('hidden');
+            saveRoom('homepage');
         }
 
         function toggleBuzzAttachmentMenu() {
-            const menu = document.getElementById('buzz-attachment-menu');
-            menu.classList.toggle('hidden');
+            document.getElementById('buzz-attachment-menu').classList.toggle('hidden');
         }
 
         function sendBuzzMessage() {
             const input = document.getElementById('buzz-input');
             let text = input.value.trim();
             const att = attachments['buzz'];
-
             if (text === '' && !att) return;
 
-            if (att) {
-                text = (text ? text + '\n\n' : '') + '📎 Attached: ' + att.name;
-            }
-
             const chatBox = document.getElementById('buzz-chat-box');
-
             const userMsg = document.createElement('div');
             userMsg.className = 'buzz-msg user';
-            userMsg.textContent = text;
+
+            if (att && att.isImage) {
+                const img = document.createElement('img');
+                img.src = att.data;
+                userMsg.appendChild(img);
+            } else if (att) {
+                const fileLine = document.createElement('div');
+                fileLine.textContent = '📄 ' + att.name;
+                fileLine.style.marginBottom = text ? '8px' : '0';
+                userMsg.appendChild(fileLine);
+            }
+
+            if (text) {
+                const textDiv = document.createElement('div');
+                textDiv.textContent = text;
+                userMsg.appendChild(textDiv);
+            }
+
             chatBox.appendChild(userMsg);
             input.value = '';
             attachments['buzz'] = null;
@@ -715,40 +559,52 @@
             }, 800);
         }
 
-        // --- EINSTEIN ROOM LOGIC ---
+        // --- EINSTEIN ROOM ---
         function openEinstein() {
             document.getElementById('homepage').classList.add('hidden');
             document.getElementById('einstein-room').classList.remove('hidden');
             document.getElementById('buzz-room').classList.add('hidden');
             document.getElementById('godmode-room').classList.add('hidden');
+            saveRoom('einstein-room');
         }
 
         function closeEinstein() {
             document.getElementById('einstein-room').classList.add('hidden');
             document.getElementById('homepage').classList.remove('hidden');
+            saveRoom('homepage');
         }
 
         function toggleAttachmentMenu() {
-            const menu = document.getElementById('attachment-menu');
-            menu.classList.toggle('hidden');
+            document.getElementById('attachment-menu').classList.toggle('hidden');
         }
 
         function sendEinsteinMessage() {
             const input = document.getElementById('einstein-input');
             let text = input.value.trim();
             const att = attachments['einstein'];
-
             if (text === '' && !att) return;
 
-            if (att) {
-                text = (text ? text + '\n\n' : '') + '📎 Attached: ' + att.name;
-            }
-
             const chatBox = document.getElementById('einstein-chat-box');
-
             const userMsg = document.createElement('div');
             userMsg.className = 'einstein-msg user';
-            userMsg.textContent = text;
+
+            if (att && att.isImage) {
+                const img = document.createElement('img');
+                img.src = att.data;
+                userMsg.appendChild(img);
+            } else if (att) {
+                const fileLine = document.createElement('div');
+                fileLine.textContent = '📄 ' + att.name;
+                fileLine.style.marginBottom = text ? '8px' : '0';
+                userMsg.appendChild(fileLine);
+            }
+
+            if (text) {
+                const textDiv = document.createElement('div');
+                textDiv.textContent = text;
+                userMsg.appendChild(textDiv);
+            }
+
             chatBox.appendChild(userMsg);
             input.value = '';
             attachments['einstein'] = null;
@@ -764,40 +620,52 @@
             }, 800);
         }
 
-        // --- GOD MODE ROOM LOGIC ---
+        // --- GOD MODE ROOM ---
         function openGodMode() {
             document.getElementById('homepage').classList.add('hidden');
             document.getElementById('godmode-room').classList.remove('hidden');
             document.getElementById('buzz-room').classList.add('hidden');
             document.getElementById('einstein-room').classList.add('hidden');
+            saveRoom('godmode-room');
         }
 
         function closeGodMode() {
             document.getElementById('godmode-room').classList.add('hidden');
             document.getElementById('homepage').classList.remove('hidden');
+            saveRoom('homepage');
         }
 
         function toggleGodModeAttachmentMenu() {
-            const menu = document.getElementById('godmode-attachment-menu');
-            menu.classList.toggle('hidden');
+            document.getElementById('godmode-attachment-menu').classList.toggle('hidden');
         }
 
         function sendGodModeMessage() {
             const input = document.getElementById('godmode-input');
             let text = input.value.trim();
             const att = attachments['godmode'];
-
             if (text === '' && !att) return;
 
-            if (att) {
-                text = (text ? text + '\n\n' : '') + '📎 Attached: ' + att.name;
-            }
-
             const chatBox = document.getElementById('godmode-chat-box');
-
             const userMsg = document.createElement('div');
             userMsg.className = 'godmode-msg user';
-            userMsg.textContent = text;
+
+            if (att && att.isImage) {
+                const img = document.createElement('img');
+                img.src = att.data;
+                userMsg.appendChild(img);
+            } else if (att) {
+                const fileLine = document.createElement('div');
+                fileLine.textContent = '📄 ' + att.name;
+                fileLine.style.marginBottom = text ? '8px' : '0';
+                userMsg.appendChild(fileLine);
+            }
+
+            if (text) {
+                const textDiv = document.createElement('div');
+                textDiv.textContent = text;
+                userMsg.appendChild(textDiv);
+            }
+
             chatBox.appendChild(userMsg);
             input.value = '';
             attachments['godmode'] = null;
@@ -814,26 +682,22 @@
         }
 
         // ==========================================
-        // VOICE INPUT LOGIC (works for all three rooms)
+        // VOICE INPUT (works for all three rooms)
         // ==========================================
         function setupVoiceInput(micButtonId, inputId) {
             const micBtn = document.getElementById(micButtonId);
             const inputField = document.getElementById(inputId);
-
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-
             if (!SpeechRecognition) {
                 micBtn.addEventListener('click', function() {
                     alert("Voice input is not supported in this browser. Please use Chrome, Edge, or Safari.");
                 });
                 return;
             }
-
             const recog = new SpeechRecognition();
             recog.continuous = false;
             recog.interimResults = true;
             recog.lang = 'en-US';
-
             let listening = false;
             let finalTranscript = '';
 
@@ -842,50 +706,31 @@
                 finalTranscript = '';
                 micBtn.classList.add('listening');
             };
-
             recog.onresult = function(event) {
                 let interim = '';
                 for (let i = event.resultIndex; i < event.results.length; i++) {
                     const transcript = event.results[i][0].transcript;
-                    if (event.results[i].isFinal) {
-                        finalTranscript += transcript;
-                    } else {
-                        interim += transcript;
-                    }
+                    if (event.results[i].isFinal) finalTranscript += transcript;
+                    else interim += transcript;
                 }
                 inputField.value = finalTranscript + interim;
             };
-
-            recog.onend = function() {
-                listening = false;
-                micBtn.classList.remove('listening');
-            };
-
-            recog.onerror = function(event) {
-                console.error('Speech recognition error', event.error);
-                listening = false;
-                micBtn.classList.remove('listening');
-            };
+            recog.onend = function() { listening = false; micBtn.classList.remove('listening'); };
+            recog.onerror = function() { listening = false; micBtn.classList.remove('listening'); };
 
             micBtn.addEventListener('click', function() {
-                if (listening) {
-                    recog.stop();
-                } else {
-                    try {
-                        recog.start();
-                    } catch (e) {
-                        console.error('Could not start recognition:', e);
-                    }
-                }
+                if (listening) recog.stop();
+                else { try { recog.start(); } catch (e) {} }
             });
         }
 
-        // Set up voice input for all three rooms
         setupVoiceInput('mic-button', 'einstein-input');
         setupVoiceInput('buzz-mic-button', 'buzz-input');
         setupVoiceInput('godmode-mic-button', 'godmode-input');
 
-        // --- NAVIGATION ROOM LOGIC ---
+        // ==========================================
+        // NAVIGATION ROOM LOGIC
+        // ==========================================
         function updateProfileStats() {
             const projects = JSON.parse(localStorage.getItem('user_projects')) || [];
             const gallery = JSON.parse(localStorage.getItem('user_gallery')) || [];
@@ -899,12 +744,10 @@
 
         function renderReminders() {
             const tasks = JSON.parse(localStorage.getItem('user_tasks')) || {};
-            const today = new Date();
-            today.setHours(0,0,0,0);
+            const today = new Date(); today.setHours(0,0,0,0);
             let upcoming = [];
             Object.keys(tasks).forEach(dateKey => {
-                const taskDate = new Date(dateKey);
-                taskDate.setHours(0,0,0,0);
+                const taskDate = new Date(dateKey); taskDate.setHours(0,0,0,0);
                 if (taskDate >= today) {
                     tasks[dateKey].forEach(taskText => {
                         upcoming.push({ date: taskDate, text: taskText });
@@ -950,8 +793,8 @@
             for (let i = 1; i <= daysInMonth; i++) {
                 let classNames = 'calendar-date';
                 const thisDateString = new Date(year, month, i).toDateString();
-                if (isCurrentMonth && i === todayDate) { classNames += ' today'; }
-                if (thisDateString === selectedDateString) { classNames += ' selected'; }
+                if (isCurrentMonth && i === todayDate) classNames += ' today';
+                if (thisDateString === selectedDateString) classNames += ' selected';
                 gridHTML += `<div class="${classNames}" onclick="selectDay(${year}, ${month}, ${i})">${i}</div>`;
             }
             calendarDays.innerHTML = gridHTML;
@@ -966,7 +809,7 @@
             const text = input.value.trim();
             if (text === '') return;
             const dateKey = selectedDate.toDateString();
-            if (!tasks[dateKey]) { tasks[dateKey] = []; }
+            if (!tasks[dateKey]) tasks[dateKey] = [];
             tasks[dateKey].push(text);
             localStorage.setItem('user_tasks', JSON.stringify(tasks));
             input.value = '';
@@ -1092,6 +935,12 @@
         }
         loadParticles("tsparticles-home");
         loadParticles("tsparticles-nav");
+
+        // ==========================================
+        // ON LOAD: restore the room the user was in
+        // ==========================================
+        window.addEventListener('pageshow', restoreRoom);
+        window.addEventListener('load', restoreRoom);
     </script>
 
 </body>
