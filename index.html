@@ -34,7 +34,7 @@
         .content-box { width: 100%; min-height: 250px; display: flex; flex-direction: column; padding: 20px; cursor: pointer; transition: all 0.3s ease; }
         .content-box:hover { box-shadow: 0 0 20px rgba(217, 70, 239, 0.6); border-color: rgba(217, 70, 239, 0.8); }
         .profile-img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid rgba(217, 70, 239, 0.8); margin-bottom: 20px; box-shadow: 0 0 20px rgba(217, 70, 239, 0.4); }
-        #homepage footer { height: 60px; width: 100%; }
+        #homepage footer { height: 60px; width: 100%; cursor: pointer; }
 
         #navigation-room { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background-image: url('https://i.postimg.cc/Dy6xxLm9/Screenshot-20260930-133327-Google.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; z-index: 100; background-color: rgba(11, 7, 26, 0.6); background-blend-mode: overlay; padding: 20px; display: flex; flex-direction: column; gap: 15px; overflow-y: auto; }
         .nav-room-top { display: flex; justify-content: center; align-items: center; padding: 15px 20px; border-radius: 30px; border: 1px solid rgba(217, 70, 239, 0.5); box-shadow: 0 0 15px rgba(217, 70, 239, 0.3); flex-shrink: 0; }
@@ -218,7 +218,7 @@
             </div>
         </main>
 
-        <footer class="glass-panel">Library</footer>
+        <footer class="glass-panel" onclick="goToNavRoom()">Library</footer>
     </div>
 
     <div id="navigation-room" class="hidden">
@@ -368,6 +368,14 @@
 
     <script>
         // ==========================================
+        // HTML ESCAPE HELPER (Prevents layout breakage from special characters)
+        // ==========================================
+        function escapeHTML(str) {
+            if (!str) return '';
+            return str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag));
+        }
+
+        // ==========================================
         // EINSTEIN MEMORY (Full conversation transcript)
         // ==========================================
         const einsteinMemory = `You are Einstein, an AI strictly for Grayson's schoolwork. Here is the full history of your conversation with Grayson. You must remember all of it and use it to help him.
@@ -502,27 +510,41 @@ God Mode must always write and respond in Grayson's voice when writing for him: 
         function triggerFileInput(type, room) {
             activeRoomForFile = room;
             document.getElementById('file-' + type).click();
-            document.getElementById('attachment-menu').classList.add('hidden');
-            document.getElementById('buzz-attachment-menu').classList.add('hidden');
-            document.getElementById('godmode-attachment-menu').classList.add('hidden');
+            // Fix: Safely hide all attachment menus
+            const menus = ['attachment-menu', 'buzz-attachment-menu', 'godmode-attachment-menu'];
+            menus.forEach(menuId => {
+                const menu = document.getElementById(menuId);
+                if (menu) menu.classList.add('hidden');
+            });
         }
 
         function handleFileSelect(event) {
             const file = event.target.files[0];
             if (!file || !activeRoomForFile) return;
 
+            const isText = file.type === 'text/plain';
             const reader = new FileReader();
             reader.onload = function(e) {
                 attachments[activeRoomForFile] = {
                     name: file.name,
                     type: file.type,
                     data: e.target.result,
-                    isImage: file.type.startsWith('image/')
+                    isImage: file.type.startsWith('image/'),
+                    isText: isText,
+                    textContent: isText ? e.target.result : null
                 };
                 renderAttachmentPreview(activeRoomForFile);
+                if (!isText && file.type !== '') {
+                    console.log("Note: Only text files are fully readable by the frontend.");
+                }
             };
-            reader.readAsDataURL(file);
+            if (isText) {
+                reader.readAsText(file);
+            } else {
+                reader.readAsDataURL(file);
+            }
             event.target.value = '';
+            activeRoomForFile = null; // Fix: Reset to prevent cross-room contamination
         }
 
         function renderAttachmentPreview(room) {
@@ -579,12 +601,13 @@ God Mode must always write and respond in Grayson's voice when writing for him: 
         const ROOM_KEY = 'current_room';
 
         function saveRoom(roomId) {
-            try { sessionStorage.setItem(ROOM_KEY, roomId); } catch (e) {}
+            // Fix: Use localStorage instead of sessionStorage so it survives browser restarts
+            try { localStorage.setItem(ROOM_KEY, roomId); } catch (e) {}
         }
 
         function restoreRoom() {
             let roomId = null;
-            try { roomId = sessionStorage.getItem(ROOM_KEY); } catch (e) {}
+            try { roomId = localStorage.getItem(ROOM_KEY); } catch (e) {}
             if (!roomId) roomId = 'homepage';
 
             const allRooms = ['homepage', 'navigation-room', 'buzz-room', 'einstein-room', 'godmode-room'];
@@ -655,6 +678,14 @@ God Mode must always write and respond in Grayson's voice when writing for him: 
                 fileLine.textContent = '📄 ' + att.name;
                 fileLine.style.marginBottom = text ? '8px' : '0';
                 userMsg.appendChild(fileLine);
+                if (att.textContent) {
+                    const textContentDiv = document.createElement('div');
+                    textContentDiv.textContent = att.textContent;
+                    textContentDiv.style.fontSize = '12px';
+                    textContentDiv.style.color = '#aaa';
+                    textContentDiv.style.marginTop = '5px';
+                    userMsg.appendChild(textContentDiv);
+                }
             }
 
             if (text) {
@@ -716,6 +747,14 @@ God Mode must always write and respond in Grayson's voice when writing for him: 
                 fileLine.textContent = '📄 ' + att.name;
                 fileLine.style.marginBottom = text ? '8px' : '0';
                 userMsg.appendChild(fileLine);
+                if (att.textContent) {
+                    const textContentDiv = document.createElement('div');
+                    textContentDiv.textContent = att.textContent;
+                    textContentDiv.style.fontSize = '12px';
+                    textContentDiv.style.color = '#aaa';
+                    textContentDiv.style.marginTop = '5px';
+                    userMsg.appendChild(textContentDiv);
+                }
             }
 
             if (text) {
@@ -777,6 +816,14 @@ God Mode must always write and respond in Grayson's voice when writing for him: 
                 fileLine.textContent = '📄 ' + att.name;
                 fileLine.style.marginBottom = text ? '8px' : '0';
                 userMsg.appendChild(fileLine);
+                if (att.textContent) {
+                    const textContentDiv = document.createElement('div');
+                    textContentDiv.textContent = att.textContent;
+                    textContentDiv.style.fontSize = '12px';
+                    textContentDiv.style.color = '#aaa';
+                    textContentDiv.style.marginTop = '5px';
+                    userMsg.appendChild(textContentDiv);
+                }
             }
 
             if (text) {
@@ -883,7 +930,8 @@ God Mode must always write and respond in Grayson's voice when writing for him: 
             let html = '';
             limited.forEach(item => {
                 const dateStr = item.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-                html += `<div class="reminder-item"><div class="reminder-date">${dateStr}</div><div>${item.text}</div></div>`;
+                // Fix: escape HTML to prevent layout breaking
+                html += `<div class="reminder-item"><div class="reminder-date">${dateStr}</div><div>${escapeHTML(item.text)}</div></div>`;
             });
             list.innerHTML = html;
         }
@@ -958,7 +1006,8 @@ God Mode must always write and respond in Grayson's voice when writing for him: 
             }
             let html = '';
             dayTasks.forEach((task, index) => {
-                html += `<div class="task-item"><span>${task}</span><button onclick="deleteTask(${index})">✕</button></div>`;
+                // Fix: escape HTML to prevent layout breaking
+                html += `<div class="task-item"><span>${escapeHTML(task)}</span><button onclick="deleteTask(${index})">✕</button></div>`;
             });
             taskList.innerHTML = html;
         }
@@ -991,7 +1040,8 @@ God Mode must always write and respond in Grayson's voice when writing for him: 
             }
             let html = '';
             projects.forEach((proj, index) => {
-                html += `<div class="project-item"><span>${proj}</span><button onclick="deleteProject(${index})">✕</button></div>`;
+                // Fix: escape HTML to prevent layout breaking
+                html += `<div class="project-item"><span>${escapeHTML(proj)}</span><button onclick="deleteProject(${index})">✕</button></div>`;
             });
             list.innerHTML = html;
         }
@@ -1001,6 +1051,10 @@ God Mode must always write and respond in Grayson's voice when writing for him: 
         function addGalleryImage(event) {
             const file = event.target.files[0];
             if (!file) return;
+            // Note: localStorage has a ~5MB limit. Large images may cause it to fail.
+            if (file.size > 1024 * 1024) {
+                alert("Warning: This image is larger than 1MB. It may fill up your gallery storage quickly.");
+            }
             const reader = new FileReader();
             reader.onload = function(e) {
                 gallery.push(e.target.result);
@@ -1032,25 +1086,37 @@ God Mode must always write and respond in Grayson's voice when writing for him: 
             list.innerHTML = html;
         }
 
+        // Fix: Initial call to load reminders and stats
         renderProjects();
         renderGallery();
         renderCalendar();
+        renderReminders();
+        updateProfileStats();
 
         function loadParticles(containerId) {
-            tsParticles.load(containerId, {
-                background: { color: { value: "transparent" } },
-                fpsLimit: 60,
-                particles: {
-                    color: { value: ["#d946ef", "#06b6d4", "#ffffff"] },
-                    links: { color: "#d946ef", distance: 150, enable: true, opacity: 0.15, width: 1 },
-                    move: { direction: "none", enable: true, outModes: { default: "bounce" }, random: true, speed: 0.8, straight: false },
-                    number: { density: { enable: true, area: 800 }, value: 50 },
-                    opacity: { value: 0.4 },
-                    shape: { type: "circle" },
-                    size: { value: { min: 1, max: 3 } }
-                },
-                detectRetina: true
-            });
+            // Fix: Add error protection for CDN failure
+            if (typeof tsParticles === 'undefined') {
+                console.warn("tsParticles library not loaded. Skipping particle effects.");
+                return;
+            }
+            try {
+                tsParticles.load(containerId, {
+                    background: { color: { value: "transparent" } },
+                    fpsLimit: 60,
+                    particles: {
+                        color: { value: ["#d946ef", "#06b6d4", "#ffffff"] },
+                        links: { color: "#d946ef", distance: 150, enable: true, opacity: 0.15, width: 1 },
+                        move: { direction: "none", enable: true, outModes: { default: "bounce" }, random: true, speed: 0.8, straight: false },
+                        number: { density: { enable: true, area: 800 }, value: 50 },
+                        opacity: { value: 0.4 },
+                        shape: { type: "circle" },
+                        size: { value: { min: 1, max: 3 } }
+                    },
+                    detectRetina: true
+                });
+            } catch (e) {
+                console.error("Particle load error:", e);
+            }
         }
         loadParticles("tsparticles-home");
         loadParticles("tsparticles-nav");
