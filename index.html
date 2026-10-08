@@ -145,6 +145,23 @@
         .attachment-preview .file-name { flex: 1; font-size: 13px; color: #e0e0e0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .attachment-preview .remove-btn { background: #ff4d4d; color: white; border: none; width: 24px; height: 24px; border-radius: 50%; cursor: pointer; font-size: 12px; display: flex; justify-content: center; align-items: center; }
 
+        /* --- LIBRARY ROOM STYLES --- */
+        #library-room { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; height: 100dvh; background-color: #0b071a; z-index: 100; display: flex; flex-direction: column; padding: 20px; gap: 15px; overflow-y: auto; }
+        .library-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; border-radius: 30px; border: 1px solid rgba(217, 70, 239, 0.5); background: rgba(0,0,0,0.5); backdrop-filter: blur(5px); flex-shrink: 0; }
+        .library-header h2 { font-family: 'Orbitron', sans-serif; font-size: 18px; color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
+        .library-header button { background: transparent; border: none; color: #fff; font-size: 16px; cursor: pointer; font-family: 'Orbitron', sans-serif; padding: 5px 10px; border-radius: 5px; }
+        .library-header button:hover { background: rgba(255,255,255,0.1); }
+        .library-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; width: 100%; flex: 1; min-height: 0; }
+        .library-column { display: flex; flex-direction: column; height: 100%; background: rgba(255,255,255,0.03); border-radius: 20px; border: 1px solid rgba(255,255,255,0.15); padding: 15px; overflow: hidden; min-height: 0; }
+        .library-column h3 { font-family: 'Orbitron', sans-serif; font-size: 14px; color: #06b6d4; text-align: center; margin-bottom: 10px; flex-shrink: 0; }
+        .chat-history-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding-right: 5px; min-height: 0; }
+        .chat-history-list::-webkit-scrollbar { width: 6px; }
+        .chat-history-list::-webkit-scrollbar-thumb { background: rgba(217, 70, 239, 0.5); border-radius: 10px; }
+        .history-msg { padding: 8px 12px; border-radius: 10px; font-size: 12px; background: rgba(255,255,255,0.1); word-break: break-word; font-family: 'Courier New', Courier, monospace; }
+        .history-msg.user { background: rgba(74, 144, 226, 0.4); align-self: flex-end; }
+        .history-msg.ai { background: rgba(255, 255, 255, 0.1); align-self: flex-start; }
+        .clear-btn { margin-top: 10px; background: #ff4d4d; color: white; border: none; padding: 8px; border-radius: 10px; cursor: pointer; font-size: 12px; font-family: 'Orbitron', sans-serif; flex-shrink: 0; }
+
         @media (min-width: 769px) {
             #godmode-room { background-size: contain; background-position: center center; }
         }
@@ -159,6 +176,7 @@
             .profile-name { margin-bottom: 0; width: 100%; text-align: center; }
             .stat-row { width: 100%; justify-content: center; margin-bottom: 15px; }
             .reminders-section { width: 100%; height: 150px; flex: none; }
+            .library-grid { grid-template-columns: 1fr; }
         }
         @media (max-width: 768px) {
             #homepage main { grid-template-columns: 1fr; }
@@ -187,6 +205,7 @@
         <div class="sidebar-content">
             <h2>Einstein's Lab</h2>
             <a onclick="goHome(); toggleSidebar();">🏠 Home</a>
+            <a onclick="openLibrary(); toggleSidebar();">📚 Library</a>
             <a onclick="toggleSidebar();">Close</a>
             <a onclick="alert('Settings coming soon!'); toggleSidebar();">⚙️ Settings</a>
             <a onclick="alert('Profile coming soon!'); toggleSidebar();">👤 Profile</a>
@@ -218,7 +237,7 @@
             </div>
         </main>
 
-        <footer class="glass-panel" onclick="goToNavRoom()">Library</footer>
+        <footer class="glass-panel" onclick="openLibrary()">Library</footer>
     </div>
 
     <div id="navigation-room" class="hidden">
@@ -362,6 +381,33 @@
         </div>
     </div>
 
+    <!-- NEW LIBRARY ROOM -->
+    <div id="library-room" class="hidden">
+        <div class="library-header">
+            <button onclick="toggleSidebar()">☰</button>
+            <h2>Library</h2>
+            <button onclick="closeLibrary()">← Back</button>
+        </div>
+        <div class="library-grid">
+            <div class="library-column">
+                <h3>Buzz History</h3>
+                <div class="chat-history-list" id="library-buzz-list"></div>
+                <button class="clear-btn" onclick="clearLibrary('buzz')">Clear Buzz History</button>
+            </div>
+            <div class="library-column">
+                <h3>Einstein History</h3>
+                <div class="chat-history-list" id="library-einstein-list"></div>
+                <button class="clear-btn" onclick="clearLibrary('einstein')">Clear Einstein History</button>
+            </div>
+            <div class="library-column">
+                <h3>God Mode History</h3>
+                <div class="chat-history-list" id="library-godmode-list"></div>
+                <button class="clear-btn" onclick="clearLibrary('godmode')">Clear God Mode History</button>
+            </div>
+        </div>
+        <button class="glass-panel back-home-btn" onclick="closeLibrary()">← Back to Home</button>
+    </div>
+
     <input type="file" id="file-camera" accept="image/*" capture="environment" class="hidden-file-input">
     <input type="file" id="file-photo" accept="image/*" class="hidden-file-input">
     <input type="file" id="file-document" accept=".pdf,.doc,.docx,.txt" class="hidden-file-input">
@@ -502,6 +548,35 @@ Grayson wants God Mode to be a chat room with an AI, just like Buzz and Einstein
 God Mode must always write and respond in Grayson's voice when writing for him: short, plain sentences. Explain reasoning as you go. Use everyday phrases. Include real personal details. Do not force them. Be honest, direct, and do not sugarcoat.`;
 
         // ==========================================
+        // CHAT HISTORY STORAGE
+        // ==========================================
+        function getChatHistory(room) {
+            try {
+                return JSON.parse(localStorage.getItem('chat_history_' + room)) || [];
+            } catch (e) {
+                return [];
+            }
+        }
+
+        function saveChatMessage(room, sender, text, isImage = false) {
+            const history = getChatHistory(room);
+            history.push({ sender, text, isImage, timestamp: Date.now() });
+            localStorage.setItem('chat_history_' + room, JSON.stringify(history));
+        }
+
+        function clearLibrary(room) {
+            if (confirm("Are you sure you want to clear all " + room + " history? This cannot be undone.")) {
+                localStorage.removeItem('chat_history_' + room);
+                renderLibrary();
+                // Also clear the current chat box visually
+                const chatBox = document.getElementById(room + '-chat-box');
+                if (chatBox) {
+                    chatBox.innerHTML = `<div class="${room}-msg ai">I am ${room === 'buzz' ? 'Buzz' : room === 'einstein' ? 'Einstein' : 'God Mode'}. How can I help you today?</div>`;
+                }
+            }
+        }
+
+        // ==========================================
         // ATTACHMENT STORAGE
         // ==========================================
         const attachments = { buzz: null, einstein: null, godmode: null };
@@ -510,7 +585,6 @@ God Mode must always write and respond in Grayson's voice when writing for him: 
         function triggerFileInput(type, room) {
             activeRoomForFile = room;
             document.getElementById('file-' + type).click();
-            // Fix: Safely hide all attachment menus
             const menus = ['attachment-menu', 'buzz-attachment-menu', 'godmode-attachment-menu'];
             menus.forEach(menuId => {
                 const menu = document.getElementById(menuId);
@@ -534,9 +608,6 @@ God Mode must always write and respond in Grayson's voice when writing for him: 
                     textContent: isText ? e.target.result : null
                 };
                 renderAttachmentPreview(activeRoomForFile);
-                if (!isText && file.type !== '') {
-                    console.log("Note: Only text files are fully readable by the frontend.");
-                }
             };
             if (isText) {
                 reader.readAsText(file);
@@ -544,7 +615,7 @@ God Mode must always write and respond in Grayson's voice when writing for him: 
                 reader.readAsDataURL(file);
             }
             event.target.value = '';
-            activeRoomForFile = null; // Fix: Reset to prevent cross-room contamination
+            activeRoomForFile = null;
         }
 
         function renderAttachmentPreview(room) {
@@ -601,7 +672,6 @@ God Mode must always write and respond in Grayson's voice when writing for him: 
         const ROOM_KEY = 'current_room';
 
         function saveRoom(roomId) {
-            // Fix: Use localStorage instead of sessionStorage so it survives browser restarts
             try { localStorage.setItem(ROOM_KEY, roomId); } catch (e) {}
         }
 
@@ -610,7 +680,7 @@ God Mode must always write and respond in Grayson's voice when writing for him: 
             try { roomId = localStorage.getItem(ROOM_KEY); } catch (e) {}
             if (!roomId) roomId = 'homepage';
 
-            const allRooms = ['homepage', 'navigation-room', 'buzz-room', 'einstein-room', 'godmode-room'];
+            const allRooms = ['homepage', 'navigation-room', 'buzz-room', 'einstein-room', 'godmode-room', 'library-room'];
             allRooms.forEach(function(id) {
                 const el = document.getElementById(id);
                 if (el) el.classList.add('hidden');
@@ -625,6 +695,7 @@ God Mode must always write and respond in Grayson's voice when writing for him: 
             document.getElementById('buzz-room').classList.add('hidden');
             document.getElementById('einstein-room').classList.add('hidden');
             document.getElementById('godmode-room').classList.add('hidden');
+            document.getElementById('library-room').classList.add('hidden');
             saveRoom('navigation-room');
             renderCalendar();
             updateProfileStats();
@@ -637,7 +708,47 @@ God Mode must always write and respond in Grayson's voice when writing for him: 
             document.getElementById('buzz-room').classList.add('hidden');
             document.getElementById('einstein-room').classList.add('hidden');
             document.getElementById('godmode-room').classList.add('hidden');
+            document.getElementById('library-room').classList.add('hidden');
             saveRoom('homepage');
+        }
+
+        // --- LIBRARY ROOM ---
+        function openLibrary() {
+            document.getElementById('homepage').classList.add('hidden');
+            document.getElementById('library-room').classList.remove('hidden');
+            document.getElementById('navigation-room').classList.add('hidden');
+            document.getElementById('buzz-room').classList.add('hidden');
+            document.getElementById('einstein-room').classList.add('hidden');
+            document.getElementById('godmode-room').classList.add('hidden');
+            saveRoom('library-room');
+            renderLibrary();
+        }
+
+        function closeLibrary() {
+            document.getElementById('library-room').classList.add('hidden');
+            document.getElementById('homepage').classList.remove('hidden');
+            saveRoom('homepage');
+        }
+
+        function renderLibrary() {
+            const rooms = ['buzz', 'einstein', 'godmode'];
+            rooms.forEach(room => {
+                const list = document.getElementById('library-' + room + '-list');
+                if (!list) return;
+                const history = getChatHistory(room);
+                if (history.length === 0) {
+                    list.innerHTML = '<div style="color: #666; text-align: center; font-size: 12px; margin-top: 10px;">No history yet.</div>';
+                    return;
+                }
+                let html = '';
+                history.forEach(msg => {
+                    // Skip system prompts in the library view
+                    if (msg.sender === 'system') return;
+                    const cls = msg.sender === 'user' ? 'user' : 'ai';
+                    html += `<div class="history-msg ${cls}">${escapeHTML(msg.text)}</div>`;
+                });
+                list.innerHTML = html;
+            });
         }
 
         // --- BUZZ ROOM ---
@@ -646,7 +757,9 @@ God Mode must always write and respond in Grayson's voice when writing for him: 
             document.getElementById('buzz-room').classList.remove('hidden');
             document.getElementById('einstein-room').classList.add('hidden');
             document.getElementById('godmode-room').classList.add('hidden');
+            document.getElementById('library-room').classList.add('hidden');
             saveRoom('buzz-room');
+            loadChatHistory('buzz');
         }
 
         function closeBuzz() {
@@ -678,14 +791,6 @@ God Mode must always write and respond in Grayson's voice when writing for him: 
                 fileLine.textContent = '📄 ' + att.name;
                 fileLine.style.marginBottom = text ? '8px' : '0';
                 userMsg.appendChild(fileLine);
-                if (att.textContent) {
-                    const textContentDiv = document.createElement('div');
-                    textContentDiv.textContent = att.textContent;
-                    textContentDiv.style.fontSize = '12px';
-                    textContentDiv.style.color = '#aaa';
-                    textContentDiv.style.marginTop = '5px';
-                    userMsg.appendChild(textContentDiv);
-                }
             }
 
             if (text) {
@@ -695,6 +800,11 @@ God Mode must always write and respond in Grayson's voice when writing for him: 
             }
 
             chatBox.appendChild(userMsg);
+            
+            // Save to history
+            if (text) saveChatMessage('buzz', 'user', text);
+            if (att) saveChatMessage('buzz', 'user', '[Attachment: ' + att.name + ']');
+
             input.value = '';
             attachments['buzz'] = null;
             renderAttachmentPreview('buzz');
@@ -705,8 +815,27 @@ God Mode must always write and respond in Grayson's voice when writing for him: 
                 aiMsg.className = 'buzz-msg ai';
                 aiMsg.textContent = "Got it. I will help you with that.";
                 chatBox.appendChild(aiMsg);
+                saveChatMessage('buzz', 'ai', aiMsg.textContent);
                 chatBox.scrollTop = chatBox.scrollHeight;
             }, 800);
+        }
+
+        function loadChatHistory(room) {
+            const chatBox = document.getElementById(room + '-chat-box');
+            if (!chatBox) return;
+            const history = getChatHistory(room);
+            chatBox.innerHTML = '';
+            if (history.length === 0) {
+                chatBox.innerHTML = `<div class="${room}-msg ai">I am ${room === 'buzz' ? 'Buzz' : room === 'einstein' ? 'Einstein' : 'God Mode'}. How can I help you today?</div>`;
+                return;
+            }
+            history.forEach(msg => {
+                if (msg.sender === 'system') return;
+                const el = document.createElement('div');
+                el.className = `${room}-msg ${msg.sender}`;
+                el.textContent = msg.text;
+                chatBox.appendChild(el);
+            });
         }
 
         // --- EINSTEIN ROOM ---
@@ -715,7 +844,9 @@ God Mode must always write and respond in Grayson's voice when writing for him: 
             document.getElementById('einstein-room').classList.remove('hidden');
             document.getElementById('buzz-room').classList.add('hidden');
             document.getElementById('godmode-room').classList.add('hidden');
+            document.getElementById('library-room').classList.add('hidden');
             saveRoom('einstein-room');
+            loadChatHistory('einstein');
         }
 
         function closeEinstein() {
@@ -747,14 +878,6 @@ God Mode must always write and respond in Grayson's voice when writing for him: 
                 fileLine.textContent = '📄 ' + att.name;
                 fileLine.style.marginBottom = text ? '8px' : '0';
                 userMsg.appendChild(fileLine);
-                if (att.textContent) {
-                    const textContentDiv = document.createElement('div');
-                    textContentDiv.textContent = att.textContent;
-                    textContentDiv.style.fontSize = '12px';
-                    textContentDiv.style.color = '#aaa';
-                    textContentDiv.style.marginTop = '5px';
-                    userMsg.appendChild(textContentDiv);
-                }
             }
 
             if (text) {
@@ -764,6 +887,11 @@ God Mode must always write and respond in Grayson's voice when writing for him: 
             }
 
             chatBox.appendChild(userMsg);
+            
+            // Save to history
+            if (text) saveChatMessage('einstein', 'user', text);
+            if (att) saveChatMessage('einstein', 'user', '[Attachment: ' + att.name + ']');
+
             input.value = '';
             attachments['einstein'] = null;
             renderAttachmentPreview('einstein');
@@ -774,6 +902,7 @@ God Mode must always write and respond in Grayson's voice when writing for him: 
                 aiMsg.className = 'einstein-msg ai';
                 aiMsg.textContent = "Got it. I will help you with that.";
                 chatBox.appendChild(aiMsg);
+                saveChatMessage('einstein', 'ai', aiMsg.textContent);
                 chatBox.scrollTop = chatBox.scrollHeight;
             }, 800);
         }
@@ -784,7 +913,9 @@ God Mode must always write and respond in Grayson's voice when writing for him: 
             document.getElementById('godmode-room').classList.remove('hidden');
             document.getElementById('buzz-room').classList.add('hidden');
             document.getElementById('einstein-room').classList.add('hidden');
+            document.getElementById('library-room').classList.add('hidden');
             saveRoom('godmode-room');
+            loadChatHistory('godmode');
         }
 
         function closeGodMode() {
@@ -816,14 +947,6 @@ God Mode must always write and respond in Grayson's voice when writing for him: 
                 fileLine.textContent = '📄 ' + att.name;
                 fileLine.style.marginBottom = text ? '8px' : '0';
                 userMsg.appendChild(fileLine);
-                if (att.textContent) {
-                    const textContentDiv = document.createElement('div');
-                    textContentDiv.textContent = att.textContent;
-                    textContentDiv.style.fontSize = '12px';
-                    textContentDiv.style.color = '#aaa';
-                    textContentDiv.style.marginTop = '5px';
-                    userMsg.appendChild(textContentDiv);
-                }
             }
 
             if (text) {
@@ -833,6 +956,11 @@ God Mode must always write and respond in Grayson's voice when writing for him: 
             }
 
             chatBox.appendChild(userMsg);
+            
+            // Save to history
+            if (text) saveChatMessage('godmode', 'user', text);
+            if (att) saveChatMessage('godmode', 'user', '[Attachment: ' + att.name + ']');
+
             input.value = '';
             attachments['godmode'] = null;
             renderAttachmentPreview('godmode');
@@ -843,6 +971,7 @@ God Mode must always write and respond in Grayson's voice when writing for him: 
                 aiMsg.className = 'godmode-msg ai';
                 aiMsg.textContent = "Got it. I will help you with that.";
                 chatBox.appendChild(aiMsg);
+                saveChatMessage('godmode', 'ai', aiMsg.textContent);
                 chatBox.scrollTop = chatBox.scrollHeight;
             }, 800);
         }
@@ -930,7 +1059,6 @@ God Mode must always write and respond in Grayson's voice when writing for him: 
             let html = '';
             limited.forEach(item => {
                 const dateStr = item.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-                // Fix: escape HTML to prevent layout breaking
                 html += `<div class="reminder-item"><div class="reminder-date">${dateStr}</div><div>${escapeHTML(item.text)}</div></div>`;
             });
             list.innerHTML = html;
@@ -1006,7 +1134,6 @@ God Mode must always write and respond in Grayson's voice when writing for him: 
             }
             let html = '';
             dayTasks.forEach((task, index) => {
-                // Fix: escape HTML to prevent layout breaking
                 html += `<div class="task-item"><span>${escapeHTML(task)}</span><button onclick="deleteTask(${index})">✕</button></div>`;
             });
             taskList.innerHTML = html;
@@ -1040,7 +1167,6 @@ God Mode must always write and respond in Grayson's voice when writing for him: 
             }
             let html = '';
             projects.forEach((proj, index) => {
-                // Fix: escape HTML to prevent layout breaking
                 html += `<div class="project-item"><span>${escapeHTML(proj)}</span><button onclick="deleteProject(${index})">✕</button></div>`;
             });
             list.innerHTML = html;
@@ -1051,7 +1177,6 @@ God Mode must always write and respond in Grayson's voice when writing for him: 
         function addGalleryImage(event) {
             const file = event.target.files[0];
             if (!file) return;
-            // Note: localStorage has a ~5MB limit. Large images may cause it to fail.
             if (file.size > 1024 * 1024) {
                 alert("Warning: This image is larger than 1MB. It may fill up your gallery storage quickly.");
             }
@@ -1086,7 +1211,6 @@ God Mode must always write and respond in Grayson's voice when writing for him: 
             list.innerHTML = html;
         }
 
-        // Fix: Initial call to load reminders and stats
         renderProjects();
         renderGallery();
         renderCalendar();
@@ -1094,7 +1218,6 @@ God Mode must always write and respond in Grayson's voice when writing for him: 
         updateProfileStats();
 
         function loadParticles(containerId) {
-            // Fix: Add error protection for CDN failure
             if (typeof tsParticles === 'undefined') {
                 console.warn("tsParticles library not loaded. Skipping particle effects.");
                 return;
@@ -1121,7 +1244,6 @@ God Mode must always write and respond in Grayson's voice when writing for him: 
         loadParticles("tsparticles-home");
         loadParticles("tsparticles-nav");
 
-        // Restore room on load/reload
         window.addEventListener('pageshow', restoreRoom);
         window.addEventListener('load', restoreRoom);
     </script>
